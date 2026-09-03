@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- html2canvas for photo export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
   <style>
     /* 1. 기본 지정 서체: 조선일보 100년체 (Joseon100Years) */
@@ -222,7 +224,7 @@
 
         <div class="brass-badge px-2 sm:px-3 py-1 rounded font-serif font-black tracking-wider text-[11px] sm:text-xs flex items-center gap-1.5 shadow">
           <span>★ TELETYPE CORP. MODEL 33-KSR ★</span>
-          <span class="text-[9px] bg-amber-950 text-amber-200 px-1 py-0.5 rounded font-mono">SEOUL WIRE</span>
+          <span class="text-[9px] bg-amber-950 text-amber-200 px-1 py-0.5 rounded font-mono">GLOBAL WIRE</span>
         </div>
       </div>
 
@@ -264,16 +266,16 @@
 
       <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400 font-mono">
         <span>◀ FEED (3열+피드+2열)</span>
-        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">전 세계 회선 실시간 감시 중...</span>
+        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">세계 각국 언론사 표준시 변환 엔진 가동 중...</span>
       </div>
     </div>
 
-    <!-- 3. 기계 제어반 (수신 모드: 실시간 즉시 전달 vs 시간대 선택) -->
+    <!-- 3. 기계 제어반 (5:5 반반 모드 및 글로벌 회선 모니터) -->
     <div class="bg-[#1b2520] p-2 sm:p-3 rounded-lg border border-[#37493e] flex flex-col gap-2 text-xs">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center flex-wrap gap-1 font-mono text-[11px] sm:text-xs">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1"></span>
-          <span class="font-bold text-emerald-300">통합 전신망:</span>
+          <span class="font-bold text-emerald-300">글로벌 통신망:</span>
           <div class="flex flex-wrap gap-1 text-[10px] sm:text-[11px]">
             <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🚨 뉴시스</span>
             <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🗽 AP</span>
@@ -293,29 +295,34 @@
         </div>
       </div>
 
-      <!-- 하단 줄: 다음 기사 강제 타건, 즉시 수신, 모드 선택, 타속 -->
+      <!-- 하단 줄: 다음 기사 무작위 타건, 즉시 수신, 5:5 반반 모드, 타속, 사진 저장 -->
       <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-700/60">
         <div class="flex items-center gap-1.5 flex-wrap">
           <button id="fetchNextStoryBtn" type="button" class="hardware-btn bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 text-amber-100 font-bold px-2.5 py-1 rounded shadow text-[11px] sm:text-xs font-joseon">
-            <span>🎲 다음 새 기사 타건</span>
+            <span>🎲 다음 무작위 기사 타건</span>
           </button>
 
           <button id="fetchLiveRssBtn" type="button" class="hardware-btn bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[11px] sm:text-xs">
-            <span>⚡ 즉시 수신</span>
+            <span>⚡ 즉시 수신/새로고침</span>
           </button>
 
           <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-amber-500/50 text-[10px] sm:text-xs">
-            <span class="text-amber-400 font-bold">📡 모드:</span>
+            <span class="text-amber-400 font-bold">⚖️ 모드:</span>
             <select id="streamModeSelect" class="bg-transparent text-amber-300 font-bold focus:outline-none cursor-pointer">
-              <option value="live" selected class="bg-[#101713]">⚡ 실시간 즉시 전달 (LIVE)</option>
-              <option value="1h" class="bg-[#101713]">⏳ 최근 1시간</option>
-              <option value="6h" class="bg-[#101713]">🕰️ 최근 6시간</option>
-              <option value="24h" class="bg-[#101713]">📰 최근 24시간</option>
+              <option value="half" selected class="bg-[#101713]">⚖️ 5:5 반반 (실시간 반 + 과거 반)</option>
+              <option value="live" class="bg-[#101713]">⚡ 100% 실시간 속보</option>
+              <option value="1h" class="bg-[#101713]">⏳ 1시간 전 주요 소식</option>
+              <option value="6h" class="bg-[#101713]">🕰️ 6시간 전 주요 소식</option>
+              <option value="24h" class="bg-[#101713]">📰 24시간 전 주요 소식</option>
             </select>
           </div>
         </div>
 
         <div class="flex items-center gap-2 font-mono ml-auto">
+          <button id="saveRollPhotoBtn" type="button" class="hardware-btn bg-amber-700 hover:bg-amber-600 text-amber-100 px-2 py-0.5 rounded text-[10px] sm:text-xs font-bold font-joseon">
+            📸 사진 저장
+          </button>
+
           <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-slate-700 text-[10px] sm:text-xs">
             <span class="text-slate-400">타속:</span>
             <select id="baudRateSelect" class="bg-transparent text-emerald-400 focus:outline-none cursor-pointer">
@@ -348,7 +355,7 @@
         <div class="text-slate-400 font-mono flex items-center gap-1.5 truncate">
           <span>대기열: <span id="queueCountBadge" class="text-amber-400 font-bold">0</span>건</span>
           <span class="text-slate-600">|</span>
-          <span class="text-emerald-400 font-bold font-joseon">전 세계 통신사 무중단 실시간 스트리밍</span>
+          <span class="text-emerald-400 font-bold font-joseon">전 세계 통신사 시간대별 자동 변환 무중단 스트리밍</span>
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
@@ -368,12 +375,11 @@
           <div class="text-center my-4 sm:my-6 text-slate-600 font-mono text-xs sm:text-sm leading-relaxed">
             ===============================================================<br>
             TELETYPE MODEL-33 INTERNATIONAL WIRE SYSTEM [SEOUL BUREAU]<br>
-            NEWSIS · AP · CNN · AL JAZEERA · DEUTSCHE WELLE<br>
+            NEWSPAPER TIMEZONE CONVERTER & 5:5 HALF-HALF STREAM<br>
             ===============================================================<br><br>
-            [상태] 실시간 한국표준시(KST) 전 세계 통신망 회선 연결 수립 완료.<br>
+            [상태] 세계 각국 언론사(UTC/EDT/GMT) 시각을 한국 표준시(KST)로 변환,<br>
+            실시간 소식과 과거 소식(1시간·6시간·24시간 전)을 교차 타건합니다.<br>
             <span id="connInitTimeLine" class="text-emerald-800 font-bold"></span><br>
-            중복 송출이 차단된 글로벌 최신 기사가 대량으로 쉼 없이 연속 타건됩니다.<br><br>
-            마음에 드는 기사는 상단 [찌익- 기사 절취]를 눌러 창고에 보관하세요.<br>
             ===============================================================
           </div>
         </div>
@@ -438,12 +444,12 @@
     <div class="flex items-center justify-between text-[10px] sm:text-xs text-slate-400 font-mono px-1">
       <div class="flex items-center gap-2 sm:gap-3">
         <span class="flex items-center gap-1 text-emerald-400">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 24H LIVE WIRE
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> GLOBAL TIMEZONE WIRE
         </span>
         <span id="counterDisplay" class="text-amber-400 font-bold">수신 완료: 0건</span>
       </div>
       <div class="flex items-center gap-2 text-[10px] sm:text-[11px] truncate">
-        <span class="text-slate-500 hidden sm:inline">중복 송출 차단 가동</span>
+        <span class="text-slate-500 hidden sm:inline">5:5 반반 교차 타건</span>
         <span id="activeFontBadge" class="text-amber-300 font-bold truncate">JOSEON 100Y</span>
       </div>
     </div>
@@ -458,7 +464,7 @@
           <span class="text-2xl">🗄️</span>
           <div>
             <h2 class="text-base sm:text-lg font-bold text-amber-400 font-joseon">전신 기록 보관 창고 (TELEGRAPH ARCHIVE)</h2>
-            <p class="text-xs text-slate-400 font-mono">절취되어 바인더에 보관된 24H 글로벌 전신문 서류철</p>
+            <p class="text-xs text-slate-400 font-mono">절취되어 바인더에 보관된 국제 시차 변환 전신문 서류철</p>
           </div>
         </div>
         <button id="closeArchiveBtn" type="button" class="hardware-btn text-slate-300 hover:text-white text-lg font-bold px-3 py-1 rounded">
@@ -500,7 +506,7 @@
 
       <div class="p-3 bg-[#141c17] border-t border-[#313f36] flex items-center justify-between text-xs text-slate-400">
         <span id="archiveStorageInfo">보관된 기사: 0건</span>
-        <span class="text-[11px] text-slate-500 hidden sm:inline">※ '전문 인쇄본 보기'를 통해 실물 전신문 스타일로 열람하고 바로 인쇄할 수 있습니다.</span>
+        <span class="text-[11px] text-slate-500 hidden sm:inline">※ '전문 인쇄본 보기' 또는 '사진 저장'을 통해 실물 전신문 스타일로 보관하세요.</span>
       </div>
     </div>
   </div>
@@ -514,6 +520,9 @@
           <h3 class="text-base sm:text-lg font-bold text-amber-300 font-joseon">전신 전문 인쇄본 (OFFICIAL WIRE SLIP)</h3>
         </div>
         <div class="flex items-center gap-2">
+          <button id="saveSlipPhotoModalBtn" type="button" class="hardware-btn bg-amber-700 hover:bg-amber-600 text-amber-100 font-bold px-3 py-1 rounded text-xs font-joseon">
+            📸 사진 저장 (PNG)
+          </button>
           <button id="printCurrentSlipBtn" type="button" class="hardware-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs font-joseon">
             🖨️ 인쇄 / PDF
           </button>
@@ -536,7 +545,7 @@
 
   <!-- ================= 핵심 자바스크립트 엔진 ================= -->
   <script>
-    // 전 세계 8대 전신 회선 (뉴시스 4섹션 + AP + CNN + 알자지라 + DW)
+    // 전 세계 8대 전신 회선
     const RSS_URLS = {
       sokbo: 'https://www.newsis.com/RSS/sokbo.xml',
       international: 'https://www.newsis.com/RSS/international.xml',
@@ -576,18 +585,52 @@
       return `${m.year}-${m.month}-${m.day} ${m.hour}:${m.minute}:${m.second} KST`;
     }
 
+    // 국제 언론사 발행 시각을 정밀하게 한국 표준시(KST) 에포크로 변환
     function parsePubEpoch(rawDateStr) {
       if (!rawDateStr) return Date.now();
-      const direct = Date.parse(rawDateStr);
-      if (!isNaN(direct)) return direct;
+      
+      // 1. 표준 ISO 또는 브라우저가 해석 가능한 파싱 시도
+      let parsed = Date.parse(rawDateStr);
+      if (!isNaN(parsed)) return parsed;
 
-      const m = rawDateStr.match(/(\d{4})[^\d](\d{1,2})[^\d](\d{1,2})[^\d]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?/);
+      // 2. RSS 날짜 문자열에 명시된 시간대 보정 (UTC, GMT, EST, EDT 등)
+      let cleaned = rawDateStr.trim();
+      const directDate = new Date(cleaned);
+      if (!isNaN(directDate.getTime())) return directDate.getTime();
+
+      // 3. 정규식으로 년, 월, 일, 시, 분, 초 추출
+      const m = cleaned.match(/(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?/);
       if (m) {
-        const kstStr = `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}T${m[4].padStart(2,'0')}:${m[5].padStart(2,'0')}:${(m[6]||'00').padStart(2,'0')}+09:00`;
-        const kstDate = new Date(kstStr);
-        if (!isNaN(kstDate.getTime())) return kstDate.getTime();
+        const months = {Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11};
+        const d = new Date(Date.UTC(parseInt(m[3]), months[m[2]] || 0, parseInt(m[1]), parseInt(m[4]), parseInt(m[5]), parseInt(m[6] || 0)));
+        // UTC를 KST(+9시간)로 변환
+        return d.getTime() + (9 * 3600 * 1000);
       }
+
       return Date.now();
+    }
+
+    // 기사의 나이(경과 시간)를 계산하여 "1시간 전", "6시간 전", "24시간 전", "실시간" 등으로 판정
+    function calculateArticleAgeCategory(pubEpoch) {
+      const now = Date.now();
+      const diffMs = now - pubEpoch;
+      const diffHrs = diffMs / (1000 * 60 * 60);
+
+      if (diffHrs <= 1.2) return 'live';       // 최근 1시간 이내 (실시간)
+      if (diffHrs <= 7) return '1h_to_6h';     // 1~6시간 전 소식
+      if (diffHrs <= 26) return '6h_to_24h';   // 6~24시간 전 소식
+      return 'older';                          // 24시간 이상 이전 소식
+    }
+
+    function formatRelativeAge(pubEpoch) {
+      const now = Date.now();
+      const diffMin = Math.floor((now - pubEpoch) / (1000 * 60));
+      if (diffMin < 2) return '방금 전 (실시간)';
+      if (diffMin < 60) return `${diffMin}분 전`;
+      const diffHrs = Math.floor(diffMin / 60);
+      if (diffHrs < 24) return `약 ${diffHrs}시간 전`;
+      const diffDays = Math.floor(diffHrs / 24);
+      return `약 ${diffDays}일 전`;
     }
 
     function updateLiveKSTClock() {
@@ -612,8 +655,26 @@
       autoPollInterval: null,
       totalCount: 0,
       currentSlipText: '',
-      streamMode: 'live' // 'live', '1h', '6h', '24h'
+      streamMode: 'half' // 'half', 'live', '1h', '6h', '24h'
     };
+
+    function loadSeenFingerprints() {
+      try {
+        const saved = localStorage.getItem('teletype_seen_fps');
+        if (saved) {
+          const arr = JSON.parse(saved);
+          if (Array.isArray(arr)) state.seenFingerprints = new Set(arr);
+        }
+      } catch (e) {}
+    }
+
+    function saveSeenFingerprints() {
+      try {
+        const arr = Array.from(state.seenFingerprints);
+        if (arr.length > 300) arr.splice(0, arr.length - 300);
+        localStorage.setItem('teletype_seen_fps', JSON.stringify(arr));
+      } catch (e) {}
+    }
 
     function getArticleFingerprint(item) {
       if (!item) return '';
@@ -633,14 +694,16 @@
 
     function isArticleSeen(item) {
       if (!item) return true;
-      const fp = getArticleFingerprint(item);
-      return state.seenFingerprints.has(fp);
+      return state.seenFingerprints.has(getArticleFingerprint(item));
     }
 
     function markArticleSeen(item) {
       if (!item) return;
       const fp = getArticleFingerprint(item);
-      if (fp) state.seenFingerprints.add(fp);
+      if (fp) {
+        state.seenFingerprints.add(fp);
+        saveSeenFingerprints();
+      }
     }
 
     // Web Audio API 사운드 합성기
@@ -822,14 +885,18 @@
           if (!res.ok) throw new Error('rss2json status');
           const data = await res.json();
           if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
-            return data.items.map(it => ({
-              title: it.title || '무제 기사',
-              link: it.link || '',
-              pubDate: getKSTFormatted24(new Date(parsePubEpoch(it.pubDate))),
-              pubEpoch: parsePubEpoch(it.pubDate),
-              description: (it.description || it.content || '').replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim(),
-              category: channelKey
-            }));
+            return data.items.map(it => {
+              const epoch = parsePubEpoch(it.pubDate);
+              return {
+                title: it.title || '무제 기사',
+                link: it.link || '',
+                pubDateKST: getKSTFormatted24(new Date(epoch)),
+                relativeAge: formatRelativeAge(epoch),
+                pubEpoch: epoch,
+                description: (it.description || it.content || '').replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim(),
+                category: channelKey
+              };
+            });
           }
           throw new Error('rss2json empty');
         },
@@ -883,10 +950,11 @@
         }
         const rawPubDate = el.querySelector('pubDate, updated, date')?.textContent?.trim() || '';
         const pubEpoch = parsePubEpoch(rawPubDate);
-        const pubDate = getKSTFormatted24(new Date(pubEpoch));
+        const pubDateKST = getKSTFormatted24(new Date(pubEpoch));
+        const relativeAge = formatRelativeAge(pubEpoch);
         let desc = el.querySelector('description, summary, content')?.textContent?.trim() || '';
         desc = desc.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim();
-        return { title, link, pubDate, pubEpoch, description: desc, category: channelKey };
+        return { title, link, pubDateKST, relativeAge, pubEpoch, description: desc, category: channelKey };
       });
     }
 
@@ -896,7 +964,8 @@
         {
           title: "[속보] 국제원자력기구(IAEA), 차세대 소형모듈원자로(SMR) 글로벌 안전 표준 지침 발표",
           link: "https://www.newsis.com/view/NISX20260903_001928371",
-          pubDate: getKSTFormatted24(new Date(now - 120000)),
+          pubDateKST: getKSTFormatted24(new Date(now - 120000)),
+          relativeAge: formatRelativeAge(now - 120000),
           pubEpoch: now - 120000,
           description: "국제원자력기구(IAEA)가 전 세계 탄소중립 가속화와 안정적 에너지 공급망 확충을 위해 소형모듈원자로(SMR) 표준 안전 가이드라인을 최종 확정하고 각국 규제기관에 배포했다.",
           category: "sokbo"
@@ -904,41 +973,36 @@
         {
           title: "AP Wire: Global Semiconductor Alliances Expand Advanced Packaging Hubs Across Asia and Europe",
           link: "https://apnews.com/wire/tech-chip-packaging-2026",
-          pubDate: getKSTFormatted24(new Date(now - 340000)),
-          pubEpoch: now - 340000,
+          pubDateKST: getKSTFormatted24(new Date(now - 3400000)),
+          relativeAge: formatRelativeAge(now - 3400000),
+          pubEpoch: now - 3400000,
           description: "Major semiconductor manufacturers have announced joint venture agreements to expand next-generation advanced packaging facilities, securing high-bandwidth memory supplies.",
           category: "apnews"
         },
         {
           title: "국제유가, 중동 주요 해상 운송로 안정화 소식에 배럴당 76달러 선으로 소폭 반락",
           link: "https://www.newsis.com/view/NISX20260903_001928385",
-          pubDate: getKSTFormatted24(new Date(now - 560000)),
-          pubEpoch: now - 560000,
+          pubDateKST: getKSTFormatted24(new Date(now - 18000000)),
+          relativeAge: formatRelativeAge(now - 18000000),
+          pubEpoch: now - 18000000,
           description: "뉴욕상업거래소에서 서부텍사스산원유(WTI) 선물 가격은 주요 해협 선박 통항 정상화와 재고 지표 안정세에 힘입어 전일 대비 1.2% 하락 마감했다.",
           category: "international"
         },
         {
           title: "CNN Wire: Space Exploration Consortium Unveils Deep-Space Lunar Habitat Prototype",
           link: "https://edition.cnn.com/space/wire/lunar-station-2026",
-          pubDate: getKSTFormatted24(new Date(now - 780000)),
-          pubEpoch: now - 780000,
+          pubDateKST: getKSTFormatted24(new Date(now - 45000000)),
+          relativeAge: formatRelativeAge(now - 45000000),
+          pubEpoch: now - 45000000,
           description: "International space agencies and private aerospace contractors completed pressurized module tests for the permanent lunar orbit gateway in preparation for long-duration crew missions.",
           category: "cnn"
-        },
-        {
-          title: "국회 산자위, 미래형 친환경 에너지 전환 지원 및 첨단 배터리 육성 법안 의결",
-          link: "https://www.newsis.com/view/NISX20260903_001928412",
-          pubDate: getKSTFormatted24(new Date(now - 990000)),
-          pubEpoch: now - 990000,
-          description: "국회 산업통상자원중소벤처기업위원회는 전체회의를 열고 차세대 전고체 배터리와 청정수소 기반 신산업 육성을 골자로 하는 종합 지원 법안을 여야 합의로 통과시켰다.",
-          category: "politics"
         }
       ];
     }
 
     async function fetchAllWireFeeds() {
       const nowStr = new Date().toTimeString().split(' ')[0];
-      updateStatusLine(`[통합 통신망] 실시간 회선 수신 중... (${nowStr})`);
+      updateStatusLine(`[글로벌 시차 변환] 세계 각국 언론사 시각 정밀 동기화 중... (${nowStr})`);
 
       const channelKeys = Object.keys(RSS_URLS);
       await Promise.all(channelKeys.map(k => fetchSingleChannelRSS(k)));
@@ -954,34 +1018,65 @@
 
       // 최신순 정렬
       combined.sort((a, b) => b.pubEpoch - a.pubEpoch);
+      state.allAggregatedNews = combined;
 
-      // 모드에 따른 시간 필터 적용
       const nowEpoch = Date.now();
-      let filtered = combined;
-      if (state.streamMode === 'live') {
-        const liveWindow = 40 * 60 * 1000; // 40분 이내 속보 우선
-        const fresh = combined.filter(it => (nowEpoch - it.pubEpoch) <= liveWindow);
-        filtered = fresh.length > 0 ? fresh : combined.slice(0, 15);
+      let filtered = [];
+
+      if (state.streamMode === 'half') {
+        // 5:5 반반 모드: 실시간(1시간 이내) 기사 풀과 과거(1~24시간 전) 기사 풀로 분리
+        const livePool = combined.filter(it => (nowEpoch - it.pubEpoch) <= 3600 * 1000);
+        const pastPool = combined.filter(it => (nowEpoch - it.pubEpoch) > 3600 * 1000 && (nowEpoch - it.pubEpoch) <= 24 * 3600 * 1000);
+
+        const shuffledLive = shuffleArray([...livePool]);
+        const shuffledPast = shuffleArray([...pastPool]);
+
+        // 1개씩 번갈아 가며 인터리빙 (Interleaving)
+        const maxLen = Math.max(shuffledLive.length, shuffledPast.length);
+        for (let i = 0; i < maxLen; i++) {
+          if (shuffledLive[i]) filtered.push(shuffledLive[i]);
+          if (shuffledPast[i]) filtered.push(shuffledPast[i]);
+        }
+        if (filtered.length === 0) filtered = combined;
+      } else if (state.streamMode === 'live') {
+        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 2 * 3600 * 1000);
+        if (filtered.length === 0) filtered = combined.slice(0, 15);
       } else if (state.streamMode === '1h') {
         filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 3600 * 1000);
       } else if (state.streamMode === '6h') {
-        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 6 * 3600 * 1000);
+        filtered = combined.filter(it => {
+          const age = nowEpoch - it.pubEpoch;
+          return age >= 3600 * 1000 && age <= 6 * 3600 * 1000;
+        });
       } else if (state.streamMode === '24h') {
-        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 24 * 3600 * 1000);
+        filtered = combined.filter(it => {
+          const age = nowEpoch - it.pubEpoch;
+          return age >= 6 * 3600 * 1000 && age <= 24 * 3600 * 1000;
+        });
       }
 
-      if (filtered.length === 0) filtered = combined.slice(0, 10);
-      state.allAggregatedNews = filtered;
+      if (filtered.length === 0) filtered = combined;
 
-      // 미수신 기사 선별
-      const freshItems = filtered.filter(item => !isArticleSeen(item));
+      // 아직 보지 않은 기사 선별 후 전체 무작위 셔플
+      const unseen = filtered.filter(item => !isArticleSeen(item));
+      const freshItems = unseen.length > 0 ? shuffleArray(unseen) : shuffleArray(filtered);
+
       if (freshItems.length > 0) {
-        updateStatusLine(`[전보 수신] 실시간 기사 ${freshItems.length}건 인입 완료`);
+        updateStatusLine(`[시간 동기화 완료] 실시간/과거 교차 전보 ${freshItems.length}건 준비됨`);
       } else {
-        updateStatusLine(`[회선 정상] 전체 ${filtered.length}건 기사 감시 대기 중`);
+        updateStatusLine(`[회선 정상] 전체 통신망 감시 대기 중`);
       }
 
       return freshItems;
+    }
+
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
     }
 
     function updateStatusLine(text) {
@@ -1021,8 +1116,6 @@
 
     function enqueueWireStory(item) {
       if (!item) return;
-      if (isArticleSeen(item)) return;
-
       markArticleSeen(item);
       state.printQueue.push(item);
       updateQueueBadge();
@@ -1041,14 +1134,12 @@
     function formatWireDocument(item) {
       const timeStr = getKSTFormatted24(new Date());
       const msgId = 'WIRE-' + Math.floor(100000 + Math.random() * 900000);
-      const isUrgent = item.title.includes('속보') || item.title.includes('1보') || item.title.includes('긴급') || item.title.includes('BREAKING') || item.category === 'sokbo';
+      const isUrgent = item.title.includes('속보') || item.title.includes('1보') || item.title.includes('긴급') || item.category === 'sokbo';
       
-      let streamTag = '';
-      if (item.streamType === 'live') {
-        streamTag = '🔴 [CURRENT TIME / 실시간 최신 속보 타건]\n';
-      } else if (item.streamType === 'earlier') {
-        streamTag = '🕰️ [HOURS AGO / 수시간 전 주요 종합 보도]\n';
-      }
+      const ageCategory = calculateArticleAgeCategory(item.pubEpoch);
+      let timeTag = `🔴 [실시간 송출 / ${item.relativeAge}]`;
+      if (ageCategory === '1h_to_6h') timeTag = `⏳ [수시간 전 소식 / ${item.relativeAge}]`;
+      else if (ageCategory === '6h_to_24h' || ageCategory === 'older') timeTag = `🕰️ [과거 아카이브 / ${item.relativeAge}]`;
       
       const flashTag = isUrgent ? '🚨 [URGENT FLASH / 긴급 전보] 🚨\n' : '';
 
@@ -1063,11 +1154,12 @@
 
       return `
 ======================================================================
-${streamTag}${flashTag}WIRE DISPATCH SERVICE [${categoryName}]
-MSG NO : ${msgId} | DISPATCH TIME: ${timeStr}
+${timeTag}
+${flashTag}WIRE DISPATCH SERVICE [${categoryName}]
+MSG NO : ${msgId} | KST RECEIVED: ${timeStr}
 ----------------------------------------------------------------------
 TITLE  : ${item.title}
-PUBDATE: ${item.pubDate}
+ORIG.DT: ${item.pubDateKST} (${item.relativeAge})
 ORIGIN : ${wireOrigin}
 ----------------------------------------------------------------------
 
@@ -1157,7 +1249,7 @@ ${cleanContent}
       state.isTyping = false;
       clearTimeout(state.typingTimer);
       if (typingIndicator) typingIndicator.classList.add('hidden');
-      updateStatusLine('전신 인쇄 완료. 상단 [기사 절취]로 창고에 보관 가능.');
+      updateStatusLine('전신 인쇄 완료. 다음 소식 자동 타건 중...');
 
       if (state.printQueue.length > 0) {
         setTimeout(processPrintQueue, 350);
@@ -1190,7 +1282,7 @@ ${cleanContent}
           <div class="text-center my-6 text-slate-600 font-mono">
             ===============================================================<br>
             TELETYPE CARRIAGE EMPTIED / 용지 리셋 완료<br>
-            신규 전 세계 전신문 수신 대기 중...<br>
+            국제 시차 변환 실시간 스트리밍 재개...<br>
             ===============================================================
           </div>
         `;
@@ -1217,7 +1309,8 @@ ${cleanContent}
         savedAtKST: getKSTFormatted24(new Date()),
         category: state.currentNewsItem.category,
         title: state.currentNewsItem.title,
-        pubDate: state.currentNewsItem.pubDate,
+        pubDateKST: state.currentNewsItem.pubDateKST,
+        relativeAge: state.currentNewsItem.relativeAge,
         description: state.currentNewsItem.description,
         fullSlip: slipFormatted,
         baudotSample: charTo5Bit(state.currentNewsItem.title[0] || 'N').join('')
@@ -1292,7 +1385,7 @@ ${cleanContent}
             <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
               <div class="flex items-center gap-2">
                 ${catBadge}
-                <span class="text-xs font-mono text-amber-300">ID: ${item.id}</span>
+                <span class="text-xs font-mono text-amber-300">${item.relativeAge}</span>
               </div>
               <div class="text-[11px] text-slate-400 font-mono">
                 절취일시: ${item.savedAtKST}
@@ -1306,9 +1399,12 @@ ${cleanContent}
             </p>
             <div class="flex items-center justify-between border-t border-slate-700/60 pt-2.5 text-xs font-mono flex-wrap gap-2">
               <span class="text-[11px] text-slate-500">
-                BAUDOT: [${item.baudotSample}]
+                발행: ${item.pubDateKST}
               </span>
               <div class="flex items-center gap-2">
+                <button type="button" onclick="window.saveSingleArchivePhoto('${item.id}')" class="hardware-btn bg-amber-700 hover:bg-amber-600 text-amber-100 px-2.5 py-1 rounded text-[11px] font-bold font-joseon">
+                  📸 사진 저장
+                </button>
                 <button type="button" onclick="window.viewPrintSlip('${item.id}')" class="hardware-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded shadow transition font-joseon text-[11px]">
                   📄 전문 인쇄본 보기
                 </button>
@@ -1388,12 +1484,83 @@ ${cleanContent}
       }, 350);
     });
 
+    // html2canvas 사진 저장 함수
+    window.saveSlipPhotoModalBtn = document.getElementById('saveSlipPhotoModalBtn');
+    if (window.saveSlipPhotoModalBtn) {
+      window.saveSlipPhotoModalBtn.addEventListener('click', async () => {
+        if (!slipPaperContent) return;
+        showNotice('고화질 전신문 사진을 렌더링 중입니다...');
+        try {
+          const canvas = await html2canvas(slipPaperContent, {
+            scale: 2,
+            backgroundColor: '#faf5e8',
+            logging: false
+          });
+          const link = document.createElement('a');
+          link.download = `teletype_wire_slip_${Date.now()}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          showNotice('전신문 사진 저장 완료!');
+        } catch (err) {
+          showNotice('사진 저장 중 오류가 발생했습니다.');
+        }
+      });
+    }
+
+    document.getElementById('saveRollPhotoBtn').addEventListener('click', async () => {
+      if (!paperElem) return;
+      showNotice('롤 용지 전체 화면을 캡처 중입니다...');
+      try {
+        const canvas = await html2canvas(paperElem, {
+          scale: 2,
+          backgroundColor: '#faf5e8',
+          logging: false
+        });
+        const link = document.createElement('a');
+        link.download = `teletype_roll_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showNotice('롤 용지 사진 저장 완료!');
+      } catch (err) {
+        showNotice('캡처 중 오류가 발생했습니다.');
+      }
+    });
+
+    window.saveSingleArchivePhoto = async function(id) {
+      const item = state.archive.find(a => a.id === id);
+      if (!item) return;
+      const tempDiv = document.createElement('div');
+      tempDiv.style.cssText = 'position: absolute; left: -9999px; width: 680px; padding: 40px; background: #faf5e8; font-family: Joseon100Years, serif; font-size: 14px; line-height: 1.8; color: #141a16; white-space: pre-wrap;';
+      tempDiv.textContent = item.fullSlip;
+      document.body.appendChild(tempDiv);
+      showNotice('보관함 기사 사진 생성 중...');
+      try {
+        const canvas = await html2canvas(tempDiv, { scale: 2, backgroundColor: '#faf5e8' });
+        const link = document.createElement('a');
+        link.download = `teletype_archive_${id}_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showNotice('아카이브 사진 저장 완료!');
+      } catch (e) {
+        showNotice('저장 실패');
+      } finally {
+        tempDiv.remove();
+      }
+    };
+
     window.replayArchiveItem = function(id) {
       const item = state.archive.find(a => a.id === id);
       if (!item) return;
       if (archiveModal) archiveModal.classList.add('hidden');
       showNotice(`[창고 기사 로드] '${item.title.substring(0, 15)}...' 재타건 시작`);
-      enqueueWireStory(item);
+      enqueueWireStory({
+        title: item.title,
+        pubDateKST: item.pubDateKST,
+        relativeAge: item.relativeAge,
+        pubEpoch: Date.now(),
+        description: item.description,
+        category: item.category
+      });
     };
 
     window.deleteArchiveItem = function(id) {
@@ -1533,21 +1700,12 @@ ${cleanContent}
       const freshItems = await fetchAllWireFeeds();
 
       if (freshItems && freshItems.length > 0) {
-        // 이미 fetchAllWireFeeds에서 셔플된 freshItems를 큐에 차례로 넣음
         freshItems.forEach(item => enqueueWireStory(item));
-        showNotice(`신규 전보 ${freshItems.length}건 무작위 인입 완료!`);
-      } else {
-        const unseen = state.allAggregatedNews.filter(it => !isArticleSeen(it));
-        if (unseen.length > 0) {
-          const shuffledUnseen = shuffleArray(unseen);
-          shuffledUnseen.forEach(it => enqueueWireStory(it));
-          showNotice(`전신 대기 기사 ${shuffledUnseen.length}건 무작위 인입!`);
-        } else if (isManualClick && state.allAggregatedNews.length > 0) {
-          // 수동 클릭 시에도 전체 풀에서 무작위 1건을 즉시 발췌
-          const randomPick = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
-          startTeletypeOutput(randomPick);
-          showNotice(`무작위 기사 타건: '${randomPick.title.substring(0, 16)}...'`);
-        }
+        showNotice(`무작위로 선별된 전보 ${freshItems.length}건 인입 완료!`);
+      } else if (isManualClick && state.allAggregatedNews.length > 0) {
+        const randomPick = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
+        startTeletypeOutput(randomPick);
+        showNotice(`무작위 기사 타건: '${randomPick.title.substring(0, 16)}...'`);
       }
     }
 
@@ -1557,7 +1715,7 @@ ${cleanContent}
         if (!state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
-      }, 8000);
+      }, 10000);
     }
 
     document.getElementById('fetchNextStoryBtn').addEventListener('click', async (e) => {
@@ -1565,16 +1723,16 @@ ${cleanContent}
       await fetchAndDispatchNews(true);
     });
 
-    document.getElementById('fetchLiveRssBtn').addEventListener('click', (e) => {
+    document.getElementById('fetchLiveRssBtn').addEventListener('click', async (e) => {
       e.preventDefault();
-      fetchAndDispatchNews(true);
+      await fetchAndDispatchNews(true);
     });
 
     window.addEventListener('DOMContentLoaded', () => {
       loadSeenFingerprints();
       const now24 = getKSTFormatted24(new Date());
       const initLine = document.getElementById('connInitTimeLine');
-      if (initLine) initLine.innerText = `[회선 접속 기준 시각: ${now24}]`;
+      if (initLine) initLine.innerText = `[시차 변환 접속 시각: ${now24}]`;
 
       applySelectedFont('font-joseon');
 
