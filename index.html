@@ -6,7 +6,7 @@
   <title>TELETYPE MODEL 33-KSR WIRE TERMINAL</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Monospaced & Display Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
   <style>
-    /* 1. 기본 지정 서체: 조선일보 100년체 (Joseon100Years) */
+    /* 조선일보 100년체 */
     @font-face {
       font-family: 'Joseon100Years';
       src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
@@ -22,7 +22,7 @@
       font-display: swap;
     }
 
-    /* 2. 보조 서체: Stella */
+    /* Stella 보조 서체 */
     @font-face {
       font-family: 'Stella';
       src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2608201622@stellar-serif/stellar-serif/Stellar_Serif_Bold_Condensed.woff2') format('woff2');
@@ -30,7 +30,7 @@
       font-display: swap;
     }
 
-    /* 3. 보조 서체: RoundedFixedsys (둥근모) */
+    /* 둥근모 보조 서체 */
     @font-face {
       font-family: 'RoundedFixedsys';
       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
@@ -46,7 +46,7 @@
     }
 
     body {
-      background: radial-gradient(circle at 50% 20%, #1e2621 0%, #0d120f 80%, #050806 100%);
+      background: radial-gradient(circle at 50% 20%, #1c2521 0%, #0c100d 80%, #040605 100%);
       font-family: 'Share Tech Mono', 'Courier Prime', monospace;
       color: #e5ede7;
       min-height: 100vh;
@@ -55,37 +55,37 @@
       touch-action: manipulation;
     }
 
-    /* 기계식 헤비 듀티 케이싱 질감 (Crinkle-finish Olive Steel) */
+    /* 기계식 헤비 듀티 케이싱 질감 (Crinkle-finish Olive Steel - Model 33 스타일) */
     .teletype-chassis {
-      background: linear-gradient(170deg, #324037 0%, #25312a 35%, #1c2620 80%, #141b17 100%);
-      border: 4px solid #415248;
+      background: linear-gradient(170deg, #2d3831 0%, #202924 35%, #18201c 80%, #0f1412 100%);
+      border: 5px solid #3d4c43;
       box-shadow: 
-        0 30px 60px -15px rgba(0,0,0,0.9),
-        inset 0 2px 4px rgba(255,255,255,0.18),
-        inset 0 -6px 12px rgba(0,0,0,0.85);
-      border-radius: 18px;
+        0 35px 70px -15px rgba(0,0,0,0.95),
+        inset 0 3px 6px rgba(255,255,255,0.15),
+        inset 0 -8px 16px rgba(0,0,0,0.9);
+      border-radius: 20px;
       position: relative;
     }
 
     /* 상단 후드 및 플렉시글라스 관찰창 */
     .hood-chamber {
-      background: linear-gradient(180deg, #18201b 0%, #0f1512 100%);
-      border: 2px solid #37463d;
-      box-shadow: inset 0 8px 18px rgba(0,0,0,0.9), 0 3px 6px rgba(0,0,0,0.5);
+      background: linear-gradient(180deg, #141b17 0%, #0a0e0c 100%);
+      border: 2px solid #2f3d35;
+      box-shadow: inset 0 8px 20px rgba(0,0,0,0.95), 0 3px 6px rgba(0,0,0,0.6);
     }
 
     /* 압동 롤러 (Platen Cylinder Roller) */
     .platen-roller {
-      background: repeating-linear-gradient(90deg, #181d1a, #181d1a 14px, #242c27 15px, #242c27 28px);
-      box-shadow: inset 0 6px 10px rgba(0,0,0,0.95), inset 0 -6px 10px rgba(0,0,0,0.95);
-      border-top: 2px solid #3c4d43;
-      border-bottom: 2px solid #0d120f;
+      background: repeating-linear-gradient(90deg, #141815, #141815 14px, #202723 15px, #202723 28px);
+      box-shadow: inset 0 6px 12px rgba(0,0,0,0.95), inset 0 -6px 12px rgba(0,0,0,0.95);
+      border-top: 2px solid #35443b;
+      border-bottom: 2px solid #090d0b;
     }
 
     .platen-knob {
-      background: radial-gradient(circle at 35% 35%, #94a89d 0%, #46554d 60%, #1c2420 100%);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.7), inset 0 2px 3px rgba(255,255,255,0.4);
-      border: 2px solid #141b17;
+      background: radial-gradient(circle at 35% 35%, #889b90 0%, #3d4c44 60%, #151c18 100%);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 2px 3px rgba(255,255,255,0.4);
+      border: 2px solid #0f1412;
     }
 
     /* 텔레타이프 연속 전산 롤 용지 */
@@ -99,14 +99,14 @@
 
     /* 스프로킷 구멍 (Tractor Feed Holes) */
     .sprocket-holes-left, .sprocket-holes-right {
-      background-image: radial-gradient(#151d18 36%, transparent 38%);
+      background-image: radial-gradient(#121815 36%, transparent 38%);
       background-size: 16px 25px;
       background-position: center;
       background-repeat: repeat-y;
       width: 18px;
     }
 
-    /* 활판 잉크 활자 본문 (줄바꿈 및 오버플로우 방지) */
+    /* 활판 잉크 활자 본문 */
     .typewriter-font {
       font-family: 'Joseon100Years', 'Courier Prime', serif !important;
       letter-spacing: -0.01em;
@@ -130,7 +130,7 @@
       text-shadow: 0.5px 0.5px 0 rgba(255,255,255,0.4);
     }
 
-    /* 보석 컷팅 적색 경보 램프 (Faceted Jewel Bell Lamp) */
+    /* 보석 컷팅 적색 경보 램프 */
     .jewel-bell-lamp {
       background: radial-gradient(circle at 35% 30%, #ff5252 0%, #b30000 60%, #4a0000 100%);
       box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), 0 4px 10px rgba(0,0,0,0.8);
@@ -146,39 +146,59 @@
       animation: bellFlasher 0.3s infinite ease-in-out;
     }
 
-    /* 기계식 키보드 콘솔 (Baudot 3-Row Keyboard) */
+    /* 전원 토글 스위치 (Power Switch) */
+    .power-switch-container {
+      background: #111714;
+      border: 2px solid #334238;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.9);
+    }
+    .toggle-knob {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+    }
+
+    /* 전원 OFF 시 기기 암전 효과 (본체는 보이되 화면/램프만 어두워짐) */
+    .machine-powered-off .hood-chamber,
+    .machine-powered-off .teleprinter-paper,
+    .machine-powered-off #kstClock24,
+    .machine-powered-off #tapeCharDisplay {
+      filter: brightness(0.22) grayscale(0.8) contrast(1.1);
+    }
+    .machine-powered-off {
+      border-color: #26322b;
+    }
+
+    /* 기계식 키보드 콘솔 */
     .teletype-key {
-      background: radial-gradient(circle at 40% 35%, #343f38 0%, #1d2521 75%, #0e1310 100%);
-      border: 1.5px solid #5a6e62;
-      box-shadow: 0 4px 0 #0c110e, 0 5px 6px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.3);
+      background: radial-gradient(circle at 40% 35%, #2e3832 0%, #18201c 75%, #0b0f0d 100%);
+      border: 1.5px solid #4a5c51;
+      box-shadow: 0 4px 0 #090d0b, 0 5px 6px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.3);
       transition: transform 0.05s, box-shadow 0.05s;
       touch-action: manipulation;
       cursor: pointer;
     }
     .teletype-key:active, .teletype-key.key-pressed {
       transform: translateY(3px);
-      box-shadow: 0 1px 0 #0c110e, 0 2px 3px rgba(0,0,0,0.7), inset 0 2px 4px rgba(0,0,0,0.8);
+      box-shadow: 0 1px 0 #090d0b, 0 2px 3px rgba(0,0,0,0.7), inset 0 2px 4px rgba(0,0,0,0.8);
       border-color: #f59e0b;
       color: #fbbf24;
     }
 
     .teletype-spacebar {
-      background: linear-gradient(180deg, #2b3630 0%, #1a221d 100%);
-      border: 1.5px solid #4a5c51;
-      box-shadow: 0 4px 0 #0a0e0c, 0 6px 8px rgba(0,0,0,0.85);
+      background: linear-gradient(180deg, #242e28 0%, #151c18 100%);
+      border: 1.5px solid #3d4c43;
+      box-shadow: 0 4px 0 #080b09, 0 6px 8px rgba(0,0,0,0.85);
       touch-action: manipulation;
       cursor: pointer;
     }
     .teletype-spacebar:active, .teletype-spacebar.key-pressed {
       transform: translateY(3px);
-      box-shadow: 0 1px 0 #0a0e0c, 0 2px 3px rgba(0,0,0,0.7);
+      box-shadow: 0 1px 0 #080b09, 0 2px 3px rgba(0,0,0,0.7);
     }
 
-    /* 토글 스위치 및 하드웨어 버튼 */
     .hardware-btn {
-      background: linear-gradient(180deg, #37473e 0%, #202b25 100%);
-      border: 1.5px solid #4d6155;
-      box-shadow: 0 3px 0 #101613, 0 4px 6px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.25);
+      background: linear-gradient(180deg, #324037 0%, #1c2620 100%);
+      border: 1.5px solid #45574c;
+      box-shadow: 0 3px 0 #0d120f, 0 4px 6px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.25);
       color: #e2ede6;
       transition: all 0.05s ease-out;
       touch-action: manipulation;
@@ -186,10 +206,9 @@
     }
     .hardware-btn:active {
       transform: translateY(2px);
-      box-shadow: 0 1px 0 #101613, 0 1px 2px rgba(0,0,0,0.7);
+      box-shadow: 0 1px 0 #0d120f, 0 1px 2px rgba(0,0,0,0.7);
     }
 
-    /* 절취 애니메이션 */
     @keyframes tearAnim {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       30% { transform: translateY(15px) rotate(1.5deg); opacity: 0.92; }
@@ -203,39 +222,46 @@
 <body class="p-1 sm:p-3 md:p-6 flex flex-col items-center justify-start min-h-screen">
 
   <!-- ================= 텔레타이프 기기 본체 콘솔 ================= -->
-  <div class="w-full max-w-5xl teletype-chassis p-2 sm:p-4 md:p-6 flex flex-col gap-3 sm:gap-4 relative overflow-hidden">
+  <div id="machineChassis" class="w-full max-w-5xl teletype-chassis p-2 sm:p-4 md:p-6 flex flex-col gap-3 sm:gap-4 relative overflow-hidden transition-all duration-300">
     
-    <!-- 모서리 인더스트리얼 리벳 볼트 장식 -->
-    <div class="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#526358] border border-[#232b26] shadow"></div>
-    <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#526358] border border-[#232b26] shadow"></div>
-    <div class="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#526358] border border-[#232b26] shadow"></div>
-    <div class="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#526358] border border-[#232b26] shadow"></div>
+    <!-- 모서리 철제 볼트 리벳 -->
+    <div class="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#48564e] border border-[#1f2722] shadow"></div>
+    <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#48564e] border border-[#1f2722] shadow"></div>
+    <div class="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#48564e] border border-[#1f2722] shadow"></div>
+    <div class="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#48564e] border border-[#1f2722] shadow"></div>
 
-    <!-- 1. 기기 상단 명판 헤더 & 전광판 -->
-    <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-3 border-b-2 border-[#3d4f44]/80">
+    <!-- 1. 기기 상단 명판 헤더 & 전원 스위치 & 전광판 -->
+    <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-3 border-b-2 border-[#35453b]/80">
       
-      <!-- 황동 명판 및 보석 컷팅 비상벨 램프 -->
       <div class="flex items-center gap-2 sm:gap-3">
+        <!-- 전원 ON/OFF 토글 스위치 -->
+        <div class="flex items-center gap-1.5 bg-[#0f1412] px-2 py-1 rounded border border-[#2e3b33] shadow-inner">
+          <span id="powerStatusLabel" class="text-[10px] font-mono font-bold text-emerald-400">ON</span>
+          <button id="powerToggleBtn" type="button" class="w-10 h-5 rounded-full power-switch-container relative flex items-center p-0.5 cursor-pointer focus:outline-none">
+            <div id="powerToggleKnob" class="w-4 h-4 rounded-full bg-emerald-400 shadow-md transform translate-x-5"></div>
+          </button>
+        </div>
+
+        <!-- 벨 경보 램프 -->
         <div class="relative flex items-center justify-center shrink-0">
-          <div id="alarmLight" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full jewel-bell-lamp opacity-35 flex items-center justify-center transition-all duration-200">
-            <span class="text-[8px] sm:text-[9px] font-black text-amber-100 drop-shadow pointer-events-none">BELL</span>
+          <div id="alarmLight" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full jewel-bell-lamp opacity-35 flex items-center justify-center transition-all duration-200">
+            <span class="text-[7px] sm:text-[8px] font-black text-amber-100 drop-shadow pointer-events-none">BELL</span>
           </div>
         </div>
 
         <div class="brass-badge px-2 sm:px-3 py-1 rounded font-serif font-black tracking-wider text-[11px] sm:text-xs flex items-center gap-1.5 shadow">
           <span>★ TELETYPE CORP. MODEL 33-KSR ★</span>
-          <span class="text-[9px] bg-amber-950 text-amber-200 px-1 py-0.5 rounded font-mono">GLOBAL WIRE</span>
+          <span class="text-[9px] bg-amber-950 text-amber-200 px-1 py-0.5 rounded font-mono">GLOBAL 24H WIRE</span>
         </div>
       </div>
 
-      <!-- 24시간 KST 디지털 닉시 디스플레이 -->
-      <div class="flex items-center gap-2 bg-[#101713] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md border border-[#3b4c41] shadow-inner font-mono text-[11px] sm:text-xs shrink-0">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+      <!-- 24시간 KST 디지털 시계 -->
+      <div class="flex items-center gap-2 bg-[#0d1210] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md border border-[#313e36] shadow-inner font-mono text-[11px] sm:text-xs shrink-0">
+        <span id="powerLed" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
         <span class="text-emerald-400 font-bold hidden sm:inline">KST:</span>
         <span id="kstClock24" class="text-amber-300 font-bold tracking-widest">----.--.-- --:--:-- KST</span>
       </div>
 
-      <!-- 상단 도구: 타건음 및 전신 보관 창고 -->
       <div class="flex items-center gap-1.5 sm:gap-2 ml-auto">
         <button id="soundToggleBtn" type="button" class="hardware-btn px-2.5 py-1 rounded flex items-center gap-1 text-[11px] sm:text-xs">
           <span id="soundIcon">🔊</span>
@@ -244,76 +270,74 @@
 
         <button id="openArchiveBtn" type="button" class="hardware-btn bg-amber-700/80 hover:bg-amber-600 border-amber-500/80 text-amber-200 px-2.5 py-1 rounded font-bold flex items-center gap-1.5 font-joseon text-[11px] sm:text-xs">
           <span>🗄️ 전신 창고</span>
-          <span id="archiveCountBadge" class="bg-[#121814] text-amber-300 px-1.5 py-0.2 rounded-full text-[10px] font-mono border border-amber-600/40">0</span>
+          <span id="archiveCountBadge" class="bg-[#0f1412] text-amber-300 px-1.5 py-0.2 rounded-full text-[10px] font-mono border border-amber-600/40">0</span>
         </button>
       </div>
     </div>
 
     <!-- 2. 5-단위 보도 천공 종이 테이프 -->
-    <div class="hood-chamber p-2 sm:p-2.5 rounded-lg border border-[#35463c] flex flex-col gap-1">
+    <div class="hood-chamber p-2 sm:p-2.5 rounded-lg border border-[#2f3d35] flex flex-col gap-1">
       <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono">
         <div class="flex items-center gap-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <span class="text-emerald-400 font-bold tracking-wider">5-UNIT ITA2 BAUDOT TAPE PUNCH</span>
+          <span class="text-emerald-400 font-bold tracking-wider">5-UNIT ITA2 BAUDOT TAPE PUNCH [REALTIME MULTI-WIRE STREAM]</span>
         </div>
         <span id="tapeCharDisplay" class="text-amber-300 font-bold tracking-wider text-[10px] sm:text-[11px]">STANDBY</span>
       </div>
 
       <div class="relative w-full h-8 sm:h-10 bg-[#e8dcba] rounded border border-amber-950/70 overflow-hidden flex items-center shadow-inner">
         <canvas id="punchedTapeCanvas" class="w-full h-full block"></canvas>
-        <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#111714] to-transparent pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#0f1412] to-transparent pointer-events-none"></div>
       </div>
 
       <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400 font-mono">
         <span>◀ FEED (3열+피드+2열)</span>
-        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">세계 각국 언론사 표준시 변환 엔진 가동 중...</span>
+        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">통합 글로벌 전신망 실시간 24H 수신 중...</span>
       </div>
     </div>
 
-    <!-- 3. 기계 제어반 (5:5 반반 모드 및 글로벌 회선 모니터) -->
-    <div class="bg-[#1b2520] p-2 sm:p-3 rounded-lg border border-[#37493e] flex flex-col gap-2 text-xs">
+    <!-- 3. 제어반 (중요 기사 타건 & 시간대 버킷 선택 & 특보 수신) -->
+    <div class="bg-[#17201c] p-2 sm:p-3 rounded-lg border border-[#303e36] flex flex-col gap-2 text-xs">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center flex-wrap gap-1 font-mono text-[11px] sm:text-xs">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1"></span>
-          <span class="font-bold text-emerald-300">글로벌 통신망:</span>
+          <span class="font-bold text-emerald-300">통합 전신 회선:</span>
           <div class="flex flex-wrap gap-1 text-[10px] sm:text-[11px]">
-            <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🚨 뉴시스</span>
-            <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🗽 AP</span>
-            <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🔴 CNN</span>
-            <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🌍 알자지라</span>
-            <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🇩🇪 DW</span>
+            <span class="bg-[#0f1412] text-slate-200 px-1.5 py-0.5 rounded border border-[#27342d]">🚨 뉴시스</span>
+            <span class="bg-[#0f1412] text-slate-200 px-1.5 py-0.5 rounded border border-[#27342d]">🗽 AP</span>
+            <span class="bg-[#0f1412] text-slate-200 px-1.5 py-0.5 rounded border border-[#27342d]">🔴 CNN</span>
+            <span class="bg-[#0f1412] text-slate-200 px-1.5 py-0.5 rounded border border-[#27342d]">🌍 알자지라</span>
+            <span class="bg-[#0f1412] text-slate-200 px-1.5 py-0.5 rounded border border-[#27342d]">🇩🇪 DW</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-amber-600/40 shadow-inner ml-auto">
+        <div class="flex items-center gap-1 bg-[#0f1412] px-2 py-0.5 rounded border border-amber-600/40 shadow-inner ml-auto">
           <span class="text-amber-400 font-bold text-[10px] sm:text-xs">🔤 서체:</span>
           <select id="fontSelectDropdown" class="bg-transparent text-slate-200 border-none text-[10px] sm:text-xs focus:outline-none cursor-pointer font-joseon">
-            <option value="font-joseon" selected class="bg-[#1a231e]">조선일보 100년체</option>
-            <option value="font-stella" class="bg-[#1a231e]">Stella (세리프)</option>
-            <option value="font-fixedsys" class="bg-[#1a231e]">둥근모 (Fixedsys)</option>
+            <option value="font-joseon" selected class="bg-[#17201c]">조선일보 100년체</option>
+            <option value="font-stella" class="bg-[#17201c]">Stella (세리프)</option>
+            <option value="font-fixedsys" class="bg-[#17201c]">둥근모 (Fixedsys)</option>
           </select>
         </div>
       </div>
 
-      <!-- 하단 줄: 다음 기사 무작위 타건, 즉시 수신, 5:5 반반 모드, 타속, 사진 저장 -->
       <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-700/60">
         <div class="flex items-center gap-1.5 flex-wrap">
-          <button id="fetchNextStoryBtn" type="button" class="hardware-btn bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 text-amber-100 font-bold px-2.5 py-1 rounded shadow text-[11px] sm:text-xs font-joseon">
-            <span>🎲 다음 무작위 기사 타건</span>
+          <button id="fetchImportantStoryBtn" type="button" class="hardware-btn bg-gradient-to-r from-red-800 to-red-700 hover:from-red-700 text-red-100 font-bold px-2.5 py-1 rounded shadow text-[11px] sm:text-xs font-joseon border-red-600">
+            <span>🚨 중요 기사 타건</span>
           </button>
 
-          <button id="fetchLiveRssBtn" type="button" class="hardware-btn bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[11px] sm:text-xs">
-            <span>⚡ 즉시 수신/새로고침</span>
+          <button id="fetchLiveRssBtn" type="button" class="hardware-btn bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-2.5 py-1 rounded text-[11px] sm:text-xs font-joseon">
+            <span>⚡ 실시간 특보 수신</span>
           </button>
 
-          <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-amber-500/50 text-[10px] sm:text-xs">
-            <span class="text-amber-400 font-bold">⚖️ 모드:</span>
-            <select id="streamModeSelect" class="bg-transparent text-amber-300 font-bold focus:outline-none cursor-pointer">
-              <option value="half" selected class="bg-[#101713]">⚖️ 5:5 반반 (실시간 반 + 과거 반)</option>
-              <option value="live" class="bg-[#101713]">⚡ 100% 실시간 속보</option>
-              <option value="1h" class="bg-[#101713]">⏳ 1시간 전 주요 소식</option>
-              <option value="6h" class="bg-[#101713]">🕰️ 6시간 전 주요 소식</option>
-              <option value="24h" class="bg-[#101713]">📰 24시간 전 주요 소식</option>
+          <div class="flex items-center gap-1 bg-[#0f1412] px-2 py-0.5 rounded border border-amber-500/50 text-[10px] sm:text-xs">
+            <span class="text-amber-400 font-bold">⏳ 시간대 버킷:</span>
+            <select id="timeBucketSelect" class="bg-transparent text-amber-300 font-bold focus:outline-none cursor-pointer">
+              <option value="all" selected class="bg-[#0f1412]">전체 시간대 통합</option>
+              <option value="1h" class="bg-[#0f1412]">1시간 전 뉴스 (1H)</option>
+              <option value="6h" class="bg-[#0f1412]">6시간 전 뉴스 (6H)</option>
+              <option value="24h" class="bg-[#0f1412]">24시간 전 뉴스 (24H)</option>
             </select>
           </div>
         </div>
@@ -323,12 +347,12 @@
             📸 사진 저장
           </button>
 
-          <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-slate-700 text-[10px] sm:text-xs">
+          <div class="flex items-center gap-1 bg-[#0f1412] px-2 py-0.5 rounded border border-slate-700 text-[10px] sm:text-xs">
             <span class="text-slate-400">타속:</span>
             <select id="baudRateSelect" class="bg-transparent text-emerald-400 focus:outline-none cursor-pointer">
-              <option value="50" class="bg-[#101713]">45 Baud</option>
-              <option value="20" selected class="bg-[#101713]">75 Baud (표준)</option>
-              <option value="5" class="bg-[#101713]">110 Baud (초고속)</option>
+              <option value="50" class="bg-[#0f1412]">45 Baud</option>
+              <option value="20" selected class="bg-[#0f1412]">75 Baud (표준)</option>
+              <option value="5" class="bg-[#0f1412]">110 Baud (초고속)</option>
             </select>
           </div>
 
@@ -340,12 +364,12 @@
     </div>
 
     <!-- 4. 기계 플래튼 롤러 & 연속 전산 롤 용지 인쇄 뷰어 -->
-    <div class="hood-chamber p-2 sm:p-3 rounded-lg border-2 border-[#384a3f] flex flex-col gap-1.5 relative shadow-2xl">
+    <div class="hood-chamber p-2 sm:p-3 rounded-lg border-2 border-[#32423a] flex flex-col gap-1.5 relative shadow-2xl">
       <div class="relative w-full h-7 sm:h-8 platen-roller rounded flex items-center justify-between px-2 overflow-hidden">
         <div class="w-3.5 sm:w-4 h-5 sm:h-6 platen-knob rounded-sm shrink-0"></div>
         <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono text-slate-400 truncate mx-2">
           <span class="text-amber-400">✂️</span>
-          <span class="font-bold text-slate-300">TEAR-OFF SERRATED KNIFE BAR</span>
+          <span class="font-bold text-slate-300">TEAR-OFF SERRATED KNIFE BAR [CONTINUOUS MULTI-WIRE ROLL]</span>
           <span id="typingIndicator" class="text-emerald-400 hidden animate-pulse font-bold">● TYPING WIRE DISPATCH...</span>
         </div>
         <div class="w-3.5 sm:w-4 h-5 sm:h-6 platen-knob rounded-sm shrink-0"></div>
@@ -355,7 +379,7 @@
         <div class="text-slate-400 font-mono flex items-center gap-1.5 truncate">
           <span>대기열: <span id="queueCountBadge" class="text-amber-400 font-bold">0</span>건</span>
           <span class="text-slate-600">|</span>
-          <span class="text-emerald-400 font-bold font-joseon">전 세계 통신사 시간대별 자동 변환 무중단 스트리밍</span>
+          <span id="machineStatusBadge" class="text-emerald-400 font-bold font-joseon">24H 실시간 자동 스트리밍 중</span>
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
@@ -363,7 +387,7 @@
             <span>찌익- 기사 절취</span>
           </button>
           <button id="clearPaperBtn" type="button" class="hardware-btn px-2 py-0.5 text-slate-400 text-[10px] sm:text-xs">
-            용지 비우기
+            용지 비우기 (정지)
           </button>
         </div>
       </div>
@@ -374,11 +398,11 @@
         <div id="teleprinterPaper" class="flex-grow p-3 sm:p-5 md:p-6 typewriter-font font-joseon text-xs sm:text-sm md:text-base whitespace-pre-wrap break-words select-text">
           <div class="text-center my-4 sm:my-6 text-slate-600 font-mono text-xs sm:text-sm leading-relaxed">
             ===============================================================<br>
-            TELETYPE MODEL-33 INTERNATIONAL WIRE SYSTEM [SEOUL BUREAU]<br>
-            NEWSPAPER TIMEZONE CONVERTER & 5:5 HALF-HALF STREAM<br>
+            TELETYPE MODEL-33 INTERNATIONAL MULTI-WIRE SYSTEM [SEOUL BUREAU]<br>
+            REALTIME TIME-BUCKET DISPATCH (1H / 6H / 24H STREAM)<br>
             ===============================================================<br><br>
-            [상태] 세계 각국 언론사(UTC/EDT/GMT) 시각을 한국 표준시(KST)로 변환,<br>
-            실시간 소식과 과거 소식(1시간·6시간·24시간 전)을 교차 타건합니다.<br>
+            [상태] 뉴시스, AP, CNN, 알자지라, DW 전 회선 실시간 접속 완료.<br>
+            시간대별 버킷(1시간/6시간/24시간 전)에 맞춰 롤 용지에 연속 타건합니다.<br>
             <span id="connInitTimeLine" class="text-emerald-800 font-bold"></span><br>
             ===============================================================
           </div>
@@ -391,9 +415,9 @@
     </div>
 
     <!-- 5. 3열 기계식 텔레타이프 키보드 콘솔 -->
-    <div class="bg-[#151c17] p-2 sm:p-3 rounded-lg border-2 border-[#334238] flex flex-col gap-1 sm:gap-1.5 items-center shadow-2xl">
+    <div class="bg-[#111714] p-2 sm:p-3 rounded-lg border-2 border-[#2c3a32] flex flex-col gap-1 sm:gap-1.5 items-center shadow-2xl">
       <div class="w-full flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-mono px-1">
-        <span class="text-slate-400">BAUDOT ITA2 MECHANICAL KEYBOARD</span>
+        <span class="text-slate-400">BAUDOT ITA2 MECHANICAL KEYBOARD CONSOLE</span>
         <span class="text-amber-400 font-bold">KEY CLICK SYNC</span>
       </div>
 
@@ -444,12 +468,12 @@
     <div class="flex items-center justify-between text-[10px] sm:text-xs text-slate-400 font-mono px-1">
       <div class="flex items-center gap-2 sm:gap-3">
         <span class="flex items-center gap-1 text-emerald-400">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> GLOBAL TIMEZONE WIRE
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 24H REALTIME TIME-BUCKET WIRE
         </span>
         <span id="counterDisplay" class="text-amber-400 font-bold">수신 완료: 0건</span>
       </div>
       <div class="flex items-center gap-2 text-[10px] sm:text-[11px] truncate">
-        <span class="text-slate-500 hidden sm:inline">5:5 반반 교차 타건</span>
+        <span class="text-slate-500 hidden sm:inline">통합 다중 전신 회선</span>
         <span id="activeFontBadge" class="text-amber-300 font-bold truncate">JOSEON 100Y</span>
       </div>
     </div>
@@ -464,7 +488,7 @@
           <span class="text-2xl">🗄️</span>
           <div>
             <h2 class="text-base sm:text-lg font-bold text-amber-400 font-joseon">전신 기록 보관 창고 (TELEGRAPH ARCHIVE)</h2>
-            <p class="text-xs text-slate-400 font-mono">절취되어 바인더에 보관된 국제 시차 변환 전신문 서류철</p>
+            <p class="text-xs text-slate-400 font-mono">절취되어 바인더에 보관된 국제 멀티와이어 서류철</p>
           </div>
         </div>
         <button id="closeArchiveBtn" type="button" class="hardware-btn text-slate-300 hover:text-white text-lg font-bold px-3 py-1 rounded">
@@ -475,11 +499,11 @@
       <div class="p-3 bg-[#18201b] border-b border-[#2d3a31] flex flex-wrap items-center justify-between gap-2.5 text-xs">
         <div class="flex items-center gap-2 flex-grow max-w-md">
           <span class="text-slate-400">🔍</span>
-          <input type="text" id="archiveSearchInput" placeholder="기사 제목이나 본문 검색..." class="w-full px-3 py-1.5 rounded bg-[#101512] border border-slate-700 text-slate-200 focus:outline-none focus:border-amber-500 font-sans">
+          <input type="text" id="archiveSearchInput" placeholder="기사 제목이나 본문 검색..." class="w-full px-3 py-1.5 rounded bg-[#0f1412] border border-slate-700 text-slate-200 focus:outline-none focus:border-amber-500 font-sans">
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <select id="archiveCategoryFilter" class="px-2 py-1.5 rounded bg-[#101512] border border-slate-700 text-slate-300 focus:outline-none">
+          <select id="archiveCategoryFilter" class="px-2 py-1.5 rounded bg-[#0f1412] border border-slate-700 text-slate-300 focus:outline-none">
             <option value="all">전체 언론사 보기</option>
             <option value="sokbo">🚨 뉴시스 속보</option>
             <option value="international">🌐 뉴시스 국제</option>
@@ -545,7 +569,6 @@
 
   <!-- ================= 핵심 자바스크립트 엔진 ================= -->
   <script>
-    // 전 세계 8대 전신 회선
     const RSS_URLS = {
       sokbo: 'https://www.newsis.com/RSS/sokbo.xml',
       international: 'https://www.newsis.com/RSS/international.xml',
@@ -585,41 +608,33 @@
       return `${m.year}-${m.month}-${m.day} ${m.hour}:${m.minute}:${m.second} KST`;
     }
 
-    // 국제 언론사 발행 시각을 정밀하게 한국 표준시(KST) 에포크로 변환
     function parsePubEpoch(rawDateStr) {
       if (!rawDateStr) return Date.now();
-      
-      // 1. 표준 ISO 또는 브라우저가 해석 가능한 파싱 시도
       let parsed = Date.parse(rawDateStr);
       if (!isNaN(parsed)) return parsed;
 
-      // 2. RSS 날짜 문자열에 명시된 시간대 보정 (UTC, GMT, EST, EDT 등)
       let cleaned = rawDateStr.trim();
       const directDate = new Date(cleaned);
       if (!isNaN(directDate.getTime())) return directDate.getTime();
 
-      // 3. 정규식으로 년, 월, 일, 시, 분, 초 추출
       const m = cleaned.match(/(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?/);
       if (m) {
         const months = {Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11};
         const d = new Date(Date.UTC(parseInt(m[3]), months[m[2]] || 0, parseInt(m[1]), parseInt(m[4]), parseInt(m[5]), parseInt(m[6] || 0)));
-        // UTC를 KST(+9시간)로 변환
         return d.getTime() + (9 * 3600 * 1000);
       }
-
       return Date.now();
     }
 
-    // 기사의 나이(경과 시간)를 계산하여 "1시간 전", "6시간 전", "24시간 전", "실시간" 등으로 판정
     function calculateArticleAgeCategory(pubEpoch) {
       const now = Date.now();
       const diffMs = now - pubEpoch;
       const diffHrs = diffMs / (1000 * 60 * 60);
 
-      if (diffHrs <= 1.2) return 'live';       // 최근 1시간 이내 (실시간)
-      if (diffHrs <= 7) return '1h_to_6h';     // 1~6시간 전 소식
-      if (diffHrs <= 26) return '6h_to_24h';   // 6~24시간 전 소식
-      return 'older';                          // 24시간 이상 이전 소식
+      if (diffHrs <= 1.5) return '1h';       // 1시간 전
+      if (diffHrs <= 7) return '6h';         // 6시간 전
+      if (diffHrs <= 26) return '24h';       // 24시간 전
+      return 'older';
     }
 
     function formatRelativeAge(pubEpoch) {
@@ -641,6 +656,7 @@
     setInterval(updateLiveKSTClock, 1000);
 
     const state = {
+      isPoweredOn: true,
       soundEnabled: true,
       baudInterval: 20,
       isTyping: false,
@@ -655,7 +671,9 @@
       autoPollInterval: null,
       totalCount: 0,
       currentSlipText: '',
-      streamMode: 'half' // 'half', 'live', '1h', '6h', '24h'
+      timeBucket: 'all', // 'all', '1h', '6h', '24h'
+      clearPaperClickCount: 0,
+      clearPaperResetTimer: null
     };
 
     function loadSeenFingerprints() {
@@ -706,9 +724,9 @@
       }
     }
 
-    // Web Audio API 사운드 합성기
     let audioCtx = null;
     function getAudioContext() {
+      if (!state.isPoweredOn || !state.soundEnabled) return null;
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (AudioContextClass) audioCtx = new AudioContextClass();
@@ -718,7 +736,7 @@
     }
 
     function playKeyClick() {
-      if (!state.soundEnabled) return;
+      if (!state.isPoweredOn || !state.soundEnabled) return;
       try {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -746,7 +764,7 @@
     }
 
     function playTeletypeBell() {
-      if (!state.soundEnabled) return;
+      if (!state.isPoweredOn || !state.soundEnabled) return;
       try {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -767,7 +785,7 @@
     }
 
     function playTearSound() {
-      if (!state.soundEnabled) return;
+      if (!state.isPoweredOn || !state.soundEnabled) return;
       try {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -792,7 +810,6 @@
       } catch (e) {}
     }
 
-    // 5-단위 보도 코드
     const BAUDOT_MAP = {
       'A': [1,1,0,0,0], 'B': [1,0,0,1,1], 'C': [0,1,1,1,0], 'D': [1,0,0,1,0],
       'E': [1,0,0,0,0], 'F': [1,0,1,1,0], 'G': [0,1,0,1,1], 'H': [0,0,1,0,1],
@@ -826,6 +843,7 @@
     window.addEventListener('resize', resizeTapeCanvas);
 
     function addTapeCharacter(char) {
+      if (!state.isPoweredOn) return;
       const bits = charTo5Bit(char);
       tapeColumns.push({ bits, char });
       if (tapeColumns.length > MAX_TAPE_COLS) tapeColumns.shift();
@@ -840,7 +858,7 @@
       const h = tapeCanvas.clientHeight;
       tapeCtx.clearRect(0, 0, w, h);
 
-      tapeCtx.fillStyle = '#ebdfbd';
+      tapeCtx.fillStyle = state.isPoweredOn ? '#ebdfbd' : '#8c836d';
       tapeCtx.fillRect(0, 0, w, h);
 
       const colWidth = 14;
@@ -872,7 +890,6 @@
     for (let i = 0; i < 24; i++) tapeColumns.push({ bits: [0,0,0,0,0], char: ' ' });
     setTimeout(resizeTapeCanvas, 100);
 
-    // RSS 수신기 엔진
     async function fetchSingleChannelRSS(channelKey) {
       const targetUrl = RSS_URLS[channelKey] || RSS_URLS.sokbo;
       let parsedItems = [];
@@ -958,51 +975,10 @@
       });
     }
 
-    function generateFallbackLiveWirePool() {
-      const now = Date.now();
-      return [
-        {
-          title: "[속보] 국제원자력기구(IAEA), 차세대 소형모듈원자로(SMR) 글로벌 안전 표준 지침 발표",
-          link: "https://www.newsis.com/view/NISX20260903_001928371",
-          pubDateKST: getKSTFormatted24(new Date(now - 120000)),
-          relativeAge: formatRelativeAge(now - 120000),
-          pubEpoch: now - 120000,
-          description: "국제원자력기구(IAEA)가 전 세계 탄소중립 가속화와 안정적 에너지 공급망 확충을 위해 소형모듈원자로(SMR) 표준 안전 가이드라인을 최종 확정하고 각국 규제기관에 배포했다.",
-          category: "sokbo"
-        },
-        {
-          title: "AP Wire: Global Semiconductor Alliances Expand Advanced Packaging Hubs Across Asia and Europe",
-          link: "https://apnews.com/wire/tech-chip-packaging-2026",
-          pubDateKST: getKSTFormatted24(new Date(now - 3400000)),
-          relativeAge: formatRelativeAge(now - 3400000),
-          pubEpoch: now - 3400000,
-          description: "Major semiconductor manufacturers have announced joint venture agreements to expand next-generation advanced packaging facilities, securing high-bandwidth memory supplies.",
-          category: "apnews"
-        },
-        {
-          title: "국제유가, 중동 주요 해상 운송로 안정화 소식에 배럴당 76달러 선으로 소폭 반락",
-          link: "https://www.newsis.com/view/NISX20260903_001928385",
-          pubDateKST: getKSTFormatted24(new Date(now - 18000000)),
-          relativeAge: formatRelativeAge(now - 18000000),
-          pubEpoch: now - 18000000,
-          description: "뉴욕상업거래소에서 서부텍사스산원유(WTI) 선물 가격은 주요 해협 선박 통항 정상화와 재고 지표 안정세에 힘입어 전일 대비 1.2% 하락 마감했다.",
-          category: "international"
-        },
-        {
-          title: "CNN Wire: Space Exploration Consortium Unveils Deep-Space Lunar Habitat Prototype",
-          link: "https://edition.cnn.com/space/wire/lunar-station-2026",
-          pubDateKST: getKSTFormatted24(new Date(now - 45000000)),
-          relativeAge: formatRelativeAge(now - 45000000),
-          pubEpoch: now - 45000000,
-          description: "International space agencies and private aerospace contractors completed pressurized module tests for the permanent lunar orbit gateway in preparation for long-duration crew missions.",
-          category: "cnn"
-        }
-      ];
-    }
-
     async function fetchAllWireFeeds() {
+      if (!state.isPoweredOn) return [];
       const nowStr = new Date().toTimeString().split(' ')[0];
-      updateStatusLine(`[글로벌 시차 변환] 세계 각국 언론사 시각 정밀 동기화 중... (${nowStr})`);
+      updateStatusLine(`[통합 멀티와이어 실시간 동기화] (${nowStr})`);
 
       const channelKeys = Object.keys(RSS_URLS);
       await Promise.all(channelKeys.map(k => fetchSingleChannelRSS(k)));
@@ -1012,71 +988,36 @@
         combined = combined.concat(state.channelCache[k] || []);
       });
 
-      if (combined.length === 0) {
-        combined = generateFallbackLiveWirePool();
-      }
-
-      // 최신순 정렬
       combined.sort((a, b) => b.pubEpoch - a.pubEpoch);
       state.allAggregatedNews = combined;
 
-      const nowEpoch = Date.now();
-      let filtered = [];
-
-      if (state.streamMode === 'half') {
-        // 5:5 반반 모드: 실시간(1시간 이내) 기사 풀과 과거(1~24시간 전) 기사 풀로 분리
-        const livePool = combined.filter(it => (nowEpoch - it.pubEpoch) <= 3600 * 1000);
-        const pastPool = combined.filter(it => (nowEpoch - it.pubEpoch) > 3600 * 1000 && (nowEpoch - it.pubEpoch) <= 24 * 3600 * 1000);
-
-        const shuffledLive = shuffleArray([...livePool]);
-        const shuffledPast = shuffleArray([...pastPool]);
-
-        // 1개씩 번갈아 가며 인터리빙 (Interleaving)
-        const maxLen = Math.max(shuffledLive.length, shuffledPast.length);
-        for (let i = 0; i < maxLen; i++) {
-          if (shuffledLive[i]) filtered.push(shuffledLive[i]);
-          if (shuffledPast[i]) filtered.push(shuffledPast[i]);
-        }
-        if (filtered.length === 0) filtered = combined;
-      } else if (state.streamMode === 'live') {
-        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 2 * 3600 * 1000);
-        if (filtered.length === 0) filtered = combined.slice(0, 15);
-      } else if (state.streamMode === '1h') {
-        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 3600 * 1000);
-      } else if (state.streamMode === '6h') {
+      let filtered = combined;
+      if (state.timeBucket === '1h') {
+        filtered = combined.filter(it => calculateArticleAgeCategory(it.pubEpoch) === '1h');
+        if (filtered.length === 0) filtered = combined.slice(0, 10);
+      } else if (state.timeBucket === '6h') {
         filtered = combined.filter(it => {
-          const age = nowEpoch - it.pubEpoch;
-          return age >= 3600 * 1000 && age <= 6 * 3600 * 1000;
+          const cat = calculateArticleAgeCategory(it.pubEpoch);
+          return cat === '1h' || cat === '6h';
         });
-      } else if (state.streamMode === '24h') {
+        if (filtered.length === 0) filtered = combined.slice(0, 15);
+      } else if (state.timeBucket === '24h') {
         filtered = combined.filter(it => {
-          const age = nowEpoch - it.pubEpoch;
-          return age >= 6 * 3600 * 1000 && age <= 24 * 3600 * 1000;
+          const cat = calculateArticleAgeCategory(it.pubEpoch);
+          return cat === '1h' || cat === '6h' || cat === '24h';
         });
       }
 
-      if (filtered.length === 0) filtered = combined;
-
-      // 아직 보지 않은 기사 선별 후 전체 무작위 셔플
       const unseen = filtered.filter(item => !isArticleSeen(item));
-      const freshItems = unseen.length > 0 ? shuffleArray(unseen) : shuffleArray(filtered);
+      const freshItems = unseen.length > 0 ? unseen : filtered;
 
       if (freshItems.length > 0) {
-        updateStatusLine(`[시간 동기화 완료] 실시간/과거 교차 전보 ${freshItems.length}건 준비됨`);
+        updateStatusLine(`[회선 정상] 통합 전신문 대기 중`);
       } else {
-        updateStatusLine(`[회선 정상] 전체 통신망 감시 대기 중`);
+        updateStatusLine(`[통신망 감시] 실시간 전신 대기 중`);
       }
 
       return freshItems;
-    }
-
-    function shuffleArray(arr) {
-      const a = [...arr];
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
     }
 
     function updateStatusLine(text) {
@@ -1114,32 +1055,16 @@
         .trim();
     }
 
-    function enqueueWireStory(item) {
-      if (!item) return;
-      markArticleSeen(item);
-      state.printQueue.push(item);
-      updateQueueBadge();
-      processPrintQueue();
-    }
-
-    function processPrintQueue() {
-      if (state.isTyping) return;
-      if (state.printQueue.length === 0) return;
-
-      const nextItem = state.printQueue.shift();
-      updateQueueBadge();
-      startTeletypeOutput(nextItem);
-    }
-
     function formatWireDocument(item) {
       const timeStr = getKSTFormatted24(new Date());
       const msgId = 'WIRE-' + Math.floor(100000 + Math.random() * 900000);
       const isUrgent = item.title.includes('속보') || item.title.includes('1보') || item.title.includes('긴급') || item.category === 'sokbo';
       
-      const ageCategory = calculateArticleAgeCategory(item.pubEpoch);
+      const ageCat = calculateArticleAgeCategory(item.pubEpoch);
       let timeTag = `🔴 [실시간 송출 / ${item.relativeAge}]`;
-      if (ageCategory === '1h_to_6h') timeTag = `⏳ [수시간 전 소식 / ${item.relativeAge}]`;
-      else if (ageCategory === '6h_to_24h' || ageCategory === 'older') timeTag = `🕰️ [과거 아카이브 / ${item.relativeAge}]`;
+      if (state.timeBucket === '1h' || ageCat === '1h') timeTag = `⏳ [1시간 전 특보 버킷 / ${item.relativeAge}]`;
+      else if (state.timeBucket === '6h' || ageCat === '6h') timeTag = `🕰️ [6시간 전 뉴스 버킷 / ${item.relativeAge}]`;
+      else if (state.timeBucket === '24h' || ageCat === '24h') timeTag = `📰 [24시간 전 뉴스 버킷 / ${item.relativeAge}]`;
       
       const flashTag = isUrgent ? '🚨 [URGENT FLASH / 긴급 전보] 🚨\n' : '';
 
@@ -1172,10 +1097,15 @@ ${cleanContent}
     }
 
     function triggerEmergencyBell(count = 4) {
+      if (!state.isPoweredOn) return;
       let bellsLeft = count;
       if (alarmLight) alarmLight.classList.add('bell-alert-anim');
 
       const ringInterval = setInterval(() => {
+        if (!state.isPoweredOn) {
+          clearInterval(ringInterval);
+          return;
+        }
         if (bellsLeft > 0) {
           playTeletypeBell();
           bellsLeft--;
@@ -1192,8 +1122,26 @@ ${cleanContent}
     let currentTypeIndex = 0;
     let currentArticleParagraph = null;
 
+    function enqueueWireStory(item) {
+      if (!state.isPoweredOn || !item) return;
+      if (state.printQueue.some(q => getArticleFingerprint(q) === getArticleFingerprint(item))) return;
+      markArticleSeen(item);
+      state.printQueue.push(item);
+      updateQueueBadge();
+      processPrintQueue();
+    }
+
+    function processPrintQueue() {
+      if (!state.isPoweredOn || state.isTyping) return;
+      if (state.printQueue.length === 0) return;
+
+      const nextItem = state.printQueue.shift();
+      updateQueueBadge();
+      startTeletypeOutput(nextItem);
+    }
+
     function startTeletypeOutput(newsItem) {
-      if (!newsItem) return;
+      if (!state.isPoweredOn || !newsItem) return;
 
       state.currentNewsItem = newsItem;
       state.isTyping = true;
@@ -1217,7 +1165,7 @@ ${cleanContent}
     }
 
     function typeNextCharacter() {
-      if (!state.isTyping || !currentArticleParagraph) return;
+      if (!state.isPoweredOn || !state.isTyping || !currentArticleParagraph) return;
 
       try {
         if (currentTypeIndex < fullTextToType.length) {
@@ -1254,44 +1202,74 @@ ${cleanContent}
       if (state.printQueue.length > 0) {
         setTimeout(processPrintQueue, 350);
       } else {
-        setTimeout(() => fetchAndDispatchNews(false), 1500);
+        setTimeout(() => fetchAndDispatchNews(false), 2000);
       }
     }
 
-    // 버튼 및 인터랙션 이벤트 리스너 바인딩
     document.getElementById('skipTypingBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      if (!state.isTyping || !currentArticleParagraph) return;
+      if (!state.isPoweredOn || !state.isTyping || !currentArticleParagraph) return;
       clearTimeout(state.typingTimer);
       currentArticleParagraph.textContent = fullTextToType;
       if (scrollWrapper) scrollWrapper.scrollTop = scrollWrapper.scrollHeight;
       finishTyping();
     });
 
+    // "용지 비우기" 버튼: 첫 번째 클릭 시 용지 클리어, 두 번째 연속 클릭 시 즉시 인쇄 중지(정지)
     document.getElementById('clearPaperBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      if (state.isTyping) {
-        clearTimeout(state.typingTimer);
-        state.isTyping = false;
-      }
-      state.printQueue = [];
-      updateQueueBadge();
+      if (!state.isPoweredOn) return;
 
-      if (paperElem) {
-        paperElem.innerHTML = `
-          <div class="text-center my-6 text-slate-600 font-mono">
-            ===============================================================<br>
-            TELETYPE CARRIAGE EMPTIED / 용지 리셋 완료<br>
-            국제 시차 변환 실시간 스트리밍 재개...<br>
-            ===============================================================
-          </div>
-        `;
+      state.clearPaperClickCount++;
+
+      if (state.clearPaperClickCount === 1) {
+        // 첫 번째 클릭: 용지 비우기 및 대기열 초기화
+        if (state.isTyping) {
+          clearTimeout(state.typingTimer);
+          state.isTyping = false;
+        }
+        state.printQueue = [];
+        updateQueueBadge();
+
+        if (paperElem) {
+          paperElem.innerHTML = `
+            <div class="text-center my-6 text-slate-600 font-mono">
+              ===============================================================<br>
+              TELETYPE CARRIAGE EMPTIED / 용지 리셋 완료<br>
+              통합 멀티와이어 실시간 스트리밍 재개...<br>
+              ===============================================================
+            </div>
+          `;
+        }
+        showNotice('롤 용지를 새로 장착했습니다. (한 번 더 누르면 인쇄가 정지됩니다)');
+
+        // 3초 내에 두 번째 누르지 않으면 카운터 리셋
+        if (state.clearPaperResetTimer) clearTimeout(state.clearPaperResetTimer);
+        state.clearPaperResetTimer = setTimeout(() => {
+          state.clearPaperClickCount = 0;
+        }, 3000);
+
+      } else if (state.clearPaperClickCount >= 2) {
+        // 두 번째 연속 클릭: 현재 인쇄 중단 및 정지
+        if (state.isTyping) {
+          clearTimeout(state.typingTimer);
+          state.isTyping = false;
+          if (typingIndicator) typingIndicator.classList.add('hidden');
+        }
+        state.printQueue = [];
+        updateQueueBadge();
+        state.clearPaperClickCount = 0;
+        if (state.clearPaperResetTimer) clearTimeout(state.clearPaperResetTimer);
+        
+        const statusBadge = document.getElementById('machineStatusBadge');
+        if (statusBadge) statusBadge.innerText = '인쇄 일시정지됨';
+        showNotice('⏸️ 텔레타이프 인쇄가 완전히 정지되었습니다.');
       }
-      showNotice('롤 용지를 새로 장착했습니다.');
     });
 
     document.getElementById('tearAndSaveBtn').addEventListener('click', (e) => {
       e.preventDefault();
+      if (!state.isPoweredOn) return;
       if (!state.currentNewsItem) {
         showNotice('절취할 전신문이 없습니다. 먼저 기사를 수신해주세요.');
         return;
@@ -1312,8 +1290,7 @@ ${cleanContent}
         pubDateKST: state.currentNewsItem.pubDateKST,
         relativeAge: state.currentNewsItem.relativeAge,
         description: state.currentNewsItem.description,
-        fullSlip: slipFormatted,
-        baudotSample: charTo5Bit(state.currentNewsItem.title[0] || 'N').join('')
+        fullSlip: slipFormatted
       };
 
       state.archive.unshift(archiveItem);
@@ -1333,6 +1310,7 @@ ${cleanContent}
     const archiveModal = document.getElementById('archiveModal');
     document.getElementById('openArchiveBtn').addEventListener('click', (e) => {
       e.preventDefault();
+      if (!state.isPoweredOn) return;
       renderArchiveList();
       if (archiveModal) archiveModal.classList.remove('hidden');
     });
@@ -1484,18 +1462,13 @@ ${cleanContent}
       }, 350);
     });
 
-    // html2canvas 사진 저장 함수
     window.saveSlipPhotoModalBtn = document.getElementById('saveSlipPhotoModalBtn');
     if (window.saveSlipPhotoModalBtn) {
       window.saveSlipPhotoModalBtn.addEventListener('click', async () => {
         if (!slipPaperContent) return;
         showNotice('고화질 전신문 사진을 렌더링 중입니다...');
         try {
-          const canvas = await html2canvas(slipPaperContent, {
-            scale: 2,
-            backgroundColor: '#faf5e8',
-            logging: false
-          });
+          const canvas = await html2canvas(slipPaperContent, { scale: 2, backgroundColor: '#faf5e8', logging: false });
           const link = document.createElement('a');
           link.download = `teletype_wire_slip_${Date.now()}.png`;
           link.href = canvas.toDataURL('image/png');
@@ -1508,14 +1481,10 @@ ${cleanContent}
     }
 
     document.getElementById('saveRollPhotoBtn').addEventListener('click', async () => {
-      if (!paperElem) return;
+      if (!state.isPoweredOn || !paperElem) return;
       showNotice('롤 용지 전체 화면을 캡처 중입니다...');
       try {
-        const canvas = await html2canvas(paperElem, {
-          scale: 2,
-          backgroundColor: '#faf5e8',
-          logging: false
-        });
+        const canvas = await html2canvas(paperElem, { scale: 2, backgroundColor: '#faf5e8', logging: false });
         const link = document.createElement('a');
         link.download = `teletype_roll_${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png');
@@ -1549,6 +1518,7 @@ ${cleanContent}
     };
 
     window.replayArchiveItem = function(id) {
+      if (!state.isPoweredOn) return;
       const item = state.archive.find(a => a.id === id);
       if (!item) return;
       if (archiveModal) archiveModal.classList.add('hidden');
@@ -1620,29 +1590,68 @@ ${cleanContent}
       state.baudInterval = parseInt(e.target.value, 10);
     });
 
-    const streamModeSelect = document.getElementById('streamModeSelect');
-    if (streamModeSelect) {
-      streamModeSelect.addEventListener('change', async (e) => {
-        state.streamMode = e.target.value;
-        const text = streamModeSelect.options[streamModeSelect.selectedIndex].text;
-        showNotice(`수신 모드가 '${text}'(으)로 변경되었습니다.`);
-        state.printQueue = [];
-        updateQueueBadge();
+    const timeBucketSelect = document.getElementById('timeBucketSelect');
+    if (timeBucketSelect) {
+      timeBucketSelect.addEventListener('change', async (e) => {
+        state.timeBucket = e.target.value;
+        const text = timeBucketSelect.options[timeBucketSelect.selectedIndex].text;
+        showNotice(`시간대 버킷이 '${text}'(으)로 변경되었습니다.`);
         await fetchAndDispatchNews(true);
       });
     }
 
     document.getElementById('soundToggleBtn').addEventListener('click', (e) => {
       e.preventDefault();
+      if (!state.isPoweredOn) return;
       state.soundEnabled = !state.soundEnabled;
       document.getElementById('soundIcon').innerText = state.soundEnabled ? '🔊' : '🔇';
       document.getElementById('soundLabel').innerText = state.soundEnabled ? '타건음 ON' : '타건음 OFF';
     });
 
-    // 키보드 콘솔 터치 및 클릭 인터랙션
+    // 전원 ON/OFF 토글 로직 (OFF 시에도 기기 케이싱은 보이도록 처리)
+    const powerToggleBtn = document.getElementById('powerToggleBtn');
+    const powerToggleKnob = document.getElementById('powerToggleKnob');
+    const powerStatusLabel = document.getElementById('powerStatusLabel');
+    const machineChassis = document.getElementById('machineChassis');
+    const powerLed = document.getElementById('powerLed');
+
+    powerToggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      state.isPoweredOn = !state.isPoweredOn;
+
+      if (state.isPoweredOn) {
+        powerToggleKnob.classList.remove('transform', 'translate-x-0', 'bg-slate-600');
+        powerToggleKnob.classList.add('transform', 'translate-x-5', 'bg-emerald-400');
+        powerStatusLabel.innerText = 'ON';
+        powerStatusLabel.className = 'text-[10px] font-mono font-bold text-emerald-400';
+        machineChassis.classList.remove('machine-powered-off');
+        powerLed.classList.add('animate-pulse', 'bg-emerald-400');
+        powerLed.classList.remove('bg-red-900');
+        playTeletypeBell();
+        showNotice('텔레타이프 전원이 켜졌습니다.');
+        setTimeout(() => fetchAndDispatchNews(true), 500);
+      } else {
+        powerToggleKnob.classList.remove('translate-x-5', 'bg-emerald-400');
+        powerToggleKnob.classList.add('translate-x-0', 'bg-slate-600');
+        powerStatusLabel.innerText = 'OFF';
+        powerStatusLabel.className = 'text-[10px] font-mono font-bold text-red-500';
+        machineChassis.classList.add('machine-powered-off');
+        powerLed.classList.remove('animate-pulse', 'bg-emerald-400');
+        powerLed.classList.add('bg-red-900');
+        if (state.isTyping) {
+          clearTimeout(state.typingTimer);
+          state.isTyping = false;
+        }
+        state.printQueue = [];
+        updateQueueBadge();
+        showNotice('텔레타이프 전원이 꺼졌습니다. (기기 본체는 대기 중)');
+      }
+    });
+
     document.querySelectorAll('.teletype-key, .teletype-spacebar').forEach(keyBtn => {
       keyBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        if (!state.isPoweredOn) return;
         const key = e.currentTarget.dataset.key;
         playKeyClick();
         addTapeCharacter(key === 'SPACE' ? ' ' : (key === 'CRLF' ? '\n' : (key === 'BELL' ? '!' : key[0])));
@@ -1655,6 +1664,7 @@ ${cleanContent}
     });
 
     window.addEventListener('keydown', (e) => {
+      if (!state.isPoweredOn) return;
       if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
       const upper = e.key.toUpperCase();
       const matchedBtn = document.querySelector(`[data-key="${upper}"]`);
@@ -1697,34 +1707,46 @@ ${cleanContent}
     }
 
     async function fetchAndDispatchNews(isManualClick = false) {
+      if (!state.isPoweredOn) return;
       const freshItems = await fetchAllWireFeeds();
 
       if (freshItems && freshItems.length > 0) {
         freshItems.forEach(item => enqueueWireStory(item));
-        showNotice(`무작위로 선별된 전보 ${freshItems.length}건 인입 완료!`);
+        showNotice(`신규 전보 ${freshItems.length}건 실시간 인입 완료!`);
       } else if (isManualClick && state.allAggregatedNews.length > 0) {
         const randomPick = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
         startTeletypeOutput(randomPick);
-        showNotice(`무작위 기사 타건: '${randomPick.title.substring(0, 16)}...'`);
+        showNotice(`기사 타건: '${randomPick.title.substring(0, 16)}...'`);
       }
     }
 
     function setupContinuousLiveFeed() {
       if (state.autoPollInterval) clearInterval(state.autoPollInterval);
       state.autoPollInterval = setInterval(() => {
-        if (!state.isTyping && state.printQueue.length === 0) {
+        if (state.isPoweredOn && !state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
-      }, 10000);
+      }, 15000);
     }
 
-    document.getElementById('fetchNextStoryBtn').addEventListener('click', async (e) => {
+    // 중요 기사 타건 버튼
+    document.getElementById('fetchImportantStoryBtn').addEventListener('click', async (e) => {
       e.preventDefault();
-      await fetchAndDispatchNews(true);
+      if (!state.isPoweredOn) return;
+      showNotice('🚨 중요/긴급 전신 회선 최우선 스캔 중...');
+      const freshItems = await fetchAllWireFeeds();
+      const urgentItem = freshItems.find(it => it.title.includes('속보') || it.title.includes('1보') || it.title.includes('긴급')) || freshItems[0];
+      if (urgentItem) {
+        startTeletypeOutput(urgentItem);
+      } else if (state.allAggregatedNews.length > 0) {
+        startTeletypeOutput(state.allAggregatedNews[0]);
+      }
     });
 
     document.getElementById('fetchLiveRssBtn').addEventListener('click', async (e) => {
       e.preventDefault();
+      if (!state.isPoweredOn) return;
+      showNotice('⚡ 실시간 특보 회선 즉시 스캔 중...');
       await fetchAndDispatchNews(true);
     });
 
@@ -1732,7 +1754,7 @@ ${cleanContent}
       loadSeenFingerprints();
       const now24 = getKSTFormatted24(new Date());
       const initLine = document.getElementById('connInitTimeLine');
-      if (initLine) initLine.innerText = `[시차 변환 접속 시각: ${now24}]`;
+      if (initLine) initLine.innerText = `[멀티와이어 접속 시각: ${now24}]`;
 
       applySelectedFont('font-joseon');
 
