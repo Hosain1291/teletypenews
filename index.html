@@ -2,14 +2,14 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>TELETYPE MODEL 33-KSR WIRE TERMINAL</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Monospaced & Display Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   
   <style>
     /* 1. 기본 지정 서체: 조선일보 100년체 (Joseon100Years) */
@@ -50,6 +50,7 @@
       min-height: 100vh;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     /* 기계식 헤비 듀티 케이싱 질감 (Crinkle-finish Olive Steel) */
@@ -100,14 +101,14 @@
       background-size: 16px 25px;
       background-position: center;
       background-repeat: repeat-y;
-      width: 20px;
+      width: 18px;
     }
 
-    /* 활판 잉크 활자 본문 */
+    /* 활판 잉크 활자 본문 (줄바꿈 및 오버플로우 방지) */
     .typewriter-font {
       font-family: 'Joseon100Years', 'Courier Prime', serif !important;
-      letter-spacing: 0.02em;
-      line-height: 1.75;
+      letter-spacing: -0.01em;
+      line-height: 1.7;
       color: #1a221d;
       text-shadow: 0.25px 0.25px 0.4px rgba(26, 34, 29, 0.45);
       word-break: break-word;
@@ -134,14 +135,6 @@
       border: 2px solid #290505;
       position: relative;
     }
-    .jewel-bell-lamp::after {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 60% 70%, rgba(255,255,255,0.4) 0%, transparent 40%);
-      pointer-events-none;
-    }
 
     @keyframes bellFlasher {
       0%, 100% { opacity: 0.35; filter: drop-shadow(0 0 2px #ff0000); transform: scale(0.96); }
@@ -156,8 +149,9 @@
       background: radial-gradient(circle at 40% 35%, #343f38 0%, #1d2521 75%, #0e1310 100%);
       border: 1.5px solid #5a6e62;
       box-shadow: 0 4px 0 #0c110e, 0 5px 6px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.3);
-      transition: transform 0.04s, box-shadow 0.04s;
+      transition: transform 0.05s, box-shadow 0.05s;
       touch-action: manipulation;
+      cursor: pointer;
     }
     .teletype-key:active, .teletype-key.key-pressed {
       transform: translateY(3px);
@@ -171,6 +165,7 @@
       border: 1.5px solid #4a5c51;
       box-shadow: 0 4px 0 #0a0e0c, 0 6px 8px rgba(0,0,0,0.85);
       touch-action: manipulation;
+      cursor: pointer;
     }
     .teletype-spacebar:active, .teletype-spacebar.key-pressed {
       transform: translateY(3px);
@@ -184,6 +179,8 @@
       box-shadow: 0 3px 0 #101613, 0 4px 6px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.25);
       color: #e2ede6;
       transition: all 0.05s ease-out;
+      touch-action: manipulation;
+      cursor: pointer;
     }
     .hardware-btn:active {
       transform: translateY(2px);
@@ -203,8 +200,8 @@
 </head>
 <body class="p-1 sm:p-3 md:p-6 flex flex-col items-center justify-start min-h-screen">
 
-  <!-- ================= 텔레타이프 기기 본체 콘솔 (HEAVY CHASSIS) ================= -->
-  <div class="w-full max-w-5xl teletype-chassis p-2.5 sm:p-4 md:p-6 flex flex-col gap-3 sm:gap-4 relative overflow-hidden">
+  <!-- ================= 텔레타이프 기기 본체 콘솔 ================= -->
+  <div class="w-full max-w-5xl teletype-chassis p-2 sm:p-4 md:p-6 flex flex-col gap-3 sm:gap-4 relative overflow-hidden">
     
     <!-- 모서리 인더스트리얼 리벳 볼트 장식 -->
     <div class="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#526358] border border-[#232b26] shadow"></div>
@@ -233,24 +230,24 @@
       <div class="flex items-center gap-2 bg-[#101713] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md border border-[#3b4c41] shadow-inner font-mono text-[11px] sm:text-xs shrink-0">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
         <span class="text-emerald-400 font-bold hidden sm:inline">KST:</span>
-        <span id="kstClock24" class="text-amber-300 font-bold tracking-widest">2026-09-03 00:00:00 KST</span>
+        <span id="kstClock24" class="text-amber-300 font-bold tracking-widest">----.--.-- --:--:-- KST</span>
       </div>
 
       <!-- 상단 도구: 타건음 및 전신 보관 창고 -->
       <div class="flex items-center gap-1.5 sm:gap-2 ml-auto">
-        <button id="soundToggleBtn" class="hardware-btn px-2.5 py-1 rounded flex items-center gap-1 text-[11px] sm:text-xs">
+        <button id="soundToggleBtn" type="button" class="hardware-btn px-2.5 py-1 rounded flex items-center gap-1 text-[11px] sm:text-xs">
           <span id="soundIcon">🔊</span>
           <span id="soundLabel" class="hidden sm:inline">타건음 ON</span>
         </button>
 
-        <button id="openArchiveBtn" class="hardware-btn bg-amber-700/80 hover:bg-amber-600 border-amber-500/80 text-amber-200 px-2.5 py-1 rounded font-bold flex items-center gap-1.5 font-joseon text-[11px] sm:text-xs">
+        <button id="openArchiveBtn" type="button" class="hardware-btn bg-amber-700/80 hover:bg-amber-600 border-amber-500/80 text-amber-200 px-2.5 py-1 rounded font-bold flex items-center gap-1.5 font-joseon text-[11px] sm:text-xs">
           <span>🗄️ 전신 창고</span>
           <span id="archiveCountBadge" class="bg-[#121814] text-amber-300 px-1.5 py-0.2 rounded-full text-[10px] font-mono border border-amber-600/40">0</span>
         </button>
       </div>
     </div>
 
-    <!-- 2. 5-단위 보도 천공 종이 테이프 (BAUDOT TAPE PUNCH) -->
+    <!-- 2. 5-단위 보도 천공 종이 테이프 -->
     <div class="hood-chamber p-2 sm:p-2.5 rounded-lg border border-[#35463c] flex flex-col gap-1">
       <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono">
         <div class="flex items-center gap-1.5">
@@ -260,25 +257,23 @@
         <span id="tapeCharDisplay" class="text-amber-300 font-bold tracking-wider text-[10px] sm:text-[11px]">STANDBY</span>
       </div>
 
-      <!-- 천공 테이프 캔버스 -->
-      <div class="relative w-full h-9 sm:h-11 bg-[#e8dcba] rounded border border-amber-950/70 overflow-hidden flex items-center shadow-inner">
+      <div class="relative w-full h-8 sm:h-10 bg-[#e8dcba] rounded border border-amber-950/70 overflow-hidden flex items-center shadow-inner">
         <canvas id="punchedTapeCanvas" class="w-full h-full block"></canvas>
         <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#111714] to-transparent pointer-events-none"></div>
       </div>
 
       <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400 font-mono">
-        <span>◀ FEED (상단 3열 + 피드 + 하단 2열)</span>
-        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">전 세계 통합 통신망 기사 실시간 인입 중...</span>
+        <span>◀ FEED (3열+피드+2열)</span>
+        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">전 세계 회선 실시간 감시 중...</span>
       </div>
     </div>
-    <!-- 3. 기계 제어반 (전 세계 8대 회선 통합 상시 모니터 & 서체 & 타속 제어) -->
+
+    <!-- 3. 기계 제어반 (수신 모드: 실시간 즉시 전달 vs 시간대 선택) -->
     <div class="bg-[#1b2520] p-2 sm:p-3 rounded-lg border border-[#37493e] flex flex-col gap-2 text-xs">
-      
-      <!-- 상단 줄: 실시간 회선 스트림 상태 및 서체 전환 -->
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center flex-wrap gap-1 font-mono text-[11px] sm:text-xs">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1"></span>
-          <span class="font-bold text-emerald-300">통합 전신망 무중단 수신:</span>
+          <span class="font-bold text-emerald-300">통합 전신망:</span>
           <div class="flex flex-wrap gap-1 text-[10px] sm:text-[11px]">
             <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🚨 뉴시스</span>
             <span class="bg-[#101713] text-slate-200 px-1.5 py-0.5 rounded border border-[#2d3d33]">🗽 AP</span>
@@ -288,7 +283,6 @@
           </div>
         </div>
 
-        <!-- 서체 선택 (기본: 조선일보 100년체) -->
         <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-amber-600/40 shadow-inner ml-auto">
           <span class="text-amber-400 font-bold text-[10px] sm:text-xs">🔤 서체:</span>
           <select id="fontSelectDropdown" class="bg-transparent text-slate-200 border-none text-[10px] sm:text-xs focus:outline-none cursor-pointer font-joseon">
@@ -299,29 +293,39 @@
         </div>
       </div>
 
-      <!-- 하단 줄: 다음 기사 강제 타건, 즉시 수신, 속도 다이얼 -->
+      <!-- 하단 줄: 다음 기사 강제 타건, 즉시 수신, 모드 선택, 타속 -->
       <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-700/60">
         <div class="flex items-center gap-1.5 flex-wrap">
-          <button id="fetchNextStoryBtn" class="hardware-btn bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-amber-100 font-bold px-2.5 py-1 rounded shadow text-[11px] sm:text-xs font-joseon">
-            <span>🎲 다음 새 전신 기사 타건</span>
+          <button id="fetchNextStoryBtn" type="button" class="hardware-btn bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 text-amber-100 font-bold px-2.5 py-1 rounded shadow text-[11px] sm:text-xs font-joseon">
+            <span>🎲 다음 새 기사 타건</span>
           </button>
 
-          <button id="fetchLiveRssBtn" class="hardware-btn bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[11px] sm:text-xs">
-            <span>⚡ 즉시 수신/새로고침</span>
+          <button id="fetchLiveRssBtn" type="button" class="hardware-btn bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[11px] sm:text-xs">
+            <span>⚡ 즉시 수신</span>
           </button>
+
+          <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-amber-500/50 text-[10px] sm:text-xs">
+            <span class="text-amber-400 font-bold">📡 모드:</span>
+            <select id="streamModeSelect" class="bg-transparent text-amber-300 font-bold focus:outline-none cursor-pointer">
+              <option value="live" selected class="bg-[#101713]">⚡ 실시간 즉시 전달 (LIVE)</option>
+              <option value="1h" class="bg-[#101713]">⏳ 최근 1시간</option>
+              <option value="6h" class="bg-[#101713]">🕰️ 최근 6시간</option>
+              <option value="24h" class="bg-[#101713]">📰 최근 24시간</option>
+            </select>
+          </div>
         </div>
 
         <div class="flex items-center gap-2 font-mono ml-auto">
           <div class="flex items-center gap-1 bg-[#101713] px-2 py-0.5 rounded border border-slate-700 text-[10px] sm:text-xs">
             <span class="text-slate-400">타속:</span>
             <select id="baudRateSelect" class="bg-transparent text-emerald-400 focus:outline-none cursor-pointer">
-              <option value="50" class="bg-[#101713]">45 Baud (느림)</option>
+              <option value="50" class="bg-[#101713]">45 Baud</option>
               <option value="20" selected class="bg-[#101713]">75 Baud (표준)</option>
               <option value="5" class="bg-[#101713]">110 Baud (초고속)</option>
             </select>
           </div>
 
-          <button id="skipTypingBtn" title="현재 인쇄 즉시 완료" class="hardware-btn px-2 py-0.5 text-slate-300 text-[10px] sm:text-xs">
+          <button id="skipTypingBtn" type="button" title="현재 인쇄 즉시 완료" class="hardware-btn px-2 py-0.5 text-slate-300 text-[10px] sm:text-xs">
             ⏭️ 즉시 인쇄
           </button>
         </div>
@@ -330,41 +334,34 @@
 
     <!-- 4. 기계 플래튼 롤러 & 연속 전산 롤 용지 인쇄 뷰어 -->
     <div class="hood-chamber p-2 sm:p-3 rounded-lg border-2 border-[#384a3f] flex flex-col gap-1.5 relative shadow-2xl">
-      
-      <!-- 상단 압동 롤러 (Platen Roller Assembly) -->
       <div class="relative w-full h-7 sm:h-8 platen-roller rounded flex items-center justify-between px-2 overflow-hidden">
         <div class="w-3.5 sm:w-4 h-5 sm:h-6 platen-knob rounded-sm shrink-0"></div>
-        
-        <!-- 컬럼 눈금자 및 가이드 바 -->
         <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono text-slate-400 truncate mx-2">
           <span class="text-amber-400">✂️</span>
           <span class="font-bold text-slate-300">TEAR-OFF SERRATED KNIFE BAR</span>
           <span id="typingIndicator" class="text-emerald-400 hidden animate-pulse font-bold">● TYPING WIRE DISPATCH...</span>
         </div>
-        
         <div class="w-3.5 sm:w-4 h-5 sm:h-6 platen-knob rounded-sm shrink-0"></div>
       </div>
 
-      <!-- 조작 바: 대기열 표시 및 기사 절취 스크랩 버튼 -->
       <div class="flex items-center justify-between px-1 text-[11px] sm:text-xs">
         <div class="text-slate-400 font-mono flex items-center gap-1.5 truncate">
           <span>대기열: <span id="queueCountBadge" class="text-amber-400 font-bold">0</span>건</span>
           <span class="text-slate-600">|</span>
-          <span class="text-emerald-400 font-bold font-joseon">전 세계 통신사 실시간 스트리밍 가동</span>
+          <span class="text-emerald-400 font-bold font-joseon">전 세계 통신사 무중단 실시간 스트리밍</span>
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
-          <button id="tearAndSaveBtn" class="hardware-btn bg-amber-700 hover:bg-amber-600 text-amber-100 font-bold px-3 py-0.5 rounded shadow font-joseon text-[11px] sm:text-xs">
+          <button id="tearAndSaveBtn" type="button" class="hardware-btn bg-amber-700 hover:bg-amber-600 text-amber-100 font-bold px-3 py-0.5 rounded shadow font-joseon text-[11px] sm:text-xs">
             <span>찌익- 기사 절취</span>
           </button>
-          <button id="clearPaperBtn" class="hardware-btn px-2 py-0.5 text-slate-400 text-[10px] sm:text-xs">
+          <button id="clearPaperBtn" type="button" class="hardware-btn px-2 py-0.5 text-slate-400 text-[10px] sm:text-xs">
             용지 비우기
           </button>
         </div>
       </div>
 
-      <!-- 연속 롤 페이퍼 출력 영역 -->
-      <div id="paperScrollWrapper" class="relative overflow-y-auto rounded-md teleprinter-paper flex h-[48vh] sm:h-[440px] md:h-[500px]">
+      <div id="paperScrollWrapper" class="relative overflow-y-auto rounded-md teleprinter-paper flex h-[46vh] sm:h-[420px] md:h-[480px]">
         <div class="sprocket-holes-left flex-shrink-0"></div>
 
         <div id="teleprinterPaper" class="flex-grow p-3 sm:p-5 md:p-6 typewriter-font font-joseon text-xs sm:text-sm md:text-base whitespace-pre-wrap break-words select-text">
@@ -384,59 +381,56 @@
         <div class="sprocket-holes-right flex-shrink-0"></div>
       </div>
 
-      <!-- 타자기 캐리지 해머 인디케이터 -->
       <div id="carriageLight" class="h-1 bg-amber-900/40 rounded w-full transition-all duration-75"></div>
     </div>
-    <!-- 5. 3열 기계식 텔레타이프 키보드 콘솔 (BAUDOT ITA2 STEPPED CONSOLE) -->
+
+    <!-- 5. 3열 기계식 텔레타이프 키보드 콘솔 -->
     <div class="bg-[#151c17] p-2 sm:p-3 rounded-lg border-2 border-[#334238] flex flex-col gap-1 sm:gap-1.5 items-center shadow-2xl">
       <div class="w-full flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-mono px-1">
         <span class="text-slate-400">BAUDOT ITA2 MECHANICAL KEYBOARD</span>
         <span class="text-amber-400 font-bold">KEY CLICK SYNC</span>
       </div>
 
-      <!-- 1행: 11개 키 (Q ~ P + BELL) -->
-      <div class="flex items-center justify-center gap-0.5 sm:gap-1.5 md:gap-2 w-full">
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Q">Q</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="W">W</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="E">E</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="R">R</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="T">T</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Y">Y</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="U">U</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="I">I</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="O">O</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="P">P</button>
-        <button class="teletype-key w-8 h-7.5 sm:w-12 sm:h-9 md:w-14 md:h-10 rounded-md font-mono font-bold text-[9px] sm:text-[10px] text-red-300" data-key="BELL">BELL🔔</button>
+      <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full">
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Q">Q</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="W">W</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="E">E</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="R">R</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="T">T</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Y">Y</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="U">U</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="I">I</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="O">O</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="P">P</button>
+        <button type="button" class="teletype-key w-8 h-8 sm:w-12 sm:h-9 md:w-14 md:h-10 rounded-md font-mono font-bold text-[9px] sm:text-[10px] text-red-300" data-key="BELL">BELL🔔</button>
       </div>
 
-      <!-- 2행: 10개 키 (A ~ L + CRLF) -->
-      <div class="flex items-center justify-center gap-0.5 sm:gap-1.5 md:gap-2 w-full">
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="A">A</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="S">S</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="D">D</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="F">F</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="G">G</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="H">H</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="J">J</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="K">K</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="L">L</button>
-        <button class="teletype-key w-9 h-7.5 sm:w-14 sm:h-9 md:w-16 md:h-10 rounded-md font-mono font-bold text-[9px] sm:text-[10px] text-emerald-300" data-key="CRLF">CRLF↵</button>
+      <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full">
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="A">A</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="S">S</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="D">D</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="F">F</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="G">G</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="H">H</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="J">J</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="K">K</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="L">L</button>
+        <button type="button" class="teletype-key w-10 h-8 sm:w-14 sm:h-9 md:w-16 md:h-10 rounded-md font-mono font-bold text-[9px] sm:text-[10px] text-emerald-300" data-key="CRLF">CRLF↵</button>
       </div>
 
-      <!-- 3행: 8개 키 (Z ~ V + SPACE + B ~ M) -->
-      <div class="flex items-center justify-center gap-0.5 sm:gap-1.5 md:gap-2 w-full">
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Z">Z</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="X">X</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="C">C</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="V">V</button>
+      <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full">
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Z">Z</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="X">X</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="C">C</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="V">V</button>
         
-        <button class="teletype-spacebar px-4 sm:px-10 md:px-16 h-7.5 sm:h-9 md:h-10 rounded-md font-mono font-bold text-[10px] sm:text-xs text-slate-300 flex-grow max-w-[150px] sm:max-w-[220px]" data-key="SPACE">
+        <button type="button" class="teletype-spacebar px-4 sm:px-10 md:px-16 h-8 sm:h-9 md:h-10 rounded-md font-mono font-bold text-[10px] sm:text-xs text-slate-300 flex-grow max-w-[160px] sm:max-w-[220px]" data-key="SPACE">
           SPACE
         </button>
 
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="B">B</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="N">N</button>
-        <button class="teletype-key w-6.5 h-7.5 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="M">M</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="B">B</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="N">N</button>
+        <button type="button" class="teletype-key w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="M">M</button>
       </div>
     </div>
 
@@ -444,7 +438,7 @@
     <div class="flex items-center justify-between text-[10px] sm:text-xs text-slate-400 font-mono px-1">
       <div class="flex items-center gap-2 sm:gap-3">
         <span class="flex items-center gap-1 text-emerald-400">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 24H ONLINE
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 24H LIVE WIRE
         </span>
         <span id="counterDisplay" class="text-amber-400 font-bold">수신 완료: 0건</span>
       </div>
@@ -454,7 +448,8 @@
       </div>
     </div>
   </div>
-  <!-- ================= [모달] 전신 기록 보관 창고 (ARCHIVE) ================= -->
+
+  <!-- ================= [모달] 전신 기록 보관 창고 ================= -->
   <div id="archiveModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-6">
     <div class="bg-[#1f2822] border-2 border-amber-600/70 w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl flex flex-col overflow-hidden text-slate-200">
       
@@ -466,7 +461,7 @@
             <p class="text-xs text-slate-400 font-mono">절취되어 바인더에 보관된 24H 글로벌 전신문 서류철</p>
           </div>
         </div>
-        <button id="closeArchiveBtn" class="hardware-btn text-slate-300 hover:text-white text-lg font-bold px-3 py-1 rounded">
+        <button id="closeArchiveBtn" type="button" class="hardware-btn text-slate-300 hover:text-white text-lg font-bold px-3 py-1 rounded">
           ✕
         </button>
       </div>
@@ -490,10 +485,10 @@
             <option value="dw">🇩🇪 DW (독일)</option>
           </select>
 
-          <button id="exportArchiveBtn" class="hardware-btn px-2.5 py-1.5 rounded text-[11px]">
+          <button id="exportArchiveBtn" type="button" class="hardware-btn px-2.5 py-1.5 rounded text-[11px]">
             💾 JSON 내보내기
           </button>
-          <button id="clearAllArchiveBtn" class="hardware-btn bg-red-950/80 hover:bg-red-900 text-red-200 border-red-800 px-2.5 py-1.5 rounded text-[11px]">
+          <button id="clearAllArchiveBtn" type="button" class="hardware-btn bg-red-950/80 hover:bg-red-900 text-red-200 border-red-800 px-2.5 py-1.5 rounded text-[11px]">
             창고 비우기
           </button>
         </div>
@@ -510,23 +505,22 @@
     </div>
   </div>
 
-  <!-- ================= [모달] 실물 전신 인쇄본 뷰어 (PRINT SLIP MODAL) ================= -->
+  <!-- ================= [모달] 실물 전신 인쇄본 뷰어 ================= -->
   <div id="printSlipModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-6">
     <div class="bg-[#1f2822] border-2 border-amber-500 w-full max-w-3xl max-h-[92vh] rounded-xl shadow-2xl flex flex-col overflow-hidden text-slate-200">
-      
       <div class="bg-[#131a15] p-3 sm:p-4 border-b border-slate-700 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="text-xl">📄</span>
           <h3 class="text-base sm:text-lg font-bold text-amber-300 font-joseon">전신 전문 인쇄본 (OFFICIAL WIRE SLIP)</h3>
         </div>
         <div class="flex items-center gap-2">
-          <button id="printCurrentSlipBtn" class="hardware-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs font-joseon">
+          <button id="printCurrentSlipBtn" type="button" class="hardware-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs font-joseon">
             🖨️ 인쇄 / PDF
           </button>
-          <button id="copyCurrentSlipBtn" class="hardware-btn px-3 py-1 rounded text-xs">
+          <button id="copyCurrentSlipBtn" type="button" class="hardware-btn px-3 py-1 rounded text-xs">
             📋 복사
           </button>
-          <button id="closeSlipModalBtn" class="hardware-btn px-2.5 py-1 rounded text-sm font-bold">
+          <button id="closeSlipModalBtn" type="button" class="hardware-btn px-2.5 py-1 rounded text-sm font-bold">
             ✕
           </button>
         </div>
@@ -539,6 +533,8 @@
       </div>
     </div>
   </div>
+
+  <!-- ================= 핵심 자바스크립트 엔진 ================= -->
   <script>
     // 전 세계 8대 전신 회선 (뉴시스 4섹션 + AP + CNN + 알자지라 + DW)
     const RSS_URLS = {
@@ -615,7 +611,8 @@
       archive: [],
       autoPollInterval: null,
       totalCount: 0,
-      currentSlipText: ''
+      currentSlipText: '',
+      streamMode: 'live' // 'live', '1h', '6h', '24h'
     };
 
     function getArticleFingerprint(item) {
@@ -731,6 +728,7 @@
         src.stop(t + dur);
       } catch (e) {}
     }
+
     // 5-단위 보도 코드
     const BAUDOT_MAP = {
       'A': [1,1,0,0,0], 'B': [1,0,0,1,1], 'C': [0,1,1,1,0], 'D': [1,0,0,1,0],
@@ -810,7 +808,8 @@
 
     for (let i = 0; i < 24; i++) tapeColumns.push({ bits: [0,0,0,0,0], char: ' ' });
     setTimeout(resizeTapeCanvas, 100);
-    // 실시간 다중 프록시 RSS 수신기
+
+    // RSS 수신기 엔진
     async function fetchSingleChannelRSS(channelKey) {
       const targetUrl = RSS_URLS[channelKey] || RSS_URLS.sokbo;
       let parsedItems = [];
@@ -818,7 +817,6 @@
       const urlWithBust = targetUrl.includes('?') ? `${targetUrl}&${cacheBust}` : `${targetUrl}?${cacheBust}`;
 
       const liveProxies = [
-        // 1. rss2json (CORS 완벽 우회 및 구조화된 파싱)
         async () => {
           const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(targetUrl)}&api_key=`, { cache: 'no-store' });
           if (!res.ok) throw new Error('rss2json status');
@@ -835,21 +833,18 @@
           }
           throw new Error('rss2json empty');
         },
-        // 2. allorigins raw XML
         async () => {
           const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
           if (!res.ok) throw new Error('allorigins raw');
           const xmlText = await res.text();
           return parseRawXML(xmlText, channelKey);
         },
-        // 3. allorigins contents JSON
         async () => {
           const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
           if (!res.ok) throw new Error('allorigins json');
           const data = await res.json();
           return parseRawXML(data.contents, channelKey);
         },
-        // 4. codetabs proxy
         async () => {
           const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
           if (!res.ok) throw new Error('codetabs');
@@ -895,10 +890,9 @@
       });
     }
 
-    // 네트워크 완전 차단 환경 대비 실시간 전보 제너레이터 (0건 방지 안전망)
     function generateFallbackLiveWirePool() {
       const now = Date.now();
-      const pool = [
+      return [
         {
           title: "[속보] 국제원자력기구(IAEA), 차세대 소형모듈원자로(SMR) 글로벌 안전 표준 지침 발표",
           link: "https://www.newsis.com/view/NISX20260903_001928371",
@@ -938,37 +932,13 @@
           pubEpoch: now - 990000,
           description: "국회 산업통상자원중소벤처기업위원회는 전체회의를 열고 차세대 전고체 배터리와 청정수소 기반 신산업 육성을 골자로 하는 종합 지원 법안을 여야 합의로 통과시켰다.",
           category: "politics"
-        },
-        {
-          title: "Al Jazeera Wire: UN Climate Adaptation Conference Concludes with Renewed Global Resiliency Pledges",
-          link: "https://www.aljazeera.com/news/wire/climate-summit-2026",
-          pubDate: getKSTFormatted24(new Date(now - 1200000)),
-          pubEpoch: now - 1200000,
-          description: "Delegates from over 140 nations agreed on new financial mechanisms to support climate-vulnerable coastal regions with modern early-warning weather satellite networks.",
-          category: "aljazeera"
-        },
-        {
-          title: "지자체 초광역 스마트 물류 거점망 개통… 수도권-남부권 당일 직배송망 가동",
-          link: "https://www.newsis.com/view/NISX20260903_001928450",
-          pubDate: getKSTFormatted24(new Date(now - 1450000)),
-          pubEpoch: now - 1450000,
-          description: "국토교통부와 각 지자체가 공동 추진한 초광역 스마트 물류 터미널이 시범 운영을 성공적으로 마치고 정식 가동에 들어가 주요 산단 간 운송 시간이 30% 단축된다.",
-          category: "country"
-        },
-        {
-          title: "DW Wire: European Clean Industrial Deal Accelerates Hydrogen Grid Construction Across Rhine Valley",
-          link: "https://www.dw.com/wire/industrial-hydrogen-grid-2026",
-          pubDate: getKSTFormatted24(new Date(now - 1800000)),
-          pubEpoch: now - 1800000,
-          description: "European ministers inaugurated the first cross-border hydrogen pipeline infrastructure designed to power heavy chemical and metallurgical plants with zero direct carbon emissions.",
-          category: "dw"
         }
       ];
-      return pool;
     }
+
     async function fetchAllWireFeeds() {
       const nowStr = new Date().toTimeString().split(' ')[0];
-      updateStatusLine(`[통합 통신망] 전 세계 8대 회선 실시간 감시 및 수신 중... (${nowStr})`);
+      updateStatusLine(`[통합 통신망] 실시간 회선 수신 중... (${nowStr})`);
 
       const channelKeys = Object.keys(RSS_URLS);
       await Promise.all(channelKeys.map(k => fetchSingleChannelRSS(k)));
@@ -978,22 +948,37 @@
         combined = combined.concat(state.channelCache[k] || []);
       });
 
-      // 만약 외부 프록시/네트워크 장애로 0건인 경우, 기기가 멈추지 않도록 풀을 공급
       if (combined.length === 0) {
         combined = generateFallbackLiveWirePool();
       }
 
       // 최신순 정렬
       combined.sort((a, b) => b.pubEpoch - a.pubEpoch);
-      state.allAggregatedNews = combined;
 
-      // 미수신 기사 선별 (중복 제외)
-      const freshItems = combined.filter(item => !isArticleSeen(item));
+      // 모드에 따른 시간 필터 적용
+      const nowEpoch = Date.now();
+      let filtered = combined;
+      if (state.streamMode === 'live') {
+        const liveWindow = 40 * 60 * 1000; // 40분 이내 속보 우선
+        const fresh = combined.filter(it => (nowEpoch - it.pubEpoch) <= liveWindow);
+        filtered = fresh.length > 0 ? fresh : combined.slice(0, 15);
+      } else if (state.streamMode === '1h') {
+        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 3600 * 1000);
+      } else if (state.streamMode === '6h') {
+        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 6 * 3600 * 1000);
+      } else if (state.streamMode === '24h') {
+        filtered = combined.filter(it => (nowEpoch - it.pubEpoch) <= 24 * 3600 * 1000);
+      }
 
+      if (filtered.length === 0) filtered = combined.slice(0, 10);
+      state.allAggregatedNews = filtered;
+
+      // 미수신 기사 선별
+      const freshItems = filtered.filter(item => !isArticleSeen(item));
       if (freshItems.length > 0) {
-        updateStatusLine(`[신규 전보 수신] 실시간 기사 ${freshItems.length}건 대기열 인입 완료`);
+        updateStatusLine(`[전보 수신] 실시간 기사 ${freshItems.length}건 인입 완료`);
       } else {
-        updateStatusLine(`[통합 회선 정상] 전체 ${combined.length}건 최신 기사 수신 대기 중`);
+        updateStatusLine(`[회선 정상] 전체 ${filtered.length}건 기사 감시 대기 중`);
       }
 
       return freshItems;
@@ -1017,7 +1002,6 @@
     function sanitizeWireBody(rawText) {
       if (!rawText) return '';
       return rawText
-        // 1. HTML 태그 및 엔티티 치환
         .replace(/<[^>]*>/g, ' ')
         .replace(/&nbsp;/gi, ' ')
         .replace(/&quot;/gi, '"')
@@ -1025,10 +1009,8 @@
         .replace(/&amp;/gi, '&')
         .replace(/&lt;/gi, '<')
         .replace(/&gt;/gi, '>')
-        // 2. 외신 RSS 광고 레이블(Advertisement) 및 불필요한 단독 문구 제거
         .replace(/^\s*Advertisement\s*$/gim, '')
         .replace(/\bAdvertisement\b/gi, '')
-        // 3. 3줄 이상의 과도한 줄바꿈을 깔끔한 단락(2줄)으로 압축
         .replace(/\r\n/g, '\n')
         .split('\n')
         .map(line => line.trim())
@@ -1060,7 +1042,15 @@
       const timeStr = getKSTFormatted24(new Date());
       const msgId = 'WIRE-' + Math.floor(100000 + Math.random() * 900000);
       const isUrgent = item.title.includes('속보') || item.title.includes('1보') || item.title.includes('긴급') || item.title.includes('BREAKING') || item.category === 'sokbo';
-      const flashTag = isUrgent ? '🚨 [URGENT FLASH / 긴급 속보 전보] 🚨\n' : '';
+      
+      let streamTag = '';
+      if (item.streamType === 'live') {
+        streamTag = '🔴 [CURRENT TIME / 실시간 최신 속보 타건]\n';
+      } else if (item.streamType === 'earlier') {
+        streamTag = '🕰️ [HOURS AGO / 수시간 전 주요 종합 보도]\n';
+      }
+      
+      const flashTag = isUrgent ? '🚨 [URGENT FLASH / 긴급 전보] 🚨\n' : '';
 
       let wireOrigin = 'NEWSIS WIRE SERVICE [SEOUL HEADQUARTERS]';
       if (item.category === 'apnews') wireOrigin = 'ASSOCIATED PRESS (AP) WIRE SERVICE [NEW YORK / GLOBAL BUREAU]';
@@ -1073,7 +1063,7 @@
 
       return `
 ======================================================================
-${flashTag}WIRE DISPATCH SERVICE [${categoryName}]
+${streamTag}${flashTag}WIRE DISPATCH SERVICE [${categoryName}]
 MSG NO : ${msgId} | DISPATCH TIME: ${timeStr}
 ----------------------------------------------------------------------
 TITLE  : ${item.title}
@@ -1105,6 +1095,7 @@ ${cleanContent}
         }
       }, 300);
     }
+
     let fullTextToType = '';
     let currentTypeIndex = 0;
     let currentArticleParagraph = null;
@@ -1168,16 +1159,16 @@ ${cleanContent}
       if (typingIndicator) typingIndicator.classList.add('hidden');
       updateStatusLine('전신 인쇄 완료. 상단 [기사 절취]로 창고에 보관 가능.');
 
-      // 다음 대기열 기사가 있다면 0.3초 후 즉시 인쇄 시작
       if (state.printQueue.length > 0) {
         setTimeout(processPrintQueue, 350);
       } else {
-        // 대기열이 비었으면 즉시 다음 미수신 기사를 찾아 채워넣음
         setTimeout(() => fetchAndDispatchNews(false), 1500);
       }
     }
 
-    document.getElementById('skipTypingBtn').addEventListener('click', () => {
+    // 버튼 및 인터랙션 이벤트 리스너 바인딩
+    document.getElementById('skipTypingBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (!state.isTyping || !currentArticleParagraph) return;
       clearTimeout(state.typingTimer);
       currentArticleParagraph.textContent = fullTextToType;
@@ -1185,7 +1176,8 @@ ${cleanContent}
       finishTyping();
     });
 
-    document.getElementById('clearPaperBtn').addEventListener('click', () => {
+    document.getElementById('clearPaperBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (state.isTyping) {
         clearTimeout(state.typingTimer);
         state.isTyping = false;
@@ -1205,7 +1197,9 @@ ${cleanContent}
       }
       showNotice('롤 용지를 새로 장착했습니다.');
     });
-    document.getElementById('tearAndSaveBtn').addEventListener('click', () => {
+
+    document.getElementById('tearAndSaveBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (!state.currentNewsItem) {
         showNotice('절취할 전신문이 없습니다. 먼저 기사를 수신해주세요.');
         return;
@@ -1244,11 +1238,13 @@ ${cleanContent}
     }
 
     const archiveModal = document.getElementById('archiveModal');
-    document.getElementById('openArchiveBtn').addEventListener('click', () => {
+    document.getElementById('openArchiveBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       renderArchiveList();
       if (archiveModal) archiveModal.classList.remove('hidden');
     });
-    document.getElementById('closeArchiveBtn').addEventListener('click', () => {
+    document.getElementById('closeArchiveBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (archiveModal) archiveModal.classList.add('hidden');
     });
 
@@ -1313,13 +1309,13 @@ ${cleanContent}
                 BAUDOT: [${item.baudotSample}]
               </span>
               <div class="flex items-center gap-2">
-                <button onclick="window.viewPrintSlip('${item.id}')" class="hardware-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded shadow transition font-joseon text-[11px]">
+                <button type="button" onclick="window.viewPrintSlip('${item.id}')" class="hardware-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded shadow transition font-joseon text-[11px]">
                   📄 전문 인쇄본 보기
                 </button>
-                <button onclick="window.replayArchiveItem('${item.id}')" class="hardware-btn text-amber-200 px-2 py-1 rounded text-[11px]">
+                <button type="button" onclick="window.replayArchiveItem('${item.id}')" class="hardware-btn text-amber-200 px-2 py-1 rounded text-[11px]">
                   🔄 재타건
                 </button>
-                <button onclick="window.deleteArchiveItem('${item.id}')" class="hardware-btn bg-red-950/70 hover:bg-red-900 text-red-300 px-2 py-1 rounded text-[11px]">
+                <button type="button" onclick="window.deleteArchiveItem('${item.id}')" class="hardware-btn bg-red-950/70 hover:bg-red-900 text-red-300 px-2 py-1 rounded text-[11px]">
                   삭제
                 </button>
               </div>
@@ -1340,11 +1336,13 @@ ${cleanContent}
       if (printSlipModal) printSlipModal.classList.remove('hidden');
     };
 
-    document.getElementById('closeSlipModalBtn').addEventListener('click', () => {
+    document.getElementById('closeSlipModalBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (printSlipModal) printSlipModal.classList.add('hidden');
     });
 
-    document.getElementById('copyCurrentSlipBtn').addEventListener('click', () => {
+    document.getElementById('copyCurrentSlipBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (!state.currentSlipText) return;
       const ta = document.createElement('textarea');
       ta.value = state.currentSlipText;
@@ -1352,10 +1350,11 @@ ${cleanContent}
       ta.select();
       document.execCommand('copy');
       ta.remove();
-      showNotice('전신문 전문이 클립보드에 복사되었습니다.');
+      showNotice('전신문 전문이 복사되었습니다.');
     });
 
-    document.getElementById('printCurrentSlipBtn').addEventListener('click', () => {
+    document.getElementById('printCurrentSlipBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       const printWin = window.open('', '_blank');
       if (!printWin) return;
       printWin.document.write(`
@@ -1403,7 +1402,8 @@ ${cleanContent}
       renderArchiveList();
     };
 
-    document.getElementById('clearAllArchiveBtn').addEventListener('click', () => {
+    document.getElementById('clearAllArchiveBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (state.archive.length === 0) return;
       state.archive = [];
       updateArchiveCount();
@@ -1411,7 +1411,8 @@ ${cleanContent}
       showNotice("보관 창고가 비워졌습니다.");
     });
 
-    document.getElementById('exportArchiveBtn').addEventListener('click', () => {
+    document.getElementById('exportArchiveBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       if (state.archive.length === 0) {
         showNotice("내보낼 보관 기사가 없습니다.");
         return;
@@ -1424,6 +1425,7 @@ ${cleanContent}
       downloadAnchor.click();
       downloadAnchor.remove();
     });
+
     const fontDropdown = document.getElementById('fontSelectDropdown');
     const activeFontBadge = document.getElementById('activeFontBadge');
 
@@ -1447,63 +1449,33 @@ ${cleanContent}
       showNotice(`서체가 '${fontDropdown.options[fontDropdown.selectedIndex].text}'(으)로 변경되었습니다.`);
     });
 
-    document.getElementById('fetchNextStoryBtn').addEventListener('click', async () => {
-      await fetchAndDispatchNews(true);
-    });
-
-    document.getElementById('fetchLiveRssBtn').addEventListener('click', () => {
-      fetchAndDispatchNews(true);
-    });
-
-    async function fetchAndDispatchNews(isManualClick = false) {
-      const freshItems = await fetchAllWireFeeds();
-
-      if (freshItems && freshItems.length > 0) {
-        // 도착한 모든 최신 기사를 대기열에 대량 투입하여 멈춤 없이 연속 타건
-        freshItems.forEach(item => enqueueWireStory(item));
-        showNotice(`신규 전보 ${freshItems.length}건 대기열 인입 완료!`);
-      } else {
-        const unseen = state.allAggregatedNews.filter(it => !isArticleSeen(it));
-        if (unseen.length > 0) {
-          unseen.forEach(it => enqueueWireStory(it));
-          showNotice(`전신 대기 기사 ${unseen.length}건 추가 인입!`);
-        } else if (isManualClick && state.allAggregatedNews.length > 0) {
-          // 모든 기사를 다 읽었을 경우 새로운 회선 번갈아 타건
-          const anyItem = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
-          startTeletypeOutput(anyItem);
-          showNotice(`통합 기사 타건: '${anyItem.title.substring(0, 16)}...'`);
-        }
-      }
-    }
-
     document.getElementById('baudRateSelect').addEventListener('change', (e) => {
       state.baudInterval = parseInt(e.target.value, 10);
     });
 
-    // 수신 모드 전환 (실시간 직송 vs 1시간 / 6시간 / 24시간)
     const streamModeSelect = document.getElementById('streamModeSelect');
     if (streamModeSelect) {
       streamModeSelect.addEventListener('change', async (e) => {
         state.streamMode = e.target.value;
         const text = streamModeSelect.options[streamModeSelect.selectedIndex].text;
         showNotice(`수신 모드가 '${text}'(으)로 변경되었습니다.`);
-        
-        // 모드 변경 시 현재 대기열을 신선한 새 목록으로 갱신
         state.printQueue = [];
         updateQueueBadge();
         await fetchAndDispatchNews(true);
       });
     }
 
-    document.getElementById('soundToggleBtn').addEventListener('click', () => {
+    document.getElementById('soundToggleBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       state.soundEnabled = !state.soundEnabled;
       document.getElementById('soundIcon').innerText = state.soundEnabled ? '🔊' : '🔇';
       document.getElementById('soundLabel').innerText = state.soundEnabled ? '타건음 ON' : '타건음 OFF';
     });
 
-    // 키보드 콘솔 인터랙션
+    // 키보드 콘솔 터치 및 클릭 인터랙션
     document.querySelectorAll('.teletype-key, .teletype-spacebar').forEach(keyBtn => {
       keyBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         const key = e.currentTarget.dataset.key;
         playKeyClick();
         addTapeCharacter(key === 'SPACE' ? ' ' : (key === 'CRLF' ? '\n' : (key === 'BELL' ? '!' : key[0])));
@@ -1538,7 +1510,7 @@ ${cleanContent}
 
     function showNotice(msg) {
       const notice = document.createElement('div');
-      notice.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-950 px-4 py-2 rounded-full font-bold shadow-2xl z-50 text-xs flex items-center gap-2 border-2 border-slate-900 animate-bounce font-joseon';
+      notice.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-950 px-4 py-2 rounded-full font-bold shadow-2xl z-50 text-xs flex items-center gap-2 border-2 border-slate-900 animate-bounce font-joseon pointer-events-none';
       notice.innerHTML = `<span>📢</span> <span>${escapeHtml(msg)}</span>`;
       document.body.appendChild(notice);
       setTimeout(() => notice.remove(), 3200);
@@ -1557,25 +1529,41 @@ ${cleanContent}
       });
     }
 
+    async function fetchAndDispatchNews(isManualClick = false) {
+      const freshItems = await fetchAllWireFeeds();
+
+      if (freshItems && freshItems.length > 0) {
+        freshItems.forEach(item => enqueueWireStory(item));
+        showNotice(`신규 전보 ${freshItems.length}건 대기열 인입 완료!`);
+      } else {
+        const unseen = state.allAggregatedNews.filter(it => !isArticleSeen(it));
+        if (unseen.length > 0) {
+          unseen.forEach(it => enqueueWireStory(it));
+          showNotice(`전신 대기 기사 ${unseen.length}건 추가 인입!`);
+        } else if (isManualClick && state.allAggregatedNews.length > 0) {
+          const anyItem = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
+          startTeletypeOutput(anyItem);
+          showNotice(`통합 기사 타건: '${anyItem.title.substring(0, 16)}...'`);
+        }
+      }
+    }
+
     function setupContinuousLiveFeed() {
       if (state.autoPollInterval) clearInterval(state.autoPollInterval);
-      // 실시간 직송을 위해 8초마다 초고속 백그라운드 탐색
       state.autoPollInterval = setInterval(() => {
         if (!state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
       }, 8000);
     }
-      }, 10000);
-    }
 
-    // 다음 기사 타건 버튼 이벤트 (수동 즉시 트리거)
-    document.getElementById('fetchNextStoryBtn').addEventListener('click', async () => {
+    document.getElementById('fetchNextStoryBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
       await fetchAndDispatchNews(true);
     });
 
-    // 즉시 수신/새로고침 버튼 이벤트
-    document.getElementById('fetchLiveRssBtn').addEventListener('click', () => {
+    document.getElementById('fetchLiveRssBtn').addEventListener('click', (e) => {
+      e.preventDefault();
       fetchAndDispatchNews(true);
     });
 
@@ -1586,7 +1574,6 @@ ${cleanContent}
 
       applySelectedFont('font-joseon');
 
-      // 접속 즉시 전 세계 회선에서 최신 기사 수신 및 즉각 타건 시작
       setTimeout(async () => {
         await fetchAndDispatchNews(true);
         setupContinuousLiveFeed();
