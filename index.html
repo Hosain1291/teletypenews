@@ -983,7 +983,14 @@
         combined = combined.concat(state.channelCache[k] || []);
       });
 
-      combined.sort((a, b) => b.pubEpoch - a.pubEpoch);
+      // 접속 시마다 세션 시드에 따라 뉴스를 무작위 셔플하여 항상 새로운 뉴스로 시작
+      combined.sort((a, b) => {
+        if (state.sessionRandomSeed % 2 === 0) {
+          return (a.title.length + Math.random()) - (b.title.length + Math.random());
+        }
+        return b.pubEpoch - a.pubEpoch;
+      });
+
       state.allAggregatedNews = combined;
 
       let filtered = combined;
@@ -1744,9 +1751,12 @@ ${cleanContent}
 
     window.addEventListener('DOMContentLoaded', () => {
       loadSeenFingerprints();
+      // 접속할 때마다 고유 세션 무작위 시드 생성
+      state.sessionRandomSeed = Math.floor(Math.random() * 10000);
+      
       const now24 = getKSTFormatted24(new Date());
       const initLine = document.getElementById('connInitTimeLine');
-      if (initLine) initLine.innerText = `[멀티와이어 접속 시각: ${now24}]`;
+      if (initLine) initLine.innerText = `[멀티와이어 접속 시각: ${now24} | 세션 #${state.sessionRandomSeed}]`;
 
       applySelectedFont('font-joseon');
 
