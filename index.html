@@ -1446,10 +1446,11 @@ ${item.description || '상세 본문이 전신망을 통해 요약 전송되었�
 
       applySelectedFont('font-joseon');
 
-      setTimeout(() => {
-        fetchAndDispatchNews(false);
+      // 접속 즉시 전 세계 회선에서 최신 기사 수신 및 즉각 타건 시작
+      setTimeout(async () => {
+        await fetchAndDispatchNews(true);
         setupContinuousLiveFeed();
-      }, 400);
+      }, 300);
     });
   </script>
 </body>
