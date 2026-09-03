@@ -1807,7 +1807,9 @@ ${cleanContent}
       loadSeenFingerprints();
       const now24 = getKSTFormatted24(new Date());
       const initLine = document.getElementById('connInitTimeLine');
-      if (initLine) initLine.innerText = `[멀티와이어 접속 시각: ${now24} | 세션 #${state.sessionRandomSeed}]`;
+      if (initLine) {
+        initLine.innerText = `[신규 전신 세션 연결 시각: ${now24} | 통신 세션 #${state.sessionRandomSeed.toString().slice(-4)}]`;
+      }
 
       applySelectedFont('font-joseon');
 
