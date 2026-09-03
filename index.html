@@ -1480,6 +1480,21 @@ ${cleanContent}
       state.baudInterval = parseInt(e.target.value, 10);
     });
 
+    // 수신 모드 전환 (실시간 직송 vs 1시간 / 6시간 / 24시간)
+    const streamModeSelect = document.getElementById('streamModeSelect');
+    if (streamModeSelect) {
+      streamModeSelect.addEventListener('change', async (e) => {
+        state.streamMode = e.target.value;
+        const text = streamModeSelect.options[streamModeSelect.selectedIndex].text;
+        showNotice(`수신 모드가 '${text}'(으)로 변경되었습니다.`);
+        
+        // 모드 변경 시 현재 대기열을 신선한 새 목록으로 갱신
+        state.printQueue = [];
+        updateQueueBadge();
+        await fetchAndDispatchNews(true);
+      });
+    }
+
     document.getElementById('soundToggleBtn').addEventListener('click', () => {
       state.soundEnabled = !state.soundEnabled;
       document.getElementById('soundIcon').innerText = state.soundEnabled ? '🔊' : '🔇';
@@ -1544,11 +1559,13 @@ ${cleanContent}
 
     function setupContinuousLiveFeed() {
       if (state.autoPollInterval) clearInterval(state.autoPollInterval);
-      // 백그라운드 실시간 수신 주기 (10초마다 자동 탐색)
+      // 실시간 직송을 위해 8초마다 초고속 백그라운드 탐색
       state.autoPollInterval = setInterval(() => {
         if (!state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
+      }, 8000);
+    }
       }, 10000);
     }
 
