@@ -1766,11 +1766,11 @@ ${cleanContent}
 
       if (freshItems && freshItems.length > 0) {
         freshItems.forEach(item => enqueueWireStory(item));
-        showNotice(`신규 전보 ${freshItems.length}건 실시간 인입 완료!`);
+        const agencyLabel = CHANNEL_NAMES_KR[state.selectedAgency] || state.selectedAgency;
+        showNotice(`[${agencyLabel}] 신규 전보 ${freshItems.length}건 수신 완료!`);
       } else if (isManualClick && state.allAggregatedNews.length > 0) {
-        const randomPick = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
-        startTeletypeOutput(randomPick);
-        showNotice(`기사 타건: '${randomPick.title.substring(0, 16)}...'`);
+        const pick = state.allAggregatedNews[0];
+        startTeletypeOutput(pick);
       }
     }
 
@@ -1780,20 +1780,19 @@ ${cleanContent}
         if (state.isPoweredOn && !state.isPaused && !state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
-      }, 15000);
+      }, 14000);
     }
 
-    /* 중요 기사 타건 버튼 핸들러 */
+    /* 중요 기사 타건 버튼 핸들러 (현재 선택된 언론사 회선 내 중요 기사) */
     document.getElementById('fetchImportantStoryBtn').addEventListener('click', async (e) => {
       e.preventDefault();
       if (!state.isPoweredOn || state.isPaused) return;
-      showNotice('🚨 중요/긴급 전신 회선 최우선 스캔 중...');
+      const agencyLabel = CHANNEL_NAMES_KR[state.selectedAgency] || state.selectedAgency;
+      showNotice(`🚨 [${agencyLabel}] 중요/긴급 전보 최우선 수신 중...`);
       const freshItems = await fetchAllWireFeeds();
       const urgentItem = freshItems.find(it => it.title.includes('속보') || it.title.includes('1보') || it.title.includes('긴급')) || freshItems[0];
       if (urgentItem) {
         startTeletypeOutput(urgentItem);
-      } else if (state.allAggregatedNews.length > 0) {
-        startTeletypeOutput(state.allAggregatedNews[0]);
       }
     });
 
@@ -1801,7 +1800,8 @@ ${cleanContent}
     document.getElementById('fetchLiveRssBtn').addEventListener('click', async (e) => {
       e.preventDefault();
       if (!state.isPoweredOn || state.isPaused) return;
-      showNotice('⚡ 실시간 특보 회선 즉시 스캔 중...');
+      const agencyLabel = CHANNEL_NAMES_KR[state.selectedAgency] || state.selectedAgency;
+      showNotice(`⚡ [${agencyLabel}] 최신 기사 즉시 수신 중...`);
       await fetchAndDispatchNews(true);
     });
 
