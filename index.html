@@ -107,9 +107,11 @@
     .typewriter-font {
       font-family: 'Joseon100Years', 'Courier Prime', serif !important;
       letter-spacing: 0.02em;
-      line-height: 1.85;
+      line-height: 1.75;
       color: #1a221d;
       text-shadow: 0.25px 0.25px 0.4px rgba(26, 34, 29, 0.45);
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .font-joseon { font-family: 'Joseon100Years', serif !important; }
@@ -1012,6 +1014,29 @@
       if (el) el.innerText = state.printQueue.length;
     }
 
+    function sanitizeWireBody(rawText) {
+      if (!rawText) return '';
+      return rawText
+        // 1. HTML 태그 및 엔티티 치환
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/&quot;/gi, '"')
+        .replace(/&apos;/gi, "'")
+        .replace(/&amp;/gi, '&')
+        .replace(/&lt;/gi, '<')
+        .replace(/&gt;/gi, '>')
+        // 2. 외신 RSS 광고 레이블(Advertisement) 및 불필요한 단독 문구 제거
+        .replace(/^\s*Advertisement\s*$/gim, '')
+        .replace(/\bAdvertisement\b/gi, '')
+        // 3. 3줄 이상의 과도한 줄바꿈을 깔끔한 단락(2줄)으로 압축
+        .replace(/\r\n/g, '\n')
+        .split('\n')
+        .map(line => line.trim())
+        .join('\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+    }
+
     function enqueueWireStory(item) {
       if (!item) return;
       if (isArticleSeen(item)) return;
@@ -1044,6 +1069,7 @@
       else if (item.category === 'dw') wireOrigin = 'DEUTSCHE WELLE (DW) GLOBAL DESK [BERLIN / BONN]';
 
       const categoryName = CHANNEL_NAMES_KR[item.category] || (item.category || 'WIRE').toUpperCase();
+      const cleanContent = sanitizeWireBody(item.description || '상세 본문이 전신망을 통해 요약 전송되었습니다.');
 
       return `
 ======================================================================
@@ -1055,7 +1081,7 @@ PUBDATE: ${item.pubDate}
 ORIGIN : ${wireOrigin}
 ----------------------------------------------------------------------
 
-${item.description || '상세 본문이 전신망을 통해 요약 전송되었습니다.'}
+${cleanContent}
 
 -- 30 -- (END OF WIRE MESSAGE)
 ======================================================================
