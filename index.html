@@ -1533,17 +1533,20 @@ ${cleanContent}
       const freshItems = await fetchAllWireFeeds();
 
       if (freshItems && freshItems.length > 0) {
+        // 이미 fetchAllWireFeeds에서 셔플된 freshItems를 큐에 차례로 넣음
         freshItems.forEach(item => enqueueWireStory(item));
-        showNotice(`신규 전보 ${freshItems.length}건 대기열 인입 완료!`);
+        showNotice(`신규 전보 ${freshItems.length}건 무작위 인입 완료!`);
       } else {
         const unseen = state.allAggregatedNews.filter(it => !isArticleSeen(it));
         if (unseen.length > 0) {
-          unseen.forEach(it => enqueueWireStory(it));
-          showNotice(`전신 대기 기사 ${unseen.length}건 추가 인입!`);
+          const shuffledUnseen = shuffleArray(unseen);
+          shuffledUnseen.forEach(it => enqueueWireStory(it));
+          showNotice(`전신 대기 기사 ${shuffledUnseen.length}건 무작위 인입!`);
         } else if (isManualClick && state.allAggregatedNews.length > 0) {
-          const anyItem = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
-          startTeletypeOutput(anyItem);
-          showNotice(`통합 기사 타건: '${anyItem.title.substring(0, 16)}...'`);
+          // 수동 클릭 시에도 전체 풀에서 무작위 1건을 즉시 발췌
+          const randomPick = state.allAggregatedNews[Math.floor(Math.random() * state.allAggregatedNews.length)];
+          startTeletypeOutput(randomPick);
+          showNotice(`무작위 기사 타건: '${randomPick.title.substring(0, 16)}...'`);
         }
       }
     }
