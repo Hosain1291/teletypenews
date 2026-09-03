@@ -156,15 +156,14 @@
       transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
     }
 
-    /* 전원 OFF 시 기기 암전 효과 (본체는 보이되 화면/램프만 어두워짐) */
+    /* 전원 OFF 시 기기 외관은 유지되되 내부 디스플레이/램프만 어두워짐 (본체는 항상 잘 보임) */
     .machine-powered-off .hood-chamber,
     .machine-powered-off .teleprinter-paper,
-    .machine-powered-off #kstClock24,
     .machine-powered-off #tapeCharDisplay {
-      filter: brightness(0.22) grayscale(0.8) contrast(1.1);
+      filter: brightness(0.4) grayscale(0.6) contrast(1.05);
     }
     .machine-powered-off {
-      border-color: #26322b;
+      border-color: #35443b;
     }
 
     /* 기계식 키보드 콘솔 */
@@ -251,7 +250,7 @@
 
         <div class="brass-badge px-2 sm:px-3 py-1 rounded font-serif font-black tracking-wider text-[11px] sm:text-xs flex items-center gap-1.5 shadow">
           <span>★ TELETYPE CORP. MODEL 33-KSR ★</span>
-          <span class="text-[9px] bg-amber-950 text-amber-200 px-1 py-0.5 rounded font-mono">GLOBAL 24H WIRE</span>
+          <span class="text-[9px] bg-amber-950 text-amber-200 px-1.5 py-0.5 rounded font-mono">24H GLOBAL WIRE</span>
         </div>
       </div>
 
@@ -296,7 +295,7 @@
       </div>
     </div>
 
-    <!-- 3. 제어반 (중요 기사 타건 & 시간대 버킷 선택 & 특보 수신) -->
+    <!-- 3. 제어반 (중요 기사 타건 & 시간대 버킷 선택 & 실시간 특보) -->
     <div class="bg-[#17201c] p-2 sm:p-3 rounded-lg border border-[#303e36] flex flex-col gap-2 text-xs">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center flex-wrap gap-1 font-mono text-[11px] sm:text-xs">
@@ -331,6 +330,7 @@
             <span>⚡ 실시간 특보 수신</span>
           </button>
 
+          <!-- 시간대 버킷 선택 -->
           <div class="flex items-center gap-1 bg-[#0f1412] px-2 py-0.5 rounded border border-amber-500/50 text-[10px] sm:text-xs">
             <span class="text-amber-400 font-bold">⏳ 시간대 버킷:</span>
             <select id="timeBucketSelect" class="bg-transparent text-amber-300 font-bold focus:outline-none cursor-pointer">
@@ -387,7 +387,7 @@
             <span>찌익- 기사 절취</span>
           </button>
           <button id="clearPaperBtn" type="button" class="hardware-btn px-2 py-0.5 text-slate-400 text-[10px] sm:text-xs">
-            용지 비우기 (정지)
+            용지 비우기 / 정지
           </button>
         </div>
       </div>
@@ -660,6 +660,7 @@
       soundEnabled: true,
       baudInterval: 20,
       isTyping: false,
+      isPaused: false, // 인쇄 일시정지 상태
       typingTimer: null,
       currentNewsItem: null,
       currentFontClass: 'font-joseon',
@@ -726,7 +727,7 @@
 
     let audioCtx = null;
     function getAudioContext() {
-      if (!state.isPoweredOn || !state.soundEnabled) return null;
+      if (!state.isPoweredOn || state.isPaused || !state.soundEnabled) return null;
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (AudioContextClass) audioCtx = new AudioContextClass();
@@ -736,7 +737,7 @@
     }
 
     function playKeyClick() {
-      if (!state.isPoweredOn || !state.soundEnabled) return;
+      if (!state.isPoweredOn || state.isPaused || !state.soundEnabled) return;
       try {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -764,7 +765,7 @@
     }
 
     function playTeletypeBell() {
-      if (!state.isPoweredOn || !state.soundEnabled) return;
+      if (!state.isPoweredOn || state.isPaused || !state.soundEnabled) return;
       try {
         const ctx = getAudioContext();
         if (!ctx) return;
@@ -843,7 +844,7 @@
     window.addEventListener('resize', resizeTapeCanvas);
 
     function addTapeCharacter(char) {
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       const bits = charTo5Bit(char);
       tapeColumns.push({ bits, char });
       if (tapeColumns.length > MAX_TAPE_COLS) tapeColumns.shift();
@@ -858,7 +859,7 @@
       const h = tapeCanvas.clientHeight;
       tapeCtx.clearRect(0, 0, w, h);
 
-      tapeCtx.fillStyle = state.isPoweredOn ? '#ebdfbd' : '#8c836d';
+      tapeCtx.fillStyle = state.isPoweredOn && !state.isPaused ? '#ebdfbd' : '#8c836d';
       tapeCtx.fillRect(0, 0, w, h);
 
       const colWidth = 14;
@@ -924,12 +925,6 @@
           return parseRawXML(xmlText, channelKey);
         },
         async () => {
-          const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
-          if (!res.ok) throw new Error('allorigins json');
-          const data = await res.json();
-          return parseRawXML(data.contents, channelKey);
-        },
-        async () => {
           const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
           if (!res.ok) throw new Error('codetabs');
           const xmlText = await res.text();
@@ -976,7 +971,7 @@
     }
 
     async function fetchAllWireFeeds() {
-      if (!state.isPoweredOn) return [];
+      if (!state.isPoweredOn || state.isPaused) return [];
       const nowStr = new Date().toTimeString().split(' ')[0];
       updateStatusLine(`[통합 멀티와이어 실시간 동기화] (${nowStr})`);
 
@@ -1010,12 +1005,6 @@
 
       const unseen = filtered.filter(item => !isArticleSeen(item));
       const freshItems = unseen.length > 0 ? unseen : filtered;
-
-      if (freshItems.length > 0) {
-        updateStatusLine(`[회선 정상] 통합 전신문 대기 중`);
-      } else {
-        updateStatusLine(`[통신망 감시] 실시간 전신 대기 중`);
-      }
 
       return freshItems;
     }
@@ -1097,12 +1086,12 @@ ${cleanContent}
     }
 
     function triggerEmergencyBell(count = 4) {
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       let bellsLeft = count;
       if (alarmLight) alarmLight.classList.add('bell-alert-anim');
 
       const ringInterval = setInterval(() => {
-        if (!state.isPoweredOn) {
+        if (!state.isPoweredOn || state.isPaused) {
           clearInterval(ringInterval);
           return;
         }
@@ -1123,7 +1112,7 @@ ${cleanContent}
     let currentArticleParagraph = null;
 
     function enqueueWireStory(item) {
-      if (!state.isPoweredOn || !item) return;
+      if (!state.isPoweredOn || state.isPaused || !item) return;
       if (state.printQueue.some(q => getArticleFingerprint(q) === getArticleFingerprint(item))) return;
       markArticleSeen(item);
       state.printQueue.push(item);
@@ -1132,7 +1121,7 @@ ${cleanContent}
     }
 
     function processPrintQueue() {
-      if (!state.isPoweredOn || state.isTyping) return;
+      if (!state.isPoweredOn || state.isPaused || state.isTyping) return;
       if (state.printQueue.length === 0) return;
 
       const nextItem = state.printQueue.shift();
@@ -1141,7 +1130,7 @@ ${cleanContent}
     }
 
     function startTeletypeOutput(newsItem) {
-      if (!state.isPoweredOn || !newsItem) return;
+      if (!state.isPoweredOn || state.isPaused || !newsItem) return;
 
       state.currentNewsItem = newsItem;
       state.isTyping = true;
@@ -1165,7 +1154,7 @@ ${cleanContent}
     }
 
     function typeNextCharacter() {
-      if (!state.isPoweredOn || !state.isTyping || !currentArticleParagraph) return;
+      if (!state.isPoweredOn || state.isPaused || !state.isTyping || !currentArticleParagraph) return;
 
       try {
         if (currentTypeIndex < fullTextToType.length) {
@@ -1199,23 +1188,25 @@ ${cleanContent}
       if (typingIndicator) typingIndicator.classList.add('hidden');
       updateStatusLine('전신 인쇄 완료. 다음 소식 자동 타건 중...');
 
-      if (state.printQueue.length > 0) {
-        setTimeout(processPrintQueue, 350);
-      } else {
-        setTimeout(() => fetchAndDispatchNews(false), 2000);
+      if (state.isPoweredOn && !state.isPaused) {
+        if (state.printQueue.length > 0) {
+          setTimeout(processPrintQueue, 350);
+        } else {
+          setTimeout(() => fetchAndDispatchNews(false), 2000);
+        }
       }
     }
 
     document.getElementById('skipTypingBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      if (!state.isPoweredOn || !state.isTyping || !currentArticleParagraph) return;
+      if (!state.isPoweredOn || state.isPaused || !state.isTyping || !currentArticleParagraph) return;
       clearTimeout(state.typingTimer);
       currentArticleParagraph.textContent = fullTextToType;
       if (scrollWrapper) scrollWrapper.scrollTop = scrollWrapper.scrollHeight;
       finishTyping();
     });
 
-    // "용지 비우기" 버튼: 첫 번째 클릭 시 용지 클리어, 두 번째 연속 클릭 시 즉시 인쇄 중지(정지)
+    // "용지 비우기 / 정지" 버튼: 첫 번째 클릭 시 용지 클리어, 두 번째 연속 클릭 시 즉시 인쇄 중지(일시정지)
     document.getElementById('clearPaperBtn').addEventListener('click', (e) => {
       e.preventDefault();
       if (!state.isPoweredOn) return;
@@ -1243,14 +1234,13 @@ ${cleanContent}
         }
         showNotice('롤 용지를 새로 장착했습니다. (한 번 더 누르면 인쇄가 정지됩니다)');
 
-        // 3초 내에 두 번째 누르지 않으면 카운터 리셋
         if (state.clearPaperResetTimer) clearTimeout(state.clearPaperResetTimer);
         state.clearPaperResetTimer = setTimeout(() => {
           state.clearPaperClickCount = 0;
         }, 3000);
 
       } else if (state.clearPaperClickCount >= 2) {
-        // 두 번째 연속 클릭: 현재 인쇄 중단 및 정지
+        // 두 번째 연속 클릭: 현재 인쇄 중단 및 일시정지
         if (state.isTyping) {
           clearTimeout(state.typingTimer);
           state.isTyping = false;
@@ -1258,12 +1248,13 @@ ${cleanContent}
         }
         state.printQueue = [];
         updateQueueBadge();
+        state.isPaused = true;
         state.clearPaperClickCount = 0;
         if (state.clearPaperResetTimer) clearTimeout(state.clearPaperResetTimer);
         
         const statusBadge = document.getElementById('machineStatusBadge');
-        if (statusBadge) statusBadge.innerText = '인쇄 일시정지됨';
-        showNotice('⏸️ 텔레타이프 인쇄가 완전히 정지되었습니다.');
+        if (statusBadge) statusBadge.innerText = '인쇄 일시정지됨 (PAUSED)';
+        showNotice('⏸️ 텔레타이프 인쇄가 일시정지되었습니다. (전원 스위치나 재시작 버튼으로 재개)');
       }
     });
 
@@ -1518,7 +1509,7 @@ ${cleanContent}
     };
 
     window.replayArchiveItem = function(id) {
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       const item = state.archive.find(a => a.id === id);
       if (!item) return;
       if (archiveModal) archiveModal.classList.add('hidden');
@@ -1608,7 +1599,7 @@ ${cleanContent}
       document.getElementById('soundLabel').innerText = state.soundEnabled ? '타건음 ON' : '타건음 OFF';
     });
 
-    // 전원 ON/OFF 토글 로직 (OFF 시에도 기기 케이싱은 보이도록 처리)
+    // 전원 ON/OFF 토글 로직 (OFF 시에도 기기 본체 케이싱은 유지되도록 처리)
     const powerToggleBtn = document.getElementById('powerToggleBtn');
     const powerToggleKnob = document.getElementById('powerToggleKnob');
     const powerStatusLabel = document.getElementById('powerStatusLabel');
@@ -1627,6 +1618,7 @@ ${cleanContent}
         machineChassis.classList.remove('machine-powered-off');
         powerLed.classList.add('animate-pulse', 'bg-emerald-400');
         powerLed.classList.remove('bg-red-900');
+        state.isPaused = false;
         playTeletypeBell();
         showNotice('텔레타이프 전원이 켜졌습니다.');
         setTimeout(() => fetchAndDispatchNews(true), 500);
@@ -1644,14 +1636,14 @@ ${cleanContent}
         }
         state.printQueue = [];
         updateQueueBadge();
-        showNotice('텔레타이프 전원이 꺼졌습니다. (기기 본체는 대기 중)');
+        showNotice('텔레타이프 전원이 꺼졌습니다. (기기 본체는 유지됨)');
       }
     });
 
     document.querySelectorAll('.teletype-key, .teletype-spacebar').forEach(keyBtn => {
       keyBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (!state.isPoweredOn) return;
+        if (!state.isPoweredOn || state.isPaused) return;
         const key = e.currentTarget.dataset.key;
         playKeyClick();
         addTapeCharacter(key === 'SPACE' ? ' ' : (key === 'CRLF' ? '\n' : (key === 'BELL' ? '!' : key[0])));
@@ -1664,7 +1656,7 @@ ${cleanContent}
     });
 
     window.addEventListener('keydown', (e) => {
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
       const upper = e.key.toUpperCase();
       const matchedBtn = document.querySelector(`[data-key="${upper}"]`);
@@ -1707,7 +1699,7 @@ ${cleanContent}
     }
 
     async function fetchAndDispatchNews(isManualClick = false) {
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       const freshItems = await fetchAllWireFeeds();
 
       if (freshItems && freshItems.length > 0) {
@@ -1723,7 +1715,7 @@ ${cleanContent}
     function setupContinuousLiveFeed() {
       if (state.autoPollInterval) clearInterval(state.autoPollInterval);
       state.autoPollInterval = setInterval(() => {
-        if (state.isPoweredOn && !state.isTyping && state.printQueue.length === 0) {
+        if (state.isPoweredOn && !state.isPaused && !state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
       }, 15000);
@@ -1732,7 +1724,7 @@ ${cleanContent}
     // 중요 기사 타건 버튼
     document.getElementById('fetchImportantStoryBtn').addEventListener('click', async (e) => {
       e.preventDefault();
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       showNotice('🚨 중요/긴급 전신 회선 최우선 스캔 중...');
       const freshItems = await fetchAllWireFeeds();
       const urgentItem = freshItems.find(it => it.title.includes('속보') || it.title.includes('1보') || it.title.includes('긴급')) || freshItems[0];
@@ -1745,7 +1737,7 @@ ${cleanContent}
 
     document.getElementById('fetchLiveRssBtn').addEventListener('click', async (e) => {
       e.preventDefault();
-      if (!state.isPoweredOn) return;
+      if (!state.isPoweredOn || state.isPaused) return;
       showNotice('⚡ 실시간 특보 회선 즉시 스캔 중...');
       await fetchAndDispatchNews(true);
     });
