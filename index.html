@@ -1568,6 +1568,7 @@ ${cleanContent}
     });
 
     window.addEventListener('DOMContentLoaded', () => {
+      loadSeenFingerprints();
       const now24 = getKSTFormatted24(new Date());
       const initLine = document.getElementById('connInitTimeLine');
       if (initLine) initLine.innerText = `[회선 접속 기준 시각: ${now24}]`;
