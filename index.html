@@ -1544,12 +1544,23 @@ ${cleanContent}
 
     function setupContinuousLiveFeed() {
       if (state.autoPollInterval) clearInterval(state.autoPollInterval);
+      // 백그라운드 실시간 수신 주기 (10초마다 자동 탐색)
       state.autoPollInterval = setInterval(() => {
         if (!state.isTyping && state.printQueue.length === 0) {
           fetchAndDispatchNews(false);
         }
       }, 10000);
     }
+
+    // 다음 기사 타건 버튼 이벤트 (수동 즉시 트리거)
+    document.getElementById('fetchNextStoryBtn').addEventListener('click', async () => {
+      await fetchAndDispatchNews(true);
+    });
+
+    // 즉시 수신/새로고침 버튼 이벤트
+    document.getElementById('fetchLiveRssBtn').addEventListener('click', () => {
+      fetchAndDispatchNews(true);
+    });
 
     window.addEventListener('DOMContentLoaded', () => {
       const now24 = getKSTFormatted24(new Date());
