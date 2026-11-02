@@ -1140,6 +1140,17 @@
       }
     }
 
+    /* 응답이 없는 프록시에 무한정 매달리지 않도록 시간 제한을 둔 fetch */
+    async function fetchWithTimeout(url, options = {}, ms = 8000) {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), ms);
+      try {
+        return await fetch(url, { ...options, signal: ctrl.signal });
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
     /* RSS 피드 수신 프록시 파이프라인 */
     async function fetchAgencyArticles(agencyKey) {
       const feedUrls = AGENCY_FEEDS[agencyKey] || [];
@@ -1153,7 +1164,7 @@
 
         const proxies = [
           async () => {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rawUrl)}&api_key=`, { cache: 'no-store' });
+            const res = await fetchWithTimeout(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rawUrl)}&api_key=`, { cache: 'no-store' });
             if (!res.ok) throw new Error('rss2json');
             const data = await res.json();
             if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
@@ -1177,13 +1188,13 @@
             throw new Error('empty');
           },
           async () => {
-            const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
+            const res = await fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
             if (!res.ok) throw new Error('allorigins');
             const xmlText = await res.text();
             return parseRawXML(xmlText, agencyKey);
           },
           async () => {
-            const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
+            const res = await fetchWithTimeout(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlWithBust)}`, { cache: 'no-store' });
             if (!res.ok) throw new Error('codetabs');
             const xmlText = await res.text();
             return parseRawXML(xmlText, agencyKey);
@@ -1240,7 +1251,11 @@
 
       if (agencyKey === 'all') {
         const keys = Object.keys(AGENCY_FEEDS);
-        await Promise.all(keys.map(k => fetchAgencyArticles(k)));
+        // 느린 통신사 하나 때문에 전체가 멈추지 않도록, 15초 안에 도착한 회선만 모아서 인쇄
+        await Promise.race([
+          Promise.allSettled(keys.map(k => fetchAgencyArticles(k))),
+          new Promise(resolve => setTimeout(resolve, 15000))
+        ]);
         keys.forEach(k => {
           combined = combined.concat(state.agencyCaches[k] || []);
         });
