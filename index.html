@@ -827,10 +827,21 @@
       return `${m.year}-${m.month}-${m.day} ${m.hour}:${m.minute}:${m.second} KST`;
     }
 
-    function parsePubEpoch(rawDateStr) {
+    /* assumeTz: 시간대 표기가 없는 날짜를 어느 기준으로 볼지 ('Z' = UTC, '+09:00' = KST) */
+    function parsePubEpoch(rawDateStr, assumeTz = '+09:00') {
       if (!rawDateStr) return Date.now();
-      let parsed = Date.parse(rawDateStr);
-      if (!isNaN(parsed)) return parsed;
+      const raw = String(rawDateStr).trim();
+      // "2026-11-03 08:12:00" / "2026.11.03 08:12" 처럼 시간대가 없는 숫자형 날짜
+      const iso = raw.match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})[ T](\d{1,2}):(\d{2})(?::(\d{2}))?(\.\d+)?\s*(Z|[+-]\d{2}:?\d{2})?$/i);
+      if (iso) {
+        const pad = v => String(v).padStart(2, '0');
+        let tz = iso[8] || assumeTz;
+        if (/^[+-]\d{4}$/.test(tz)) tz = tz.slice(0, 3) + ':' + tz.slice(3);
+        const t = Date.parse(`${iso[1]}-${pad(iso[2])}-${pad(iso[3])}T${pad(iso[4])}:${iso[5]}:${iso[6] || '00'}${tz.toUpperCase()}`);
+        if (!isNaN(t)) return Math.min(t, Date.now());
+      }
+      let parsed = Date.parse(raw);
+      if (!isNaN(parsed)) return Math.min(parsed, Date.now());
 
       let cleaned = rawDateStr.trim();
       const directDate = new Date(cleaned);
@@ -1146,8 +1157,8 @@
             if (!res.ok) throw new Error('rss2json');
             const data = await res.json();
             if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
-              return data.items.map(it => {
-                const epoch = parsePubEpoch(it.pubDate);
+              const mapped = data.items.map(it => {
+                const epoch = parsePubEpoch(it.pubDate, 'Z');
                 return {
                   title: it.title || '무제 기사',
                   link: it.link || '',
@@ -1158,6 +1169,10 @@
                   agency: agencyKey
                 };
               });
+              // rss2json이 오래된 캐시를 돌려주면(최신 기사도 하루 이상 지남) 다른 프록시로 원본을 다시 받음
+              const newest = Math.max(...mapped.map(m => m.pubEpoch));
+              if (Date.now() - newest > 24 * 3600 * 1000) throw new Error('stale-cache');
+              return mapped;
             }
             throw new Error('empty');
           },
@@ -1237,16 +1252,19 @@
       }
 
       // 시간대 버킷 필터
+      // 사흘 넘은 묵은 기사는 어떤 회선에서도 인쇄하지 않음
+      combined = combined.filter(it => Date.now() - it.pubEpoch <= 72 * 3600 * 1000);
+      // 상대 시각은 받아온 시점이 아니라 지금 기준으로 다시 계산
+      combined.forEach(it => { it.relativeAge = formatRelativeAge(it.pubEpoch); });
+
       let filtered = combined;
       if (state.timeBucket === '1h') {
         filtered = combined.filter(it => calculateArticleAgeCategory(it.pubEpoch) === '1h');
-        if (filtered.length === 0) filtered = combined.slice(0, 8);
       } else if (state.timeBucket === '6h') {
         filtered = combined.filter(it => {
           const cat = calculateArticleAgeCategory(it.pubEpoch);
           return cat === '1h' || cat === '6h';
         });
-        if (filtered.length === 0) filtered = combined.slice(0, 12);
       } else if (state.timeBucket === '24h') {
         filtered = combined.filter(it => {
           const cat = calculateArticleAgeCategory(it.pubEpoch);
@@ -1356,10 +1374,12 @@
       const isUrgent = item.title.includes('속보') || item.title.includes('1보') || item.title.includes('긴급') || item.agency === 'newsis';
       
       const ageCat = calculateArticleAgeCategory(item.pubEpoch);
-      let timeTag = `🔴 [실시간 송출 / ${item.relativeAge}]`;
-      if (state.timeBucket === '1h' || ageCat === '1h') timeTag = `⏳ [1시간 전 특보 버킷 / ${item.relativeAge}]`;
-      else if (state.timeBucket === '6h' || ageCat === '6h') timeTag = `🕰️ [6시간 전 뉴스 버킷 / ${item.relativeAge}]`;
-      else if (state.timeBucket === '24h' || ageCat === '24h') timeTag = `📰 [24시간 전 뉴스 버킷 / ${item.relativeAge}]`;
+      item.relativeAge = formatRelativeAge(item.pubEpoch);
+      let timeTag = `📁 [지난 뉴스 / ${item.relativeAge}]`;
+      if (Date.now() - item.pubEpoch < 10 * 60 * 1000) timeTag = `🔴 [실시간 송출 / ${item.relativeAge}]`;
+      else if (ageCat === '1h') timeTag = `⏳ [1시간 이내 / ${item.relativeAge}]`;
+      else if (ageCat === '6h') timeTag = `🕰️ [6시간 이내 / ${item.relativeAge}]`;
+      else if (ageCat === '24h') timeTag = `📰 [24시간 이내 / ${item.relativeAge}]`;
       
       const flashTag = isUrgent ? '🚨 [URGENT FLASH / 긴급 전보] 🚨\n' : '';
       const wireOrigin = AGENCY_ORIGINS[item.agency] || 'INTERNATIONAL TELEGRAPH WIRE SERVICE';
@@ -1507,9 +1527,10 @@ ${cleanContent}
       if (freshItems && freshItems.length > 0) {
         freshItems.forEach(item => enqueueWireStory(item));
         showNotice(`[${AGENCY_LABELS[state.selectedAgency]}] 신규 전보 ${freshItems.length}건 수신 완료!`);
-      } else if (isManualClick && state.agencyCaches[state.selectedAgency]?.length > 0) {
-        const pick = state.agencyCaches[state.selectedAgency][0];
-        startTeletypeOutput(pick);
+      } else if (isManualClick) {
+        const bucketLabel = { '1h': '최근 1시간', '6h': '최근 6시간', '24h': '최근 24시간' }[state.timeBucket] || '최근 사흘';
+        updateStatusLine(`${bucketLabel} 안에 들어온 새 기사가 없습니다.`);
+        showNotice(`${bucketLabel} 안에 들어온 새 기사가 없습니다.`);
       }
     }
 
