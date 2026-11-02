@@ -2,15 +2,12 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TELETYPE MODEL 33-KSR INTERNATIONAL WIRE TERMINAL</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <!-- html2canvas for photo export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
@@ -21,7 +18,6 @@
       font-weight: normal;
       font-display: swap;
     }
-
     /* Stella 보조 서체 */
     @font-face {
       font-family: 'Stella';
@@ -29,7 +25,6 @@
       font-weight: 400;
       font-display: swap;
     }
-
     /* 둥근모 보조 서체 */
     @font-face {
       font-family: 'RoundedFixedsys';
@@ -37,696 +32,722 @@
       font-weight: normal;
       font-display: swap;
     }
+    /* 깍두기 제도체 */
+    @font-face {
+      font-family: 'KkakdugiDrafting';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610102356@kkakdugidrafting-extralight/kkakdugidrafting-extralight/KkakdugiDrafting-ExtraLight.woff2') format('woff2');
+      font-weight: 200;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'KkakdugiDrafting';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610102356@kkakdugidrafting-extralight/kkakdugidrafting-extralight/KkakdugiDrafting-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'KkakdugiDrafting';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610102356@kkakdugidrafting-extralight/kkakdugidrafting-extralight/KkakdugiDrafting-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'KkakdugiDrafting';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2610102356@kkakdugidrafting-extralight/kkakdugidrafting-extralight/KkakdugiDrafting-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
 
     :root {
-      --teletype-olive: #28332b;
-      --teletype-dark: #161e19;
-      --teletype-highlight: #3e4e43;
-      --teletype-shadow: #0a0e0c;
-      --paper-vintage: #faf4e3;
+      --beige-hi: #efe8d6;
+      --beige: #e2d9c3;
+      --beige-mid: #d3c8ad;
+      --beige-lo: #b8ab8c;
+      --beige-edge: #978a6c;
+      --ink: #2b2620;
+      --label: #5a4f3c;
+      --canary: #f4e9a6;
+      --canary-line: #e9dc8e;
+      --key: #1b1a19;
+      --lamp: #ffb43a;
     }
 
+    html { -webkit-text-size-adjust: 100%; background: #2c2c29; }
     body {
-      background: radial-gradient(circle at 50% 18%, #1f2823 0%, #0d120f 65%, #050706 100%);
-      font-family: 'Share Tech Mono', 'Courier Prime', monospace;
-      color: #e3ede6;
+      font-family: 'KkakdugiDrafting', 'Share Tech Mono', monospace;
+      color: var(--ink);
       min-height: 100vh;
-      user-select: none;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+      /* 1970년대 전신실: 나무 벽 패널 + 리놀륨 바닥 */
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 62%, rgba(0,0,0,.35) 62.2%, rgba(0,0,0,0) 63%),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.10) 0 2px, transparent 2px 120px),
+        linear-gradient(180deg, #5b4632 0%, #4a3826 60%, #3a3a36 62%, #2c2c29 100%);
+      background-attachment: fixed;
+      background-color: #2c2c29;
     }
+    #powerStatusLabel.text-emerald-400 { color: #2f6b2a !important; }
+    #powerStatusLabel.text-red-500 { color: #a3241a !important; }
 
-    /* 1940s-1950s 텔레타이프 중공업 주물 캐비닛 (Heavy Crinkle-finish Olive Steel) */
-    .teletype-chassis {
-      background: 
-        radial-gradient(ellipse at 50% 0%, rgba(68, 85, 74, 0.4) 0%, transparent 70%),
-        linear-gradient(175deg, #2f3b33 0%, #222b25 25%, #18201b 60%, #111713 100%);
-      border: 6px solid #3c4b41;
-      box-shadow: 
-        0 40px 80px -10px rgba(0,0,0,0.98),
-        inset 0 2px 4px rgba(255,255,255,0.2),
-        inset 0 -10px 20px rgba(0,0,0,0.9);
-      border-radius: 24px;
+    .lbl {
+      font-family: 'KkakdugiDrafting', 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--label);
+      font-weight: 700;
+    }
+    .mono { font-family: 'Share Tech Mono', monospace; }
+
+    /* ======== 본체 ======== */
+    .tty { position: relative; }
+    .tty-shell {
+      background:
+        radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,.45), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, var(--beige-hi) 0%, var(--beige) 35%, var(--beige-mid) 100%);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.7),
+        inset 0 -3px 0 rgba(0,0,0,.12),
+        0 30px 60px -20px rgba(0,0,0,.75);
+      border: 1px solid var(--beige-edge);
+    }
+    /* 상단 프린터 커버 (둥근 후드) */
+    .tty-hood {
+      border-radius: 46px 46px 14px 14px;
       position: relative;
-      transition: all 0.35s ease;
+    }
+    /* 커버 위로 빠져나온 카나리아 용지 리더 */
+    .paper-leader {
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      top: -38px; height: 46px; width: min(62%, 560px);
+      background: linear-gradient(180deg, #f7efbd, var(--canary));
+      clip-path: polygon(0 18%, 4% 6%, 8% 16%, 12% 4%, 16% 14%, 20% 2%, 24% 12%, 28% 6%, 32% 16%, 36% 4%, 40% 12%, 44% 2%, 48% 14%, 52% 6%, 56% 16%, 60% 4%, 64% 12%, 68% 2%, 72% 14%, 76% 6%, 80% 16%, 84% 4%, 88% 12%, 92% 2%, 96% 14%, 100% 6%, 100% 100%, 0 100%);
+      filter: drop-shadow(0 -2px 2px rgba(0,0,0,.25));
+      z-index: 0;
+    }
+    .tty-hood > * { position: relative; z-index: 1; }
+
+    /* 스모크 아크릴 창 */
+    .smoke-window {
+      background: linear-gradient(180deg, #3b342b 0%, #2a251f 100%);
+      border-radius: 26px 26px 8px 8px;
+      padding: 10px 12px 12px;
+      box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,.45),
+        inset 0 8px 18px rgba(0,0,0,.6),
+        0 1px 0 rgba(255,255,255,.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .smoke-window::after { /* 아크릴 반사광 */
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 22%, rgba(255,255,255,0) 60%, rgba(255,255,255,.07) 70%, rgba(255,255,255,0) 78%),
+        linear-gradient(180deg, rgba(120,90,50,.14), rgba(60,40,20,.10));
+      pointer-events: none;
+      border-radius: inherit;
+      z-index: 5;
     }
 
-    /* 상단 라운드 후드 (Plexiglas Window Frame) */
-    .hood-visor {
-      background: linear-gradient(180deg, #1b241e 0%, #0e1410 40%, #060907 100%);
-      border: 3px solid #324036;
-      box-shadow: 
-        inset 0 10px 25px rgba(0,0,0,0.95),
-        0 5px 12px rgba(0,0,0,0.7),
-        0 0 0 1px #111713;
-      border-radius: 14px;
+    /* 절취 바 */
+    .tear-bar {
+      height: 14px;
+      background:
+        linear-gradient(180deg, #f2f2ee 0%, #b9b9b2 45%, #8a8a84 55%, #d9d9d3 100%);
+      border-radius: 3px;
+      box-shadow: 0 2px 3px rgba(0,0,0,.5);
+      position: relative;
+    }
+    .tear-bar::after {
+      content: ''; position: absolute; left: 6px; right: 6px; bottom: -4px; height: 5px;
+      background: linear-gradient(135deg, transparent 50%, #9a9a94 50%) 0 0/6px 5px repeat-x,
+                  linear-gradient(225deg, transparent 50%, #9a9a94 50%) 0 0/6px 5px repeat-x;
     }
 
-    /* 회전 압동 롤러 (Platen Cylinder Roller) */
-    .platen-roller-bar {
-      background: repeating-linear-gradient(90deg, #121714 0px, #121714 12px, #1e2621 13px, #1e2621 26px);
-      box-shadow: inset 0 6px 12px rgba(0,0,0,0.95), inset 0 -6px 12px rgba(0,0,0,0.95);
-      border-top: 2px solid #36443a;
-      border-bottom: 2px solid #080c09;
-    }
-
-    /* 베이클라이트 널링 노브 (Bakelite Knob) */
-    .knurled-knob {
-      background: radial-gradient(circle at 35% 35%, #7a8c81 0%, #37443c 55%, #101512 100%);
-      border: 2px solid #0a0e0c;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.85), inset 0 2px 3px rgba(255,255,255,0.4);
-    }
-
-    /* 연속 전산 롤 용지 */
+    /* 카나리아 롤 용지 */
     .teleprinter-paper {
-      background: var(--paper-vintage);
-      background-image: 
-        linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
-        repeating-linear-gradient(0deg, #faf4e3, #faf4e3 23px, #f1e9ce 24px, #f1e9ce 25px);
-      box-shadow: 
-        inset 0 0 45px rgba(0, 0, 0, 0.12),
-        0 12px 28px rgba(0,0,0,0.65);
-      transition: filter 0.3s ease;
+      background-color: var(--canary);
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.06), rgba(0,0,0,0) 4%, rgba(0,0,0,0) 96%, rgba(0,0,0,.06)),
+        repeating-linear-gradient(0deg, transparent 0 27px, rgba(160,140,60,.12) 27px 28px);
+      transition: filter .3s ease;
     }
+    #paperScrollWrapper { scrollbar-width: thin; scrollbar-color: #b9a95a transparent; }
+    #paperScrollWrapper::-webkit-scrollbar { width: 6px; }
+    #paperScrollWrapper::-webkit-scrollbar-thumb { background: #b9a95a; border-radius: 3px; }
 
-    /* 스프로킷 피드 구멍 (Tractor Feed Holes) */
-    .sprocket-holes {
-      background-image: radial-gradient(#151d18 36%, transparent 38%);
-      background-size: 16px 25px;
-      background-position: center;
-      background-repeat: repeat-y;
-      width: 18px;
+    /* 플래튼 롤러 + 타자 캐리지 */
+    .platen {
+      height: 22px;
+      background: linear-gradient(180deg, #0b0b0a 0%, #2c2b28 35%, #3d3b37 50%, #1a1918 70%, #050505 100%);
+      border-radius: 11px;
+      position: relative;
+      box-shadow: 0 3px 4px rgba(0,0,0,.6);
     }
+    .platen-knob {
+      position: absolute; top: -4px; width: 26px; height: 30px; border-radius: 8px;
+      background: repeating-linear-gradient(90deg, #1a1a1a 0 2px, #3a3a38 2px 4px);
+      box-shadow: inset 0 2px 2px rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.6);
+    }
+    #carriageLight {
+      position: absolute; top: -10px; left: 0%;
+      width: 30px; height: 18px; margin-left: -15px;
+      border-radius: 4px 4px 2px 2px;
+      background: linear-gradient(180deg, #d9d9d2, #8f8f88);
+      box-shadow: 0 2px 3px rgba(0,0,0,.6), inset 0 1px 0 #fff;
+      transition: left .06s linear, background-color .05s;
+    }
+    #carriageLight::after { /* 리본 */
+      content: ''; position: absolute; left: 4px; right: 4px; top: 6px; height: 4px; background: #3a1414; border-radius: 1px;
+    }
+    #carriageLight.bg-amber-400 { background: linear-gradient(180deg, #fff6d5, #e6b85a) !important; }
 
-    /* 활판 잉크 활자 본문 */
+    /* 본문 활자 */
     .typewriter-font {
       font-family: 'Joseon100Years', 'Courier Prime', serif !important;
-      letter-spacing: -0.015em;
-      line-height: 1.72;
-      color: #1a221d;
-      text-shadow: 0.25px 0.25px 0.35px rgba(26, 34, 29, 0.45);
+      letter-spacing: -0.01em;
+      line-height: 1.75;
+      color: #24211c;
+      text-shadow: 0.3px 0.3px 0.4px rgba(36, 33, 28, 0.45);
       word-break: break-word;
       overflow-wrap: anywhere;
     }
-
     .font-joseon { font-family: 'Joseon100Years', serif !important; }
     .font-stella { font-family: 'Stella', serif !important; }
     .font-fixedsys { font-family: 'RoundedFixedsys', monospace !important; }
+    .font-kkakdugi { font-family: 'KkakdugiDrafting', monospace !important; font-weight: 400; }
 
-    /* 황동 명판 (Brass Plaque) */
-    .brass-nameplate {
-      background: linear-gradient(135deg, #f2d98b 0%, #c4a44b 45%, #94772b 85%, #6d5516 100%);
-      box-shadow: inset 0 1px 1.5px rgba(255,255,255,0.7), 0 3px 8px rgba(0,0,0,0.7);
-      border: 1.5px solid #634d15;
-      color: #261b04;
-      text-shadow: 0.5px 0.5px 0 rgba(255,255,255,0.4);
+    /* 명판 */
+    .tty-badge {
+      font-family: 'Courier Prime', serif;
+      font-weight: 700;
+      letter-spacing: .32em;
+      color: #f1e9d6;
+      background: linear-gradient(180deg, #4a4339, #2c2721);
+      border-radius: 4px;
+      padding: 3px 10px 3px 13px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 0 rgba(255,255,255,.8);
+    }
+    .engraved-plate {
+      background: linear-gradient(180deg, #2f2a24, #1d1a16);
+      border-radius: 5px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,.7), 0 1px 0 rgba(255,255,255,.7);
+      color: #e9dfc6;
     }
 
-    /* 보석 컷팅 적색 경보 램프 (Faceted Red Jewel Pilot Lamp) */
+    /* 벨 램프 */
     .faceted-jewel-lamp {
-      background: radial-gradient(circle at 35% 30%, #ff5c5c 0%, #b80000 60%, #470000 100%);
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.65), 0 3px 8px rgba(0,0,0,0.85);
-      border: 2px solid #240505;
+      background: radial-gradient(circle at 35% 30%, #ff8a6a 0%, #c41e0e 55%, #4a0703 100%);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,.6), 0 0 0 3px #c9c9c2, 0 0 0 4px #7f7f78, 0 2px 4px rgba(0,0,0,.5);
+    }
+    @keyframes bellAlarmFlash {
+      0%, 100% { opacity: .4; filter: none; }
+      50% { opacity: 1; filter: drop-shadow(0 0 14px #ff3a1a) brightness(1.4); }
+    }
+    .bell-alarm-active { animation: bellAlarmFlash .28s infinite ease-in-out; }
+
+    /* ======== 하단 데크 ======== */
+    .tty-deck {
+      border-radius: 14px 14px 22px 22px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,0) 14px),
+        linear-gradient(180deg, var(--beige) 0%, var(--beige-mid) 70%, var(--beige-lo) 100%);
+    }
+    .recess {
+      background: linear-gradient(180deg, #cbbfa2, #d8ceb5);
+      border-radius: 12px;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,.22), inset 0 -1px 0 rgba(255,255,255,.6);
+    }
+
+    /* 키보드 — 검정 원통형 키 */
+    .kbd { --k: clamp(21px, 6.1vw, 38px); --g: clamp(3px, .9vw, 7px); }
+    @media (min-width: 1024px) { .kbd { --k: clamp(23px, calc((100vw - 600px) / 17), 33px); --g: 5px; } }
+    .kbd-row { display: flex; gap: var(--g); justify-content: center; }
+    .teletype-keycap, .spacebar-keycap {
+      height: var(--k);
+      min-width: var(--k);
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 38%, #3a3836 0%, #232220 45%, var(--key) 70%);
+      color: #f3efe6;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: calc(var(--k) * .36);
+      line-height: 1;
+      box-shadow:
+        0 calc(var(--k) * .14) 0 #060606,
+        0 calc(var(--k) * .14 + 3px) 5px rgba(0,0,0,.45),
+        inset 0 -2px 3px rgba(0,0,0,.6),
+        inset 0 1px 1px rgba(255,255,255,.25);
+      cursor: pointer;
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: transform .05s, box-shadow .05s, color .05s;
+      user-select: none;
       position: relative;
     }
-
-    @keyframes bellAlarmFlash {
-      0%, 100% { opacity: 0.35; filter: drop-shadow(0 0 2px #ff0000); transform: scale(0.96); }
-      50% { opacity: 1; filter: drop-shadow(0 0 20px #ff2222) brightness(1.35); transform: scale(1.08); }
-    }
-    .bell-alarm-active {
-      animation: bellAlarmFlash 0.28s infinite ease-in-out;
-    }
-
-    /* 전원 토글 하우징 */
-    .power-switch-slot {
-      background: #0d120f;
-      border: 2px solid #303d34;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.9);
-    }
-    .toggle-lever {
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+    .teletype-keycap.wide { border-radius: calc(var(--k) * .5); padding: 0 calc(var(--k) * .22); font-size: calc(var(--k) * .22); letter-spacing: .02em; }
+    .teletype-keycap .sub { font-size: calc(var(--k) * .2); opacity: .75; margin-bottom: 1px; }
+    .spacebar-keycap { width: calc(var(--k) * 8); border-radius: calc(var(--k) * .5); font-size: calc(var(--k) * .22); letter-spacing: .3em; }
+    .teletype-keycap:active, .teletype-keycap.key-active,
+    .spacebar-keycap:active, .spacebar-keycap.key-active {
+      transform: translateY(calc(var(--k) * .11));
+      box-shadow: 0 calc(var(--k) * .03) 0 #060606, 0 2px 3px rgba(0,0,0,.4), inset 0 -1px 2px rgba(0,0,0,.6);
+      color: var(--lamp);
     }
 
-    /* 전원 OFF 상태 */
-    .power-off-state .hood-visor,
-    .power-off-state .teleprinter-paper,
-    .power-off-state #tapeCharDisplay,
+    /* 콜 컨트롤 유닛 — 사각 조명 푸시버튼 */
+    .circuit-selector-btn {
+      background: linear-gradient(180deg, #f6f1e4 0%, #e3dac4 100%);
+      border: 1px solid #a99c7e;
+      border-radius: 6px;
+      box-shadow: 0 4px 0 #9b8e70, 0 5px 6px rgba(0,0,0,.25), inset 0 1px 0 #fff;
+      color: var(--ink);
+      transition: transform .06s, box-shadow .06s, background .15s;
+      cursor: pointer;
+      position: relative;
+      font-family: 'KkakdugiDrafting', monospace;
+    }
+    .circuit-selector-btn:hover { background: linear-gradient(180deg, #fffaf0 0%, #ebe3cf 100%); }
+    .circuit-selector-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #9b8e70, 0 2px 3px rgba(0,0,0,.25); }
+    .circuit-selector-btn.circuit-active {
+      background: radial-gradient(120% 120% at 50% 40%, #fff3c4 0%, #ffd77a 55%, #f0b44a 100%) !important;
+      border-color: #b07a1c !important;
+      box-shadow: 0 2px 0 #9b8e70, 0 0 14px rgba(255,180,58,.75), inset 0 0 8px rgba(255,255,255,.7) !important;
+      transform: translateY(2px);
+    }
+    .circuit-led { box-shadow: inset 0 1px 1px rgba(0,0,0,.5); }
+    .circuit-selector-btn.circuit-active .circuit-led { background-color: #e0322a !important; box-shadow: 0 0 6px #ff4a3a !important; }
+
+    /* 일반 조작 버튼 (베이지 기계 버튼) */
+    .metal-actuator-btn { white-space: nowrap;
+      background: linear-gradient(180deg, #f3eee1 0%, #dcd2b9 100%);
+      border: 1px solid #a3967a;
+      border-radius: 6px;
+      box-shadow: 0 3px 0 #978a6c, 0 4px 5px rgba(0,0,0,.2), inset 0 1px 0 #fff;
+      color: var(--ink);
+      font-family: 'KkakdugiDrafting', monospace;
+      font-weight: 700;
+      transition: transform .06s, box-shadow .06s, filter .1s;
+      cursor: pointer;
+    }
+    .metal-actuator-btn:hover { filter: brightness(1.04); }
+    .metal-actuator-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #978a6c, 0 1px 2px rgba(0,0,0,.2); }
+    .metal-actuator-btn.btn-dark { background: linear-gradient(180deg, #3a3631, #211e1a); color: #f1e9d6; border-color: #111; box-shadow: 0 3px 0 #000, 0 4px 5px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.2); }
+    .metal-actuator-btn.btn-red { background: linear-gradient(180deg, #c8402c, #8f2414); color: #fff2e6; border-color: #5e1408; box-shadow: 0 3px 0 #5e1408, 0 4px 5px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.3); }
+    .metal-actuator-btn.btn-amber { background: linear-gradient(180deg, #ffd77a, #e9a531); color: #2b1d05; border-color: #9b6a12; box-shadow: 0 3px 0 #9b6a12, 0 4px 5px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.6); }
+
+    /* 셀렉터 — 각인 다이얼 플레이트 */
+    .dial-select {
+      appearance: none; -webkit-appearance: none;
+      background: linear-gradient(180deg, #2f2a24, #1d1a16);
+      color: #f3e7c4;
+      border-radius: 5px;
+      padding: 5px 26px 5px 9px;
+      font-family: 'KkakdugiDrafting', monospace;
+      font-size: 12px;
+      width: 100%;
+      box-shadow: inset 0 2px 3px rgba(0,0,0,.7), 0 1px 0 rgba(255,255,255,.7);
+      background-image: linear-gradient(45deg, transparent 50%, #e8c66a 50%), linear-gradient(135deg, #e8c66a 50%, transparent 50%), linear-gradient(180deg, #2f2a24, #1d1a16);
+      background-position: calc(100% - 13px) 52%, calc(100% - 8px) 52%, 0 0;
+      background-size: 5px 5px, 5px 5px, 100% 100%;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+    .dial-select option { background: #2a2520; color: #f3e7c4; }
+
+    /* 전원 로터리 노브 (LINE / OFF) */
+    .power-knob {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #4a4540 0%, #24211e 60%, #111 100%);
+      box-shadow: 0 0 0 4px #cfc6ae, 0 0 0 5px #8f846a, 0 4px 6px rgba(0,0,0,.5), inset 0 1px 1px rgba(255,255,255,.3);
+      position: relative; cursor: pointer;
+    }
+    #powerToggleLever {
+      position: absolute; left: 50%; top: 50%;
+      width: 10px; height: 46px; margin: -23px 0 0 -5px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #2b2825, #514b44, #2b2825) !important;
+      box-shadow: 0 1px 2px rgba(0,0,0,.7);
+      transform: rotate(45deg) !important;
+      transition: transform .25s cubic-bezier(.4,0,.2,1);
+    }
+    #powerToggleLever::before { content: ''; position: absolute; left: 3px; top: 3px; width: 4px; height: 9px; border-radius: 2px; background: #f3efe6; }
+    .power-off-state #powerToggleLever { transform: rotate(-45deg) !important; }
+
+    /* 펀치 테이프 */
+    .tape-slot {
+      background: #1d1a16;
+      border-radius: 6px;
+      padding: 5px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,.8), 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    /* 받침대 */
+    .pedestal { display: flex; justify-content: space-between; padding: 0 9%; }
+    .pedestal .leg { width: 18%; height: 70px; background: linear-gradient(90deg, #a69a7c, #d9cfb6 40%, #b5a98b); border-radius: 0 0 6px 6px; box-shadow: inset 0 8px 10px rgba(0,0,0,.25); }
+    .pedestal .shelf { position: absolute; left: 9%; right: 9%; height: 10px; top: 0; background: #8f846a; }
+
+    /* 전원 OFF */
+    .power-off-state .smoke-window,
     .power-off-state #punchedTapeCanvas,
     .power-off-state #agencySwitchboard {
-      filter: brightness(0.38) grayscale(0.7) contrast(1.1);
+      filter: brightness(.55) grayscale(.6);
     }
-    .power-off-state #powerLed {
-      background-color: #3b1111 !important;
-      box-shadow: none !important;
-      animation: none !important;
-    }
-    .power-off-state #carriageLight {
-      background-color: #1a1e1b !important;
-    }
+    .power-off-state #powerLed { background-color: #3b1111 !important; box-shadow: none !important; animation: none !important; }
 
-    /* 3단 기계식 바우도 키캡 */
-    .teletype-keycap {
-      background: radial-gradient(circle at 40% 35%, #2a342e 0%, #171f1a 75%, #090d0b 100%);
-      border: 1.5px solid #4a5c50;
-      box-shadow: 0 4px 0 #080b09, 0 5px 6px rgba(0,0,0,0.85), inset 0 1px 2px rgba(255,255,255,0.3);
-      transition: transform 0.05s, box-shadow 0.05s, border-color 0.05s;
-      cursor: pointer;
-    }
-    .teletype-keycap:active, .teletype-keycap.key-active {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #080b09, 0 2px 3px rgba(0,0,0,0.7), inset 0 2px 4px rgba(0,0,0,0.8);
-      border-color: #f59e0b;
-      color: #fbbf24;
-    }
-
-    .spacebar-keycap {
-      background: linear-gradient(180deg, #242e28 0%, #141b16 100%);
-      border: 1.5px solid #3c4a41;
-      box-shadow: 0 4px 0 #070908, 0 6px 8px rgba(0,0,0,0.85);
-      cursor: pointer;
-    }
-    .spacebar-keycap:active, .spacebar-keycap.key-active {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #070908, 0 2px 3px rgba(0,0,0,0.7);
-    }
-
-    /* 일반 메탈 조작 버튼 */
-    .metal-actuator-btn {
-      background: linear-gradient(180deg, #324037 0%, #1c2620 100%);
-      border: 1.5px solid #44564b;
-      box-shadow: 0 3px 0 #0d120f, 0 4px 6px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.25);
-      color: #e2ede6;
-      transition: all 0.06s ease-out;
-      cursor: pointer;
-    }
-    .metal-actuator-btn:hover {
-      border-color: #688270;
-      color: #ffffff;
-    }
-    .metal-actuator-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0 #0d120f, 0 1px 2px rgba(0,0,0,0.7);
-    }
-
-    /* ================= 묵직한 하드웨어 물리 회선 푸시버튼 (HEAVY VINTAGE PUSHBUTTON) ================= */
-    .circuit-selector-btn {
-      background: linear-gradient(180deg, #2b3930 0%, #1a231d 55%, #101612 100%);
-      border: 2px solid #415547;
-      border-bottom: 3.5px solid #0d1310;
-      box-shadow: 
-        0 4px 6px rgba(0,0,0,0.8),
-        inset 0 1.5px 1px rgba(255,255,255,0.25),
-        inset 0 -2px 4px rgba(0,0,0,0.6);
-      color: #d8e5dc;
-      transition: transform 0.06s ease, box-shadow 0.06s ease, background 0.15s ease, border-color 0.15s ease;
-      cursor: pointer;
-      position: relative;
-    }
-    .circuit-selector-btn:hover {
-      border-color: #f59e0b;
-      background: linear-gradient(180deg, #384a3e 0%, #222d25 55%, #151d18 100%);
-      color: #ffffff;
-    }
-    .circuit-selector-btn:active {
-      transform: translateY(3px);
-      border-bottom-width: 1.5px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.8), inset 0 2px 4px rgba(0,0,0,0.7);
-    }
-    /* 선택된 활성 회선 상태 (ACTIVE CIRCUIT) */
-    .circuit-selector-btn.circuit-active {
-      background: linear-gradient(180deg, #443217 0%, #2e1e07 60%, #1c1102 100%) !important;
-      border-color: #f59e0b !important;
-      border-bottom-color: #854d0e !important;
-      color: #fbbf24 !important;
-      box-shadow: 
-        0 0 12px rgba(245, 158, 11, 0.45),
-        inset 0 1.5px 2px rgba(255,255,255,0.4),
-        inset 0 -2px 6px rgba(0,0,0,0.7) !important;
-    }
-    .circuit-selector-btn.circuit-active .circuit-led {
-      background-color: #10b981 !important;
-      box-shadow: 0 0 8px #34d399, 0 0 14px #10b981 !important;
-    }
-
-    /* 찌익- 종이 절취 애니메이션 */
+    /* 찌익- 종이 절취 */
     @keyframes paperTearMotion {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      30% { transform: translateY(12px) rotate(1.2deg); opacity: 0.94; }
-      100% { transform: translateY(100px) rotate(5deg); opacity: 0; }
+      30% { transform: translateY(-12px) rotate(-1.2deg); opacity: .94; }
+      100% { transform: translateY(-120px) rotate(-5deg); opacity: 0; }
     }
-    .tearing-paper-anim {
-      animation: paperTearMotion 0.65s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+    .tearing-paper-anim { animation: paperTearMotion .65s cubic-bezier(.5,0,.75,0) forwards; }
+
+    /* 모달 — 마닐라 서류철 */
+    .manila {
+      background: linear-gradient(180deg, #efe4c4, #e5d7b0);
+      border: 1px solid #a8956a;
+      color: var(--ink);
+      box-shadow: 0 30px 60px rgba(0,0,0,.6);
+    }
+    .manila-head { background: linear-gradient(180deg, #d9c89a, #cdbb8a); border-bottom: 1px solid #a8956a; }
+    .archive-card { background: #fbf6e6; border: 1px solid #cdbd93; box-shadow: 0 2px 0 #d8c99f; }
+    .archive-card:hover { border-color: #b07a1c; }
+    .manila input, .manila select.plain {
+      background: #fbf6e6; border: 1px solid #b9a77c; color: var(--ink); border-radius: 5px;
     }
   </style>
 </head>
-<body class="p-1 sm:p-3 md:p-6 flex flex-col items-center justify-start min-h-screen">
+<body class="px-2 sm:px-4 md:px-6 pt-12 sm:pt-14 pb-6 flex flex-col items-center justify-start min-h-screen">
 
-  <!-- ================= 텔레타이프 기기 본체 콘솔 (TELETYPE CHASSIS) ================= -->
-  <div id="machineChassis" class="w-full max-w-5xl teletype-chassis p-2.5 sm:p-4 md:p-6 flex flex-col gap-3 sm:gap-4 relative overflow-hidden">
-    
-    <!-- 모서리 철제 볼트 리벳 장식 -->
-    <div class="absolute top-2.5 left-2.5 w-2.5 h-2.5 rounded-full bg-[#49584f] border border-[#1b221e] shadow"></div>
-    <div class="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-[#49584f] border border-[#1b221e] shadow"></div>
-    <div class="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 rounded-full bg-[#49584f] border border-[#1b221e] shadow"></div>
-    <div class="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-[#49584f] border border-[#1b221e] shadow"></div>
+  <div class="w-full max-w-[1180px]">
+  <!-- ================= TELETYPE MODEL 33 본체 ================= -->
+  <div id="machineChassis" class="tty flex flex-col gap-0">
 
-    <!-- 1. 기기 상단 메탈 명판 & 전원 토글 스위치 & KST 디지털 시계 -->
-    <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b-2 border-[#334237]/80">
-      
-      <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-        <!-- 메탈 전원 토글 스위치 (ON/OFF) -->
-        <div class="flex items-center gap-1.5 bg-[#0e1310] px-2 py-1 rounded border border-[#2b372f] shadow-inner">
-          <span id="powerStatusLabel" class="text-[10px] font-mono font-bold text-emerald-400">PWR: ON</span>
-          <button id="powerToggleBtn" type="button" title="전원 스위치" class="w-11 h-5 rounded-full power-switch-slot relative flex items-center p-0.5 cursor-pointer focus:outline-none">
-            <div id="powerToggleLever" class="w-4 h-4 rounded-full bg-emerald-400 shadow-md transform translate-x-6 toggle-lever"></div>
-          </button>
+    <!-- ===== 상단 프린터 커버 ===== -->
+    <div class="tty-shell tty-hood p-3 sm:p-5 md:p-6 pb-3 sm:pb-4">
+      <div class="paper-leader" aria-hidden="true"></div>
+
+      <!-- 커버 상단 라벨 줄 -->
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3 px-1 sm:px-3">
+        <div class="flex items-center gap-2.5">
+          <div id="alarmLight" title="긴급 전보 벨 경보등" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full faceted-jewel-lamp opacity-40 transition-all duration-200"></div>
+          <span class="lbl text-[10px] sm:text-xs">Bell</span>
+        </div>
+        <div class="flex items-center gap-2 engraved-plate px-2.5 py-1 mono text-[11px] sm:text-xs">
+          <span id="powerLed" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+          <span id="kstClock24" class="tracking-widest text-[#f6d27a]">----.--.-- --:--:-- KST</span>
+        </div>
+      </div>
+
+      <!-- 스모크 아크릴 창: 용지 / 플래튼 -->
+      <div class="smoke-window">
+        <div class="tear-bar mx-2 sm:mx-6 mb-2 flex items-center justify-center">
+          <span id="typingIndicator" class="hidden mono text-[9px] tracking-widest text-[#5a1d10] animate-pulse relative z-10">● TYPING WIRE DISPATCH</span>
         </div>
 
-        <!-- 보석 컷팅 비상 타종 램프 (BELL JEWEL) -->
-        <div class="relative flex items-center justify-center shrink-0" title="긴급 전보 벨 경보등">
-          <div id="alarmLight" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full faceted-jewel-lamp opacity-35 flex items-center justify-center transition-all duration-200">
-            <span class="text-[7px] sm:text-[8px] font-black text-amber-100 pointer-events-none drop-shadow">BELL</span>
+        <div id="paperScrollWrapper" class="relative overflow-y-auto teleprinter-paper mx-2 sm:mx-6 h-[44vh] sm:h-[400px] md:h-[440px] rounded-sm">
+          <div id="teleprinterPaper" class="px-4 py-4 sm:px-8 sm:py-6 md:px-12 typewriter-font font-joseon text-[13px] sm:text-sm md:text-base whitespace-pre-wrap break-words select-text">
+            <div class="text-center my-4 sm:my-6 text-[#6b5f3a] font-mono text-xs sm:text-sm leading-relaxed">
+              ===============================================================<br>
+              TELETYPE MODEL-33 INTERNATIONAL WIRE TERMINAL [SEOUL BUREAU]<br>
+              24H DUPLEX INDEPENDENT WIRE CIRCUIT SYSTEM<br>
+              ===============================================================<br><br>
+              [상태] 오른쪽 콜 컨트롤 패널의 통신사 버튼(뉴시스, AP, CNN, 알자지라, DW, 프랑스24, RT)을 누르면<br>
+              해당 언론사의 최신 전보만을 단독으로 수신하여 연속 롤 용지에 인쇄합니다.<br>
+              <span id="connInitTimeLine" class="text-[#7a4a12] font-bold"></span><br>
+              ===============================================================
+            </div>
           </div>
         </div>
 
-        <!-- 1940s 황동 각인 명판 -->
-        <div class="brass-nameplate px-2.5 sm:px-3 py-1 rounded font-serif font-black tracking-wider text-[11px] sm:text-xs flex items-center gap-1.5 shadow">
-          <span>★ TELETYPE CORP. MODEL 33-KSR ★</span>
-          <span class="text-[9px] bg-amber-950 text-amber-200 px-1.5 py-0.5 rounded font-mono font-bold">SEOUL DUPLEX WIRE</span>
+        <!-- 플래튼 & 타이프박스 캐리지 -->
+        <div class="relative mt-2 mx-0 sm:mx-2">
+          <div class="platen mx-6 sm:mx-10">
+            <div class="absolute left-6 right-6 top-0 bottom-0">
+              <div id="carriageLight"></div>
+            </div>
+          </div>
+          <div class="platen-knob" style="left:0"></div>
+          <div class="platen-knob" style="right:0"></div>
         </div>
       </div>
 
-      <!-- 실시간 24시간 KST 전자 시계 -->
-      <div class="flex items-center gap-2 bg-[#0c110e] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md border border-[#2e3a32] shadow-inner font-mono text-[11px] sm:text-xs shrink-0">
-        <span id="powerLed" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-        <span class="text-emerald-400 font-bold hidden sm:inline">KST:</span>
-        <span id="kstClock24" class="text-amber-300 font-bold tracking-widest">----.--.-- --:--:-- KST</span>
-      </div>
-
-      <!-- 사운드 및 전신 창고 아카이브 바인더 -->
-      <div class="flex items-center gap-1.5 sm:gap-2 ml-auto">
-        <button id="soundToggleBtn" type="button" class="metal-actuator-btn px-2.5 py-1 rounded flex items-center gap-1 text-[11px] sm:text-xs">
-          <span id="soundIcon">🔊</span>
-          <span id="soundLabel" class="hidden sm:inline">타건음 ON</span>
-        </button>
-
-        <button id="openArchiveBtn" type="button" class="metal-actuator-btn bg-amber-800 hover:bg-amber-700 border-amber-600/80 text-amber-200 px-2.5 py-1 rounded font-bold flex items-center gap-1.5 font-joseon text-[11px] sm:text-xs">
-          <span>🗄️ 전신 창고</span>
-          <span id="archiveCountBadge" class="bg-[#0e1310] text-amber-300 px-1.5 py-0.2 rounded-full text-[10px] font-mono border border-amber-600/40">0</span>
-        </button>
+      <!-- 커버 하단: 상태 & 절취 -->
+      <div class="flex flex-wrap items-center justify-between gap-2 mt-3 px-1 sm:px-3">
+        <div class="flex items-center gap-2 text-[11px] sm:text-xs min-w-0">
+          <span class="lbl">Queue</span>
+          <span class="engraved-plate mono px-2 py-0.5 text-[#f6d27a]"><span id="queueCountBadge">0</span></span>
+          <span id="machineStatusBadge" class="truncate font-bold text-[#3f5a2a]">정상 수신 대기 중</span>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="tearAndSaveBtn" type="button" class="metal-actuator-btn btn-amber px-3 py-1.5 text-[11px] sm:text-xs">✂ 찌익- 기사 절취</button>
+          <button id="clearPaperBtn" type="button" class="metal-actuator-btn px-2.5 py-1.5 text-[11px] sm:text-xs" title="1번 클릭: 용지 비움 / 2번 연속 클릭: 인쇄 일시정지">용지 비우기 / 정지</button>
+        </div>
       </div>
     </div>
 
-    <!-- ================= [신규 핵심] 통신선 단독 회선 선택 스위치보드 (AGENCY WIRE SWITCHBOARD) ================= -->
-    <div id="agencySwitchboard" class="bg-[#111813] p-2 sm:p-3 rounded-xl border-2 border-[#394a3e] shadow-2xl flex flex-col gap-2">
-      <div class="flex items-center justify-between border-b border-[#253229] pb-1.5">
+    <!-- ===== 하단 데크: 테이프 / 키보드 / 콜 컨트롤 ===== -->
+    <div class="tty-shell tty-deck -mt-1 p-3 sm:p-4 md:p-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[220px_minmax(0,1fr)_240px] xl:grid-cols-[250px_minmax(0,1fr)_270px] gap-3 sm:gap-4">
+
+        <!-- 좌: 테이프 펀치 & 설정 -->
+        <div class="recess p-3 flex flex-col gap-2.5 order-3 lg:order-1">
+          <div class="flex items-center justify-between">
+            <span class="lbl text-[10px]">Tape Punch · ITA2</span>
+            <span id="tapeCharDisplay" class="mono text-[9px] text-[#6b4a12] truncate max-w-[60%] text-right">STANDBY</span>
+          </div>
+          <div class="tape-slot">
+            <div class="relative w-full h-9 bg-[#efe3bf] rounded-sm overflow-hidden">
+              <canvas id="punchedTapeCanvas" class="w-full h-full block"></canvas>
+            </div>
+          </div>
+          <div id="tapeStatusMsg" class="text-[11px] text-[#5a4f3c] truncate">선택된 통신선에 연결 대기 중...</div>
+
+          <div class="grid grid-cols-1 gap-2 pt-2 border-t border-[#b5a888]">
+            <label class="flex flex-col gap-1">
+              <span class="lbl text-[10px]">Type Face · 인쇄 서체</span>
+              <select id="fontSelectDropdown" class="dial-select">
+                <option value="font-joseon" selected>조선일보 100년체 (정통 활판)</option>
+                <option value="font-stella">Stella (신문 세리프)</option>
+                <option value="font-fixedsys">둥근모 (Fixedsys 타자기체)</option>
+                <option value="font-kkakdugi">깍두기 제도체 (드래프팅)</option>
+              </select>
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="flex flex-col gap-1">
+                <span class="lbl text-[10px]">Window · 시간대</span>
+                <select id="timeBucketSelect" class="dial-select">
+                  <option value="all" selected>전체</option>
+                  <option value="1h">1H</option>
+                  <option value="6h">6H</option>
+                  <option value="24h">24H</option>
+                </select>
+              </label>
+              <label class="flex flex-col gap-1">
+                <span class="lbl text-[10px]">Speed · 타속</span>
+                <select id="baudRateSelect" class="dial-select">
+                  <option value="45">45 Baud</option>
+                  <option value="18" selected>75 Baud</option>
+                  <option value="4">110 Baud</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 중앙: 키보드 -->
+        <div class="kbd recess px-2 py-3 sm:p-4 flex flex-col items-center justify-center gap-[calc(var(--g)+4px)] order-1 lg:order-2 md:col-span-2 lg:col-span-1">
+          <div class="w-full flex items-center justify-between px-1 -mt-1 mb-1">
+            <span class="tty-badge text-[11px] sm:text-sm">TELETYPE</span>
+            <span class="lbl text-[9px] sm:text-[10px]">Model 33 KSR</span>
+          </div>
+
+          <div class="kbd-row">
+            <button type="button" class="teletype-keycap" data-key="1"><span class="sub">!</span>1</button>
+            <button type="button" class="teletype-keycap" data-key="2"><span class="sub">"</span>2</button>
+            <button type="button" class="teletype-keycap" data-key="3"><span class="sub">#</span>3</button>
+            <button type="button" class="teletype-keycap" data-key="4"><span class="sub">$</span>4</button>
+            <button type="button" class="teletype-keycap" data-key="5"><span class="sub">%</span>5</button>
+            <button type="button" class="teletype-keycap" data-key="6"><span class="sub">&amp;</span>6</button>
+            <button type="button" class="teletype-keycap" data-key="7"><span class="sub">'</span>7</button>
+            <button type="button" class="teletype-keycap" data-key="8"><span class="sub">(</span>8</button>
+            <button type="button" class="teletype-keycap" data-key="9"><span class="sub">)</span>9</button>
+            <button type="button" class="teletype-keycap" data-key="0">0</button>
+            <button type="button" class="teletype-keycap" data-key=":"><span class="sub">*</span>:</button>
+            <button type="button" class="teletype-keycap" data-key="-"><span class="sub">=</span>-</button>
+            <button type="button" class="teletype-keycap wide" data-key="HEREIS">HERE<br>IS</button>
+          </div>
+          <div class="kbd-row" style="margin-left: calc(var(--k) * .5)">
+            <button type="button" class="teletype-keycap" data-key="ESC" style="font-size:calc(var(--k)*.24)">ESC</button>
+            <button type="button" class="teletype-keycap" data-key="Q">Q</button>
+            <button type="button" class="teletype-keycap" data-key="W">W</button>
+            <button type="button" class="teletype-keycap" data-key="E">E</button>
+            <button type="button" class="teletype-keycap" data-key="R">R</button>
+            <button type="button" class="teletype-keycap" data-key="T">T</button>
+            <button type="button" class="teletype-keycap" data-key="Y">Y</button>
+            <button type="button" class="teletype-keycap" data-key="U">U</button>
+            <button type="button" class="teletype-keycap" data-key="I">I</button>
+            <button type="button" class="teletype-keycap" data-key="O">O</button>
+            <button type="button" class="teletype-keycap" data-key="P">P</button>
+            <button type="button" class="teletype-keycap wide" data-key="CRLF">LINE<br>FEED</button>
+            <button type="button" class="teletype-keycap wide" data-key="RETURN">RE-<br>TURN</button>
+          </div>
+          <div class="kbd-row" style="margin-left: calc(var(--k) * .2)">
+            <button type="button" class="teletype-keycap wide" data-key="CTRL">CTRL</button>
+            <button type="button" class="teletype-keycap" data-key="A">A</button>
+            <button type="button" class="teletype-keycap" data-key="S">S</button>
+            <button type="button" class="teletype-keycap" data-key="D">D</button>
+            <button type="button" class="teletype-keycap" data-key="F">F</button>
+            <button type="button" class="teletype-keycap" data-key="G"><span class="sub">BELL</span>G</button>
+            <button type="button" class="teletype-keycap" data-key="H">H</button>
+            <button type="button" class="teletype-keycap" data-key="J">J</button>
+            <button type="button" class="teletype-keycap" data-key="K">K</button>
+            <button type="button" class="teletype-keycap" data-key="L">L</button>
+            <button type="button" class="teletype-keycap" data-key=";"><span class="sub">+</span>;</button>
+            <button type="button" class="teletype-keycap wide" data-key="RUBOUT">RUB<br>OUT</button>
+            <button type="button" class="teletype-keycap wide" data-key="BELL" style="color:#ffb3a0">BELL</button>
+          </div>
+          <div class="kbd-row">
+            <button type="button" class="teletype-keycap wide" data-key="SHIFT">SHIFT</button>
+            <button type="button" class="teletype-keycap" data-key="Z">Z</button>
+            <button type="button" class="teletype-keycap" data-key="X">X</button>
+            <button type="button" class="teletype-keycap" data-key="C">C</button>
+            <button type="button" class="teletype-keycap" data-key="V">V</button>
+            <button type="button" class="teletype-keycap" data-key="B">B</button>
+            <button type="button" class="teletype-keycap" data-key="N">N</button>
+            <button type="button" class="teletype-keycap" data-key="M">M</button>
+            <button type="button" class="teletype-keycap" data-key=","><span class="sub">&lt;</span>,</button>
+            <button type="button" class="teletype-keycap" data-key="."><span class="sub">&gt;</span>.</button>
+            <button type="button" class="teletype-keycap" data-key="/"><span class="sub">?</span>/</button>
+            <button type="button" class="teletype-keycap wide" data-key="SHIFT2">SHIFT</button>
+          </div>
+          <div class="kbd-row mt-1">
+            <button type="button" class="spacebar-keycap" data-key="SPACE">SPACE</button>
+          </div>
+        </div>
+
+        <!-- 우: 콜 컨트롤 유닛 (회선 선택 + 전원) -->
+        <div id="agencySwitchboard" class="recess p-3 flex flex-col gap-2.5 order-2 lg:order-3">
+          <div class="flex items-center justify-between">
+            <span class="lbl text-[10px]">Call Control · 회선</span>
+            <span id="currentConnectedAgencyBadge" class="engraved-plate mono px-2 py-0.5 text-[10px] text-[#f6d27a] truncate max-w-[58%]">🚨 뉴시스 단독 회선</span>
+          </div>
+
+          <div id="agencyCircuitButtons" class="grid grid-cols-4 md:grid-cols-2 gap-2">
+            <button type="button" data-agency="newsis" onclick="window.switchAgencyCircuit('newsis')" class="circuit-selector-btn circuit-active py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="text-[12px] font-bold">뉴시스</span></span>
+              <span class="mono text-[8px] opacity-70">NEWSIS</span>
+            </button>
+            <button type="button" data-agency="apnews" onclick="window.switchAgencyCircuit('apnews')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">AP</span></span>
+              <span class="mono text-[8px] opacity-70">GLOBAL</span>
+            </button>
+            <button type="button" data-agency="cnn" onclick="window.switchAgencyCircuit('cnn')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">CNN</span></span>
+              <span class="mono text-[8px] opacity-70">USA</span>
+            </button>
+            <button type="button" data-agency="aljazeera" onclick="window.switchAgencyCircuit('aljazeera')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">알자지라</span></span>
+              <span class="mono text-[8px] opacity-70">DOHA</span>
+            </button>
+            <button type="button" data-agency="dw" onclick="window.switchAgencyCircuit('dw')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">DW</span></span>
+              <span class="mono text-[8px] opacity-70">GERMANY</span>
+            </button>
+            <button type="button" data-agency="france24" onclick="window.switchAgencyCircuit('france24')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">프랑스24</span></span>
+              <span class="mono text-[8px] opacity-70">PARIS</span>
+            </button>
+            <button type="button" data-agency="rt" onclick="window.switchAgencyCircuit('rt')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">RT</span></span>
+              <span class="mono text-[8px] opacity-70">MOSCOW</span>
+            </button>
+            <button type="button" data-agency="all" onclick="window.switchAgencyCircuit('all')" class="circuit-selector-btn py-1.5 px-1 flex flex-col items-center gap-0.5 text-center">
+              <span class="flex items-center gap-1"><span class="circuit-led w-1.5 h-1.5 rounded-full bg-slate-600"></span><span class="text-[12px] font-bold">전체 순환</span></span>
+              <span class="mono text-[8px] opacity-70">ALL 7</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-[#b5a888]">
+            <button id="fetchImportantStoryBtn" type="button" class="metal-actuator-btn btn-red px-2 py-1.5 text-[11px]">중요 기사 타건</button>
+            <button id="fetchLiveRssBtn" type="button" class="metal-actuator-btn btn-dark px-2 py-1.5 text-[11px]">실시간 특보 수신</button>
+            <button id="saveRollPhotoBtn" type="button" class="metal-actuator-btn px-2 py-1.5 text-[11px]">사진 저장</button>
+            <button id="skipTypingBtn" type="button" title="현재 기사 즉시 인쇄" class="metal-actuator-btn px-2 py-1.5 text-[11px]">즉시 인쇄</button>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 pt-2 border-t border-[#b5a888]">
+            <div class="flex items-center gap-3">
+              <button id="powerToggleBtn" type="button" title="전원 스위치 (LINE / OFF)" class="power-knob shrink-0 focus:outline-none">
+                <div id="powerToggleLever"></div>
+              </button>
+              <div class="flex flex-col leading-tight">
+                <span class="lbl text-[9px]">Off · Line</span>
+                <span id="powerStatusLabel" class="text-[10px] font-mono font-bold text-emerald-400">PWR: ON</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-1.5 items-end">
+              <button id="soundToggleBtn" type="button" class="metal-actuator-btn px-2 py-1 text-[11px] flex items-center gap-1">
+                <span id="soundIcon">🔊</span><span id="soundLabel">타건음 ON</span>
+              </button>
+              <button id="openArchiveBtn" type="button" class="metal-actuator-btn btn-amber px-2 py-1 text-[11px] flex items-center gap-1.5">
+                <span>전신 창고</span>
+                <span id="archiveCountBadge" class="engraved-plate mono px-1.5 text-[10px] text-[#f6d27a]">0</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 앞면 에이프런 -->
+      <div class="flex flex-wrap items-center justify-between gap-2 mt-3 sm:mt-4 px-1 text-[10px] sm:text-[11px]">
+        <span class="lbl">Seoul Duplex Wire · 24H Realtime Receiver</span>
         <div class="flex items-center gap-2">
-          <span class="text-sm sm:text-base">📡</span>
-          <h2 class="font-joseon font-bold text-xs sm:text-sm text-amber-300 tracking-wide">
-            통신사 단독 회선 선택 콘솔 (WIRE CIRCUIT SELECTOR)
-          </h2>
-          <span class="text-[10px] text-slate-400 font-mono hidden sm:inline">[원하는 통신사 버튼을 누르면 해당 언론사 뉴스만 단독 인쇄됩니다]</span>
+          <span id="counterDisplay" class="engraved-plate mono px-2 py-0.5 text-[#f6d27a]">수신 완료: 0건</span>
+          <span id="activeFontBadge" class="lbl truncate">JOSEON 100Y</span>
         </div>
-        <div class="flex items-center gap-1.5 bg-[#0a0f0c] px-2 py-0.5 rounded border border-amber-500/40 text-[10px] sm:text-xs font-mono">
-          <span class="text-slate-400">현재 회선:</span>
-          <span id="currentConnectedAgencyBadge" class="text-emerald-400 font-bold">🚨 뉴시스 단독 회선</span>
-        </div>
-      </div>
-
-      <!-- 7개 언론사 + 통합순환 물리 푸시버튼 랙 -->
-      <div id="agencyCircuitButtons" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5 sm:gap-2">
-        
-        <!-- 1. 뉴시스 -->
-        <button type="button" data-agency="newsis" onclick="window.switchAgencyCircuit('newsis')" class="circuit-selector-btn circuit-active py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-emerald-400 shadow"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🚨 뉴시스</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">NEWSIS [국내/속보]</span>
-        </button>
-
-        <!-- 2. AP 외신 -->
-        <button type="button" data-agency="apnews" onclick="window.switchAgencyCircuit('apnews')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🗽 AP 외신</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">AP WIRE [GLOBAL]</span>
-        </button>
-
-        <!-- 3. CNN -->
-        <button type="button" data-agency="cnn" onclick="window.switchAgencyCircuit('cnn')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🔴 CNN</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">CNN INTL [USA]</span>
-        </button>
-
-        <!-- 4. 알자지라 -->
-        <button type="button" data-agency="aljazeera" onclick="window.switchAgencyCircuit('aljazeera')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🌍 알자지라</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">AL JAZEERA [DOHA]</span>
-        </button>
-
-        <!-- 5. DW 독일 -->
-        <button type="button" data-agency="dw" onclick="window.switchAgencyCircuit('dw')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🇩🇪 DW 독일</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">DEUTSCHE WELLE</span>
-        </button>
-
-        <!-- 6. 프랑스24 -->
-        <button type="button" data-agency="france24" onclick="window.switchAgencyCircuit('france24')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🇫🇷 프랑스24</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">FRANCE 24 [PARIS]</span>
-        </button>
-
-        <!-- 7. RT 통신 -->
-        <button type="button" data-agency="rt" onclick="window.switchAgencyCircuit('rt')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon">🇷🇺 RT 통신</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100">RT NEWS [MOSCOW]</span>
-        </button>
-
-        <!-- 8. 전체 순환 통합 -->
-        <button type="button" data-agency="all" onclick="window.switchAgencyCircuit('all')" class="circuit-selector-btn py-2 px-2 rounded-lg flex flex-col items-center justify-center gap-1 text-center group border-amber-600/60">
-          <div class="flex items-center gap-1">
-            <span class="circuit-led w-2 h-2 rounded-full bg-slate-600"></span>
-            <span class="text-xs sm:text-sm font-bold font-joseon text-amber-300">🌐 전체 순환</span>
-          </div>
-          <span class="text-[9px] font-mono opacity-70 group-hover:opacity-100 text-amber-200">7대 통신망 교차</span>
-        </button>
-
-      </div>
-    </div>
-
-    <!-- 2. 5-단위 보도 천공 종이 테이프 (ITA2 Baudot Tape Punch Bay) -->
-    <div class="hood-visor p-2 sm:p-2.5 rounded-lg flex flex-col gap-1 relative overflow-hidden">
-      <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono">
-        <div class="flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <span class="text-emerald-400 font-bold tracking-wider">5-UNIT ITA2 BAUDOT TAPE PUNCH [SINGLE WIRE SYNC]</span>
-        </div>
-        <span id="tapeCharDisplay" class="text-amber-300 font-bold tracking-wider text-[10px] sm:text-[11px]">STANDBY</span>
-      </div>
-
-      <!-- 실제 천공 테이프 캔버스 뷰 -->
-      <div class="relative w-full h-8 sm:h-9 bg-[#e8dbba] rounded border border-amber-950/70 overflow-hidden flex items-center shadow-inner">
-        <canvas id="punchedTapeCanvas" class="w-full h-full block"></canvas>
-        <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#0e1310] to-transparent pointer-events-none"></div>
-      </div>
-
-      <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400 font-mono">
-        <span>◀ TAPE FEED (3열+피드스프로킷+2열)</span>
-        <span id="tapeStatusMsg" class="text-amber-300 font-bold truncate ml-2">선택된 통신선에 연결 대기 중...</span>
-      </div>
-    </div>
-
-    <!-- 3. 전신 조작 보드 (중요 기사 타건, 시간대 버킷, 실시간 특보, 서체) -->
-    <div class="bg-[#151d18] p-2 sm:p-3 rounded-lg border border-[#2d3a31] flex flex-col gap-2 text-xs">
-      
-      <!-- 서체 및 타속 설정 바 -->
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-1 bg-[#0e1310] px-2 py-0.5 rounded border border-amber-600/40 shadow-inner">
-          <span class="text-amber-400 font-bold text-[10px] sm:text-xs">🔤 인쇄 서체:</span>
-          <select id="fontSelectDropdown" class="bg-transparent text-slate-200 border-none text-[10px] sm:text-xs focus:outline-none cursor-pointer font-joseon">
-            <option value="font-joseon" selected class="bg-[#151d18]">조선일보 100년체 (정통 활판)</option>
-            <option value="font-stella" class="bg-[#151d18]">Stella (신문 세리프)</option>
-            <option value="font-fixedsys" class="bg-[#151d18]">둥근모 (Fixedsys 타자기체)</option>
-          </select>
-        </div>
-
-        <div class="flex items-center gap-2 font-mono ml-auto">
-          <!-- 시간대 버킷 선택기 (1H, 6H, 24H, 전체) -->
-          <div class="flex items-center gap-1 bg-[#0e1310] px-2 py-0.5 rounded border border-amber-500/50 text-[10px] sm:text-xs">
-            <span class="text-amber-400 font-bold">⏳ 시간대:</span>
-            <select id="timeBucketSelect" class="bg-transparent text-amber-300 font-bold focus:outline-none cursor-pointer">
-              <option value="all" selected class="bg-[#0e1310]">전체 시간대</option>
-              <option value="1h" class="bg-[#0e1310]">1시간 전 뉴스 (1H)</option>
-              <option value="6h" class="bg-[#0e1310]">6시간 전 뉴스 (6H)</option>
-              <option value="24h" class="bg-[#0e1310]">24시간 전 뉴스 (24H)</option>
-            </select>
-          </div>
-
-          <!-- 타속 조절 -->
-          <div class="flex items-center gap-1 bg-[#0e1310] px-2 py-0.5 rounded border border-slate-700 text-[10px] sm:text-xs">
-            <span class="text-slate-400">타속:</span>
-            <select id="baudRateSelect" class="bg-transparent text-emerald-400 focus:outline-none cursor-pointer">
-              <option value="45" class="bg-[#0e1310]">45 Baud</option>
-              <option value="18" selected class="bg-[#0e1310]">75 Baud (표준)</option>
-              <option value="4" class="bg-[#0e1310]">110 Baud (초고속)</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- 액추에이터 실행 버튼 열 -->
-      <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-700/60">
-        <div class="flex items-center gap-2 flex-wrap">
-          <!-- 중요 기사 우선 타건 버튼 -->
-          <button id="fetchImportantStoryBtn" type="button" class="metal-actuator-btn bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 text-red-100 font-bold px-3 py-1.5 rounded-md shadow text-xs font-joseon border-red-700 flex items-center gap-1">
-            <span>🚨 중요 기사 타건</span>
-          </button>
-
-          <!-- 실시간 특보 즉시 수신 버튼 -->
-          <button id="fetchLiveRssBtn" type="button" class="metal-actuator-btn bg-emerald-900 hover:bg-emerald-800 text-emerald-100 font-bold px-3 py-1.5 rounded-md text-xs font-joseon border-emerald-700 flex items-center gap-1">
-            <span>⚡ 실시간 특보 수신</span>
-          </button>
-        </div>
-
-        <div class="flex items-center gap-2 font-mono ml-auto">
-          <!-- 롤 용지 전체 사진 저장 -->
-          <button id="saveRollPhotoBtn" type="button" class="metal-actuator-btn bg-amber-800 hover:bg-amber-700 text-amber-100 px-2.5 py-1 rounded text-[11px] sm:text-xs font-bold font-joseon">
-            📸 사진 저장
-          </button>
-
-          <!-- 즉시 인쇄 완료 -->
-          <button id="skipTypingBtn" type="button" title="현재 기사 즉시 인쇄" class="metal-actuator-btn px-2.5 py-1 text-slate-300 text-[11px] sm:text-xs">
-            ⏭️ 즉시 인쇄
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. 플래튼 롤러 & 연속 롤 용지 인쇄 뷰어 (Plexiglas Window Viewport) -->
-    <div class="hood-visor p-2 sm:p-3 rounded-lg border-2 border-[#313f36] flex flex-col gap-1.5 relative shadow-2xl overflow-hidden">
-      
-      <!-- 상단 압동 롤러 (Platen Roller Bar) -->
-      <div class="relative w-full h-7 sm:h-8 platen-roller-bar rounded flex items-center justify-between px-2 overflow-hidden">
-        <div class="w-3.5 sm:w-4 h-5 sm:h-6 knurled-knob rounded-sm shrink-0" title="플래튼 고무 노브"></div>
-        <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono text-slate-400 truncate mx-2">
-          <span class="text-amber-400">✂️</span>
-          <span class="font-bold text-slate-300">SERRATED TEAR-OFF KNIFE BAR [CONTINUOUS ROLL FEED]</span>
-          <span id="typingIndicator" class="text-emerald-400 hidden animate-pulse font-bold">● TYPING WIRE DISPATCH...</span>
-        </div>
-        <div class="w-3.5 sm:w-4 h-5 sm:h-6 knurled-knob rounded-sm shrink-0" title="플래튼 고무 노브"></div>
-      </div>
-
-      <!-- 조작 툴바 및 대기열 상태 -->
-      <div class="flex items-center justify-between px-1 text-[11px] sm:text-xs">
-        <div class="text-slate-400 font-mono flex items-center gap-1.5 truncate">
-          <span>대기열: <span id="queueCountBadge" class="text-amber-400 font-bold">0</span>건</span>
-          <span class="text-slate-600">|</span>
-          <span id="machineStatusBadge" class="text-emerald-400 font-bold font-joseon">정상 수신 대기 중</span>
-        </div>
-
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button id="tearAndSaveBtn" type="button" class="metal-actuator-btn bg-amber-800 hover:bg-amber-700 text-amber-100 font-bold px-3 py-1 rounded shadow font-joseon text-[11px] sm:text-xs">
-            <span>찌익- 기사 절취</span>
-          </button>
-          
-          <!-- 용지 비우기 (1회: 비우기, 2회 연속: 완전 정지) -->
-          <button id="clearPaperBtn" type="button" class="metal-actuator-btn px-2.5 py-1 text-slate-300 text-[10px] sm:text-xs" title="1번 클릭: 용지 비움 / 2번 연속 클릭: 인쇄 일시정지">
-            용지 비우기 / 정지
-          </button>
-        </div>
-      </div>
-
-      <!-- 연속 전산 롤 용지 스크롤 챔버 -->
-      <div id="paperScrollWrapper" class="relative overflow-y-auto rounded-md teleprinter-paper flex h-[46vh] sm:h-[420px] md:h-[480px]">
-        <div class="sprocket-holes flex-shrink-0"></div>
-
-        <div id="teleprinterPaper" class="flex-grow p-3 sm:p-5 md:p-6 typewriter-font font-joseon text-xs sm:text-sm md:text-base whitespace-pre-wrap break-words select-text">
-          <div class="text-center my-4 sm:my-6 text-slate-600 font-mono text-xs sm:text-sm leading-relaxed">
-            ===============================================================<br>
-            TELETYPE MODEL-33 INTERNATIONAL WIRE TERMINAL [SEOUL BUREAU]<br>
-            24H DUPLEX INDEPENDENT WIRE CIRCUIT SYSTEM<br>
-            ===============================================================<br><br>
-            [상태] 상단의 통신사 버튼(뉴시스, AP, CNN, 알자지라, DW, 프랑스24, RT)을 누르면<br>
-            해당 언론사의 최신 전보만을 단독으로 수신하여 연속 롤 용지에 인쇄합니다.<br>
-            <span id="connInitTimeLine" class="text-emerald-800 font-bold"></span><br>
-            ===============================================================
-          </div>
-        </div>
-
-        <div class="sprocket-holes flex-shrink-0"></div>
-      </div>
-
-      <!-- 타자 캐리지 램프 가이드 바 -->
-      <div id="carriageLight" class="h-1 bg-amber-900/40 rounded w-full transition-all duration-75"></div>
-    </div>
-
-    <!-- 5. 3열 기계식 텔레타이프 키보드 콘솔 (Baudot Stepped Deck) -->
-    <div class="bg-[#0f1411] p-2 sm:p-3 rounded-lg border-2 border-[#29362e] flex flex-col gap-1 sm:gap-1.5 items-center shadow-2xl">
-      <div class="w-full flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-mono px-1">
-        <span>BAUDOT ITA2 MECHANICAL KEYBOARD CONSOLE</span>
-        <span class="text-amber-400 font-bold">PHYSICAL KEY CLICK SYNC</span>
-      </div>
-
-      <!-- 1열 (Q ~ P, BELL) -->
-      <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full">
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Q">Q</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="W">W</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="E">E</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="R">R</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="T">T</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Y">Y</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="U">U</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="I">I</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="O">O</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="P">P</button>
-        <button type="button" class="teletype-keycap w-8 h-8 sm:w-12 sm:h-9 md:w-14 md:h-10 rounded-md font-mono font-bold text-[9px] sm:text-[10px] text-red-300" data-key="BELL">BELL🔔</button>
-      </div>
-
-      <!-- 2열 (A ~ L, CRLF) -->
-      <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full">
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="A">A</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="S">S</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="D">D</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="F">F</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="G">G</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="H">H</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="J">J</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="K">K</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="L">L</button>
-        <button type="button" class="teletype-keycap w-10 h-8 sm:w-14 sm:h-9 md:w-16 md:h-10 rounded-md font-mono font-bold text-[9px] sm:text-[10px] text-emerald-300" data-key="CRLF">CRLF↵</button>
-      </div>
-
-      <!-- 3열 (Z ~ M, SPACEBAR) -->
-      <div class="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full">
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="Z">Z</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="X">X</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="C">C</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="V">V</button>
-        
-        <button type="button" class="spacebar-keycap px-4 sm:px-10 md:px-16 h-8 sm:h-9 md:h-10 rounded-md font-mono font-bold text-[10px] sm:text-xs text-slate-300 flex-grow max-w-[160px] sm:max-w-[220px]" data-key="SPACE">
-          SPACE
-        </button>
-
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="B">B</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="N">N</button>
-        <button type="button" class="teletype-keycap w-7 h-8 sm:w-8.5 sm:h-9 md:w-10 md:h-10 rounded-full font-mono font-bold text-[10px] sm:text-xs text-amber-200" data-key="M">M</button>
-      </div>
-    </div>
-
-    <!-- 하단 상태 표시줄 -->
-    <div class="flex items-center justify-between text-[10px] sm:text-xs text-slate-400 font-mono px-1">
-      <div class="flex items-center gap-2 sm:gap-3">
-        <span class="flex items-center gap-1 text-emerald-400">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 24H REALTIME WIRE RECEIVER
-        </span>
-        <span id="counterDisplay" class="text-amber-400 font-bold">수신 완료: 0건</span>
-      </div>
-      <div class="flex items-center gap-2 text-[10px] sm:text-[11px] truncate">
-        <span id="activeFontBadge" class="text-amber-300 font-bold truncate">JOSEON 100Y</span>
       </div>
     </div>
   </div>
 
-  <!-- ================= [모달] 전신 기록 보관 창고 (ARCHIVE BINDER) ================= -->
-  <div id="archiveModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-6">
-    <div class="bg-[#1d2520] border-2 border-amber-600/70 w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl flex flex-col overflow-hidden text-slate-200">
-      
-      <div class="bg-[#121814] p-3.5 sm:p-4 border-b border-[#2e3b32] flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="text-2xl">🗄️</span>
-          <div>
-            <h2 class="text-base sm:text-lg font-bold text-amber-400 font-joseon">전신 기록 보관 창고 (TELEGRAPH ARCHIVE)</h2>
-            <p class="text-xs text-slate-400 font-mono">절취되어 바인더에 보관된 실물 전신문 서류철</p>
-          </div>
+  <!-- 받침대 -->
+  <div class="pedestal relative" aria-hidden="true">
+    <div class="leg"></div><div class="leg"></div>
+  </div>
+  </div>
+
+  <!-- ================= [모달] 전신 기록 보관 창고 ================= -->
+  <div id="archiveModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-6">
+    <div class="manila w-full max-w-4xl max-h-[90vh] rounded-xl flex flex-col overflow-hidden">
+      <div class="manila-head p-3.5 sm:p-4 flex items-center justify-between">
+        <div>
+          <h2 class="text-base sm:text-lg font-bold font-joseon">전신 기록 보관 창고 <span class="lbl text-[10px] align-middle">Telegraph Archive</span></h2>
+          <p class="text-xs text-[#5a4f3c]">절취되어 바인더에 보관된 실물 전신문 서류철</p>
         </div>
-        <button id="closeArchiveBtn" type="button" class="metal-actuator-btn text-slate-300 hover:text-white text-lg font-bold px-3 py-1 rounded">
-          ✕
-        </button>
+        <button id="closeArchiveBtn" type="button" class="metal-actuator-btn text-base px-3 py-1">✕</button>
       </div>
 
-      <div class="p-3 bg-[#161e19] border-b border-[#29352c] flex flex-wrap items-center justify-between gap-2.5 text-xs">
-        <div class="flex items-center gap-2 flex-grow max-w-md">
-          <span class="text-slate-400">🔍</span>
-          <input type="text" id="archiveSearchInput" placeholder="기사 제목이나 본문 검색..." class="w-full px-3 py-1.5 rounded bg-[#0d120f] border border-slate-700 text-slate-200 focus:outline-none focus:border-amber-500 font-sans">
-        </div>
-
+      <div class="p-3 border-b border-[#c2b085] flex flex-wrap items-center justify-between gap-2.5 text-xs">
+        <input type="text" id="archiveSearchInput" placeholder="기사 제목이나 본문 검색..." class="flex-grow max-w-md px-3 py-1.5 focus:outline-none focus:border-[#b07a1c]">
         <div class="flex items-center gap-2 flex-wrap">
-          <select id="archiveCategoryFilter" class="px-2 py-1.5 rounded bg-[#0d120f] border border-slate-700 text-slate-300 focus:outline-none">
+          <select id="archiveCategoryFilter" class="plain px-2 py-1.5 focus:outline-none">
             <option value="all">전체 언론사 보기</option>
-            <option value="newsis">🚨 뉴시스</option>
-            <option value="apnews">🗽 AP 통신</option>
-            <option value="cnn">🔴 CNN</option>
-            <option value="aljazeera">🌍 알자지라</option>
-            <option value="dw">🇩🇪 DW 독일</option>
-            <option value="france24">🇫🇷 프랑스24</option>
-            <option value="rt">🇷🇺 RT 통신</option>
+            <option value="newsis">뉴시스</option>
+            <option value="apnews">AP 통신</option>
+            <option value="cnn">CNN</option>
+            <option value="aljazeera">알자지라</option>
+            <option value="dw">DW 독일</option>
+            <option value="france24">프랑스24</option>
+            <option value="rt">RT 통신</option>
           </select>
-
-          <button id="exportArchiveBtn" type="button" class="metal-actuator-btn px-2.5 py-1.5 rounded text-[11px]">
-            💾 JSON 내보내기
-          </button>
-          <button id="clearAllArchiveBtn" type="button" class="metal-actuator-btn bg-red-950/80 hover:bg-red-900 text-red-200 border-red-800 px-2.5 py-1.5 rounded text-[11px]">
-            창고 비우기
-          </button>
+          <button id="exportArchiveBtn" type="button" class="metal-actuator-btn px-2.5 py-1.5 text-[11px]">JSON 내보내기</button>
+          <button id="clearAllArchiveBtn" type="button" class="metal-actuator-btn btn-red px-2.5 py-1.5 text-[11px]">창고 비우기</button>
         </div>
       </div>
 
-      <div id="archiveListContainer" class="p-3 sm:p-4 overflow-y-auto flex-grow space-y-3 bg-[#0f1411]">
-        <!-- 동적 렌더링 -->
-      </div>
+      <div id="archiveListContainer" class="p-3 sm:p-4 overflow-y-auto flex-grow space-y-3"></div>
 
-      <div class="p-3 bg-[#121814] border-t border-[#2e3b32] flex items-center justify-between text-xs text-slate-400">
+      <div class="p-3 border-t border-[#c2b085] flex items-center justify-between text-xs text-[#5a4f3c]">
         <span id="archiveStorageInfo">보관된 기사: 0건</span>
-        <span class="text-[11px] text-slate-500 hidden sm:inline">※ '전문 인쇄본 보기' 또는 '사진 저장'으로 실물 전신문을 출력하세요.</span>
+        <span class="text-[11px] hidden sm:inline">※ '전문 인쇄본 보기' 또는 '사진 저장'으로 실물 전신문을 출력하세요.</span>
       </div>
     </div>
   </div>
 
-  <!-- ================= [모달] 실물 전신 인쇄본 뷰어 (OFFICIAL WIRE SLIP) ================= -->
-  <div id="printSlipModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-6">
-    <div class="bg-[#1d2520] border-2 border-amber-500 w-full max-w-3xl max-h-[92vh] rounded-xl shadow-2xl flex flex-col overflow-hidden text-slate-200">
-      <div class="bg-[#121814] p-3 sm:p-4 border-b border-slate-700 flex items-center justify-between">
+  <!-- ================= [모달] 실물 전신 인쇄본 뷰어 ================= -->
+  <div id="printSlipModal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-6">
+    <div class="manila w-full max-w-3xl max-h-[92vh] rounded-xl flex flex-col overflow-hidden">
+      <div class="manila-head p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2">
+        <h3 class="text-base sm:text-lg font-bold font-joseon">전신 전문 인쇄본 <span class="lbl text-[10px] align-middle">Official Wire Slip</span></h3>
         <div class="flex items-center gap-2">
-          <span class="text-xl">📄</span>
-          <h3 class="text-base sm:text-lg font-bold text-amber-300 font-joseon">전신 전문 인쇄본 (OFFICIAL WIRE SLIP)</h3>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="saveSlipPhotoModalBtn" type="button" class="metal-actuator-btn bg-amber-800 hover:bg-amber-700 text-amber-100 font-bold px-3 py-1 rounded text-xs font-joseon">
-            📸 사진 저장 (PNG)
-          </button>
-          <button id="printCurrentSlipBtn" type="button" class="metal-actuator-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded text-xs font-joseon">
-            🖨️ 인쇄 / PDF
-          </button>
-          <button id="copyCurrentSlipBtn" type="button" class="metal-actuator-btn px-3 py-1 rounded text-xs">
-            📋 복사
-          </button>
-          <button id="closeSlipModalBtn" type="button" class="metal-actuator-btn px-2.5 py-1 rounded text-sm font-bold">
-            ✕
-          </button>
+          <button id="saveSlipPhotoModalBtn" type="button" class="metal-actuator-btn btn-amber px-3 py-1 text-xs">사진 저장 (PNG)</button>
+          <button id="printCurrentSlipBtn" type="button" class="metal-actuator-btn btn-dark px-3 py-1 text-xs">인쇄 / PDF</button>
+          <button id="copyCurrentSlipBtn" type="button" class="metal-actuator-btn px-3 py-1 text-xs">복사</button>
+          <button id="closeSlipModalBtn" type="button" class="metal-actuator-btn px-2.5 py-1 text-sm">✕</button>
         </div>
       </div>
-
-      <div class="p-3 sm:p-6 overflow-y-auto flex-grow bg-[#242e27]">
-        <div id="slipPaperContent" class="teleprinter-paper p-5 sm:p-8 rounded shadow-lg typewriter-font font-joseon text-xs sm:text-sm text-[#141a16] whitespace-pre-wrap leading-relaxed select-text border border-amber-900/40">
-          <!-- 전문 동적 삽입 -->
+      <div class="p-3 sm:p-6 overflow-y-auto flex-grow bg-[#d8c99f]">
+        <div id="slipPaperContent" class="teleprinter-paper p-5 sm:p-8 shadow-lg typewriter-font font-joseon text-xs sm:text-sm whitespace-pre-wrap leading-relaxed select-text">
         </div>
       </div>
     </div>
@@ -1293,7 +1314,7 @@
     function printCircuitSwitchDivider(agencyKey) {
       if (!paperElem) return;
       const div = document.createElement('div');
-      div.className = 'my-4 py-2 border-y-2 border-dashed border-slate-700/80 font-mono text-[11px] sm:text-xs text-amber-800 text-center font-bold select-text';
+      div.className = 'my-4 py-2 border-y-2 border-dashed border-[#8a7a3a]/70 font-mono text-[11px] sm:text-xs text-[#7a4a12] text-center font-bold select-text';
       div.innerText = `>>> TELEGRAPH CIRCUIT SWITCHED: [${AGENCY_LABELS[agencyKey]}] 단독 회선 연결 (${getKSTFormatted24(new Date())}) <<<`;
       paperElem.appendChild(div);
       if (scrollWrapper) scrollWrapper.scrollTop = scrollWrapper.scrollHeight;
@@ -1445,6 +1466,9 @@ ${cleanContent}
             playKeyClick();
             const carriage = document.getElementById('carriageLight');
             if (carriage) {
+              const lastNl = fullTextToType.lastIndexOf('\n', currentTypeIndex);
+              const col = currentTypeIndex - lastNl;
+              carriage.style.left = Math.min(100, (col % 72) / 72 * 100) + '%';
               carriage.classList.add('bg-amber-400');
               setTimeout(() => carriage.classList.remove('bg-amber-400'), 45);
             }
@@ -1516,7 +1540,7 @@ ${cleanContent}
 
         if (paperElem) {
           paperElem.innerHTML = `
-            <div class="text-center my-6 text-slate-600 font-mono">
+            <div class="text-center my-6 text-[#6b5f3a] font-mono">
               ===============================================================<br>
               TELETYPE CARRIAGE EMPTIED / 용지 리셋 완료<br>
               ${AGENCY_LABELS[state.selectedAgency]} 단독 회선 스트리밍 대기 중...<br>
@@ -1644,10 +1668,9 @@ ${cleanContent}
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="p-8 text-center text-slate-500 border-2 border-dashed border-slate-700 rounded-lg">
-            <span class="text-3xl block mb-2">📁</span>
+          <div class="p-8 text-center text-[#6b5f3a] border-2 border-dashed border-[#b9a77c] rounded-lg">
             보관된 전신 기사가 없습니다.<br>
-            <span class="text-xs text-slate-600">뉴스가 인쇄된 후 [찌익- 기사 절취] 버튼을 눌러 스크랩하세요.</span>
+            <span class="text-xs text-[#8a7b58]">뉴스가 인쇄된 후 [찌익- 기사 절취] 버튼을 눌러 스크랩하세요.</span>
           </div>
         `;
         return;
@@ -1656,36 +1679,36 @@ ${cleanContent}
       container.innerHTML = filtered.map(item => {
         const agencyName = AGENCY_LABELS[item.agency] || item.agency;
         return `
-          <div class="bg-[#151d18] border border-[#344237] hover:border-amber-500/70 p-3 sm:p-4 rounded-lg shadow transition">
+          <div class="archive-card p-3 sm:p-4 rounded-lg transition">
             <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
               <div class="flex items-center gap-2">
-                <span class="bg-[#0e1310] text-amber-300 border border-amber-600/50 px-2 py-0.5 rounded text-[11px] font-bold">
+                <span class="engraved-plate text-[#f6d27a] px-2 py-0.5 text-[11px] font-bold">
                   ${agencyName}
                 </span>
-                <span class="text-xs font-mono text-amber-300">${item.relativeAge}</span>
+                <span class="text-xs font-mono text-[#7a4a12]">${item.relativeAge}</span>
               </div>
-              <div class="text-[11px] text-slate-400 font-mono">
+              <div class="text-[11px] text-[#6b5f3a] font-mono">
                 절취일시: ${item.savedAtKST}
               </div>
             </div>
-            <h3 class="text-sm sm:text-base font-bold text-slate-100 mb-2 leading-snug font-joseon">
+            <h3 class="text-sm sm:text-base font-bold text-[#2b2620] mb-2 leading-snug font-joseon">
               ${escapeHtml(item.title)}
             </h3>
-            <p class="text-xs text-slate-300 line-clamp-2 mb-3 font-sans leading-relaxed">
+            <p class="text-xs text-[#4a4232] line-clamp-2 mb-3 font-sans leading-relaxed">
               ${escapeHtml(item.description)}
             </p>
-            <div class="flex items-center justify-between border-t border-slate-700/60 pt-2.5 text-xs font-mono flex-wrap gap-2">
-              <span class="text-[11px] text-slate-500">
+            <div class="flex items-center justify-between border-t border-[#d8c99f] pt-2.5 text-xs font-mono flex-wrap gap-2">
+              <span class="text-[11px] text-[#8a7b58]">
                 발행: ${item.pubDateKST}
               </span>
               <div class="flex items-center gap-2">
-                <button type="button" onclick="window.saveSingleArchivePhoto('${item.id}')" class="metal-actuator-btn bg-amber-800 hover:bg-amber-700 text-amber-100 px-2.5 py-1 rounded text-[11px] font-bold font-joseon">
-                  📸 사진 저장
+                <button type="button" onclick="window.saveSingleArchivePhoto('${item.id}')" class="metal-actuator-btn px-2.5 py-1 text-[11px]">
+                  사진 저장
                 </button>
-                <button type="button" onclick="window.viewPrintSlip('${item.id}')" class="metal-actuator-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded shadow transition font-joseon text-[11px]">
-                  📄 전문 인쇄본 보기
+                <button type="button" onclick="window.viewPrintSlip('${item.id}')" class="metal-actuator-btn btn-amber px-2.5 py-1 text-[11px]">
+                  전문 인쇄본 보기
                 </button>
-                <button type="button" onclick="window.deleteArchiveItem('${item.id}')" class="metal-actuator-btn bg-red-950/70 hover:bg-red-900 text-red-300 px-2 py-1 rounded text-[11px]">
+                <button type="button" onclick="window.deleteArchiveItem('${item.id}')" class="metal-actuator-btn btn-red px-2 py-1 text-[11px]">
                   삭제
                 </button>
               </div>
@@ -1764,7 +1787,7 @@ ${cleanContent}
         if (!slipPaperContent) return;
         showNotice('고화질 전신문 사진을 렌더링 중입니다...');
         try {
-          const canvas = await html2canvas(slipPaperContent, { scale: 2, backgroundColor: '#faf4e3', logging: false });
+          const canvas = await html2canvas(slipPaperContent, { scale: 2, backgroundColor: '#f4e9a6', logging: false });
           const link = document.createElement('a');
           link.download = `teletype_wire_slip_${Date.now()}.png`;
           link.href = canvas.toDataURL('image/png');
@@ -1780,7 +1803,7 @@ ${cleanContent}
       if (!state.isPoweredOn || !paperElem) return;
       showNotice('롤 용지 전체 화면을 캡처 중입니다...');
       try {
-        const canvas = await html2canvas(paperElem, { scale: 2, backgroundColor: '#faf4e3', logging: false });
+        const canvas = await html2canvas(paperElem, { scale: 2, backgroundColor: '#f4e9a6', logging: false });
         const link = document.createElement('a');
         link.download = `teletype_roll_${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png');
@@ -1795,12 +1818,12 @@ ${cleanContent}
       const item = state.archive.find(a => a.id === id);
       if (!item) return;
       const tempDiv = document.createElement('div');
-      tempDiv.style.cssText = 'position: absolute; left: -9999px; width: 680px; padding: 40px; background: #faf4e3; font-family: Joseon100Years, serif; font-size: 14px; line-height: 1.8; color: #141a16; white-space: pre-wrap;';
+      tempDiv.style.cssText = 'position: absolute; left: -9999px; width: 680px; padding: 40px; background: #f4e9a6; font-family: Joseon100Years, serif; font-size: 14px; line-height: 1.8; color: #141a16; white-space: pre-wrap;';
       tempDiv.textContent = item.fullSlip;
       document.body.appendChild(tempDiv);
       showNotice('보관함 기사 사진 생성 중...');
       try {
-        const canvas = await html2canvas(tempDiv, { scale: 2, backgroundColor: '#faf4e3' });
+        const canvas = await html2canvas(tempDiv, { scale: 2, backgroundColor: '#f4e9a6' });
         const link = document.createElement('a');
         link.download = `teletype_archive_${id}_${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png');
@@ -1849,14 +1872,15 @@ ${cleanContent}
 
     function applySelectedFont(fontClass) {
       if (!paperElem) return;
-      paperElem.classList.remove('font-joseon', 'font-stella', 'font-fixedsys');
+      paperElem.classList.remove('font-joseon', 'font-stella', 'font-fixedsys', 'font-kkakdugi');
       paperElem.classList.add(fontClass);
       state.currentFontClass = fontClass;
 
       const badgeName = {
         'font-joseon': 'JOSEON 100 YEARS',
         'font-stella': 'STELLA (세리프)',
-        'font-fixedsys': 'ROUNDED FIXEDSYS'
+        'font-fixedsys': 'ROUNDED FIXEDSYS',
+        'font-kkakdugi': 'KKAKDUGI DRAFTING'
       }[fontClass] || fontClass;
 
       if (activeFontBadge) activeFontBadge.innerText = badgeName;
@@ -1939,7 +1963,8 @@ ${cleanContent}
         if (!state.isPoweredOn || state.isPaused) return;
         const key = e.currentTarget.dataset.key;
         playKeyClick();
-        addTapeCharacter(key === 'SPACE' ? ' ' : (key === 'CRLF' ? '\n' : (key === 'BELL' ? '!' : key[0])));
+        const specialKeys = { SPACE: ' ', CRLF: '\n', RETURN: '\n', BELL: '!', HEREIS: '#', ESC: '*', CTRL: '*', SHIFT: '*', SHIFT2: '*', RUBOUT: '*' };
+        addTapeCharacter(specialKeys[key] !== undefined ? specialKeys[key] : key[0]);
         
         if (key === 'BELL') triggerEmergencyBell(2);
 
